@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Hand-drawn button with hover redraw.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/button.tsx",
+      "content": "\"use client\";\n\nimport {\n  useCallback,\n  useEffect,\n  useRef,\n  type ButtonHTMLAttributes,\n  type ReactNode,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { randomSeed, type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\n\nexport type ButtonVariant = \"default\" | \"ghost\" | \"destructive\";\nexport type ButtonSize = \"sm\" | \"md\" | \"lg\";\n\nexport interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  children: ReactNode;\n  size?: ButtonSize;\n  theme?: CrumbleTheme;\n  variant?: ButtonVariant;\n}\n\nconst sizeClasses: Record<ButtonSize, string> = {\n  lg: \"h-12 px-5 text-base\",\n  md: \"h-10 px-4 text-sm\",\n  sm: \"h-8 px-3 text-[13px]\",\n};\n\nconst sizeHeights: Record<ButtonSize, number> = {\n  lg: 48,\n  md: 40,\n  sm: 32,\n};\n\nconst variantStroke: Record<ButtonVariant, string> = {\n  default: \"currentColor\",\n  destructive: \"#dc2626\",\n  ghost: \"currentColor\",\n};\n\nexport function Button({\n  children,\n  className,\n  disabled,\n  onClick,\n  size = \"md\",\n  theme: themeProp,\n  variant = \"default\",\n  ...props\n}: ButtonProps) {\n  const btnRef = useRef<HTMLButtonElement>(null);\n  const svgRef = useRef<SVGSVGElement>(null);\n  const { animateOnHover, drawRect, theme } = useRough({\n    stableId: `btn-${typeof children === \"string\" ? children : \"content\"}`,\n    svgRef,\n    theme: themeProp,\n    variant: \"interactive\",\n  });\n  const h = sizeHeights[size];\n\n  const draw = useCallback(\n    (reseed = false) => {\n      const btn = btnRef.current;\n      const svg = svgRef.current;\n\n      if (!btn || !svg) return;\n\n      svg.replaceChildren();\n\n      const width = btn.offsetWidth;\n      svg.setAttribute(\"width\", String(width));\n      svg.setAttribute(\"height\", String(h));\n      svg.setAttribute(\"viewBox\", `0 0 ${width} ${h}`);\n\n      const node = drawRect(1, 1, width - 2, h - 2, {\n        fill: \"none\",\n        seed: reseed ? randomSeed() : undefined,\n        stroke: disabled ? \"#9ca3af\" : variantStroke[variant],\n      });\n\n      if (node) {\n        svg.appendChild(node);\n      }\n    },\n    [disabled, drawRect, h, variant],\n  );\n\n  useEffect(() => {\n    draw();\n  }, [draw, theme]);\n\n  useEffect(() => {\n    const button = btnRef.current;\n    if (!button) return;\n\n    const observer = new ResizeObserver(() => draw());\n    observer.observe(button);\n\n    return () => observer.disconnect();\n  }, [draw]);\n\n  return (\n    <button\n      ref={btnRef}\n      className={cn(\n        \"relative inline-flex select-none items-center justify-center font-medium transition-opacity\",\n        \"disabled:cursor-not-allowed disabled:opacity-40\",\n        sizeClasses[size],\n        variant === \"destructive\" && \"text-red-600\",\n        variant === \"ghost\" && \"opacity-60 hover:opacity-100\",\n        className,\n      )}\n      disabled={disabled}\n      onClick={onClick}\n      onMouseDown={() => {\n        if (!disabled) draw(true);\n      }}\n      onMouseEnter={() => {\n        if (!disabled && animateOnHover) draw(true);\n      }}\n      onMouseLeave={() => {\n        if (!disabled && animateOnHover) draw(false);\n      }}\n      {...props}\n    >\n      <svg\n        ref={svgRef}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 h-full w-full overflow-visible\"\n      />\n      <span className=\"relative\">{children}</span>\n    </button>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/button.tsx"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Hand-drawn text input.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib",
+    "styles-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/input.tsx",
+      "content": "\"use client\";\n\nimport {\n  useCallback,\n  useEffect,\n  useRef,\n  useState,\n  type InputHTMLAttributes,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\n\nexport type InputStyle = \"box\" | \"underline\";\n\nexport interface InputProps extends InputHTMLAttributes<HTMLInputElement> {\n  error?: string;\n  inputStyle?: InputStyle;\n  label?: string;\n  theme?: CrumbleTheme;\n}\n\nconst HEIGHT = 40;\n\nexport function Input({\n  className,\n  error,\n  id,\n  inputStyle = \"box\",\n  label,\n  onBlur,\n  onFocus,\n  theme: themeProp,\n  ...props\n}: InputProps) {\n  const [focused, setFocused] = useState(false);\n  const wrapperRef = useRef<HTMLDivElement>(null);\n  const svgRef = useRef<SVGSVGElement>(null);\n  const inputId =\n    id ?? `input-${label?.toLowerCase().replace(/\\s+/g, \"-\") ?? \"field\"}`;\n  const { drawLine, drawRect, theme } = useRough({\n    stableId: inputId,\n    svgRef,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(() => {\n    const svg = svgRef.current;\n    const wrapper = wrapperRef.current;\n\n    if (!svg || !wrapper) return;\n\n    svg.replaceChildren();\n\n    const width = wrapper.offsetWidth;\n    svg.setAttribute(\"width\", String(width));\n    svg.setAttribute(\"height\", String(HEIGHT));\n    svg.setAttribute(\"viewBox\", `0 0 ${width} ${HEIGHT}`);\n\n    const stroke = error\n      ? \"hsl(var(--destructive))\"\n      : focused\n        ? \"hsl(var(--foreground))\"\n        : \"hsl(var(--border))\";\n\n    if (inputStyle === \"box\") {\n      const node = drawRect(1, 1, width - 2, HEIGHT - 2, {\n        fill: \"none\",\n        stroke,\n      });\n\n      if (node) {\n        svg.appendChild(node);\n      }\n\n      return;\n    }\n\n    const node = drawLine(0, HEIGHT - 2, width, HEIGHT - 2, {\n      stroke,\n      strokeWidth: focused ? 2 : 1,\n    });\n\n    if (node) {\n      svg.appendChild(node);\n    }\n  }, [drawLine, drawRect, error, focused, inputStyle]);\n\n  useEffect(() => {\n    draw();\n  }, [draw, focused, theme]);\n\n  useEffect(() => {\n    const wrapper = wrapperRef.current;\n    if (!wrapper) return;\n\n    const observer = new ResizeObserver(() => draw());\n    observer.observe(wrapper);\n\n    return () => observer.disconnect();\n  }, [draw]);\n\n  return (\n    <div className={cn(\"flex flex-col gap-1.5\", className)}>\n      {label ? (\n        <label\n          htmlFor={inputId}\n          className=\"text-[11px] font-medium uppercase tracking-wider text-muted-foreground\"\n        >\n          {label}\n        </label>\n      ) : null}\n      <div ref={wrapperRef} className=\"relative h-10\">\n        <svg\n          ref={svgRef}\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute inset-0 overflow-visible\"\n        />\n        <input\n          id={inputId}\n          onBlur={(event) => {\n            setFocused(false);\n            onBlur?.(event);\n          }}\n          onFocus={(event) => {\n            setFocused(true);\n            onFocus?.(event);\n          }}\n          className={cn(\n            \"absolute inset-0 h-full w-full border-none bg-transparent text-sm text-foreground outline-none\",\n            inputStyle === \"box\" ? \"px-3\" : \"px-0.5\",\n          )}\n          {...props}\n        />\n      </div>\n      {error ? <span className=\"text-xs text-destructive\">{error}</span> : null}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/input.tsx"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "styles-lib",
+  "type": "registry:lib",
+  "title": "Crumble Styles",
+  "description": "Shared inline style helpers for Crumble form controls.",
+  "files": [
+    {
+      "path": "lib/styles.ts",
+      "content": "import type { CSSProperties } from \"react\";\n\nexport const labelStyle: CSSProperties = {\n  color: \"hsl(var(--muted-foreground))\",\n  fontSize: 11,\n  fontWeight: 500,\n  letterSpacing: \"0.08em\",\n  textTransform: \"uppercase\",\n};\n\nexport const errorStyle: CSSProperties = {\n  color: \"hsl(var(--destructive))\",\n  fontSize: 12,\n};\n\nexport const svgOverlay: CSSProperties = {\n  inset: 0,\n  overflow: \"visible\",\n  pointerEvents: \"none\",\n  position: \"absolute\",\n};\n",
+      "type": "registry:lib",
+      "target": "lib/styles.ts"
+    }
+  ]
+}

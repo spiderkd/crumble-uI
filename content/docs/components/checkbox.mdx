@@ -1,0 +1,39 @@
+---
+title: Checkbox
+description: A hand-drawn checkbox with a rough tick mark.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Checkbox } from "@/registry/new-york/ui/checkbox"
+
+<PreviewContainer
+  componentName="checkbox"
+  code={`import { Checkbox } from '@/components/crumble/ui/checkbox'
+
+<Checkbox label="Accept terms" />`}
+>
+  <Checkbox label="Accept terms" />
+</PreviewContainer>
+
+## Installation
+
+```bash
+npx shadcn add https://crumble.dev/r/checkbox.json
+```
+
+## States
+
+<PreviewContainer
+  componentName="checkbox"
+  code={`<Checkbox label="Unchecked" />
+<Checkbox label="Checked" defaultChecked />
+<Checkbox label="Disabled" disabled />
+<Checkbox label="Disabled checked" disabled defaultChecked />`}
+>
+  <div className="flex flex-col gap-3">
+    <Checkbox label="Unchecked" />
+    <Checkbox label="Checked" defaultChecked />
+    <Checkbox label="Disabled" disabled />
+    <Checkbox label="Disabled checked" disabled defaultChecked />
+  </div>
+</PreviewContainer>

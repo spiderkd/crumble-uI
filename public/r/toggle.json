@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle",
+  "type": "registry:ui",
+  "title": "Toggle",
+  "description": "Hand-drawn toggle switch.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/toggle.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef, useState } from \"react\";\nimport rough from \"roughjs\";\nimport { cn } from \"@/lib/utils\";\nimport {\n  getRoughOptions,\n  stableSeed,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\nimport { useCrumble } from \"@/lib/crumble-context\";\n\nexport interface ToggleProps {\n  checked?: boolean;\n  className?: string;\n  defaultChecked?: boolean;\n  disabled?: boolean;\n  id?: string;\n  label?: string;\n  onChange?: (checked: boolean) => void;\n  theme?: CrumbleTheme;\n}\n\nconst HEIGHT = 24;\nconst WIDTH = 44;\n\nexport function Toggle({\n  checked,\n  className,\n  defaultChecked = false,\n  disabled,\n  id,\n  label,\n  onChange,\n  theme: themeProp,\n}: ToggleProps) {\n  const [internalValue, setInternalValue] = useState(defaultChecked);\n  const svgRef = useRef<SVGSVGElement>(null);\n  const toggleId =\n    id ?? `toggle-${label?.toLowerCase().replace(/\\s+/g, \"-\") ?? \"field\"}`;\n  const currentValue = checked ?? internalValue;\n  const { theme: contextTheme } = useCrumble();\n  const theme = themeProp ?? contextTheme;\n\n  const draw = useCallback(\n    (isOn: boolean) => {\n      const svg = svgRef.current;\n      if (!svg) return;\n\n      svg.replaceChildren();\n\n      const renderer = rough.svg(svg);\n      const options = getRoughOptions(theme, \"interactive\", {\n        seed: stableSeed(toggleId),\n        stroke: disabled ? \"hsl(var(--muted-foreground))\" : \"currentColor\",\n      });\n\n      svg.appendChild(\n        renderer.rectangle(1, 1, WIDTH - 2, HEIGHT - 2, {\n          ...options,\n          fill: isOn ? \"currentColor\" : \"none\",\n          fillStyle: \"solid\",\n          roughness: 0.8,\n        }),\n      );\n\n      const thumbX = isOn ? WIDTH - HEIGHT / 2 - 2 : HEIGHT / 2 + 2;\n      svg.appendChild(\n        renderer.circle(thumbX, HEIGHT / 2, HEIGHT - 6, {\n          ...options,\n          fill: isOn\n            ? \"hsl(var(--background))\"\n            : disabled\n              ? \"hsl(var(--muted-foreground))\"\n              : \"currentColor\",\n          fillStyle: \"solid\",\n          seed: stableSeed(`${toggleId}-thumb`),\n          stroke: isOn ? \"hsl(var(--background))\" : \"currentColor\",\n        }),\n      );\n    },\n    [disabled, theme, toggleId],\n  );\n\n  useEffect(() => {\n    draw(currentValue);\n  }, [currentValue, draw]);\n\n  const handleClick = () => {\n    if (disabled) return;\n\n    const nextValue = !currentValue;\n    setInternalValue(nextValue);\n    onChange?.(nextValue);\n  };\n\n  return (\n    <label\n      className={cn(\n        \"inline-flex cursor-pointer select-none items-center gap-2.5\",\n        disabled && \"cursor-not-allowed opacity-40\",\n        className,\n      )}\n      htmlFor={toggleId}\n    >\n      <div onClick={handleClick} className=\"relative h-6 w-11 shrink-0\">\n        <input\n          checked={currentValue}\n          disabled={disabled}\n          id={toggleId}\n          onChange={() => {}}\n          className=\"absolute h-0 w-0 opacity-0\"\n          type=\"checkbox\"\n        />\n        <svg\n          ref={svgRef}\n          aria-checked={currentValue}\n          aria-hidden=\"true\"\n          height={HEIGHT}\n          width={WIDTH}\n          role=\"switch\"\n          className={cn(\n            \"overflow-visible\",\n            disabled ? \"cursor-not-allowed\" : \"cursor-pointer\",\n          )}\n        />\n      </div>\n      {label ? <span className=\"text-sm text-foreground\">{label}</span> : null}\n    </label>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/toggle.tsx"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+---
+title: Select
+description: A hand-drawn select dropdown with a rough chevron indicator.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Select } from "@/registry/new-york/ui/select"
+
+<PreviewContainer
+  componentName="select"
+  code={`import { Select } from '@/components/crumble/ui/select'
+
+<Select
+  label="Framework"
+  placeholder="Choose one..."
+  options={[
+    { value: 'next', label: 'Next.js' },
+    { value: 'remix', label: 'Remix' },
+    { value: 'astro', label: 'Astro' },
+  ]}
+/>`}
+>
+  <div className="w-full max-w-xs">
+    <Select
+      label="Framework"
+      placeholder="Choose one..."
+      options={[
+        { value: "next", label: "Next.js" },
+        { value: "remix", label: "Remix" },
+        { value: "astro", label: "Astro" },
+      ]}
+    />
+  </div>
+</PreviewContainer>
+
+## Error state
+
+<PreviewContainer
+  componentName="select"
+  code={`<Select
+  label="Country"
+  placeholder="Select a country"
+  error="Please select a country"
+  options={[{ value: 'in', label: 'India' }, { value: 'us', label: 'United States' }]}
+/>`}
+>
+  <div className="w-full max-w-xs">
+    <Select
+      label="Country"
+      placeholder="Select a country"
+      error="Please select a country"
+      options={[
+        { value: "in", label: "India" },
+        { value: "us", label: "United States" },
+      ]}
+    />
+  </div>
+</PreviewContainer>

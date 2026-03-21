@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Hand-drawn textarea with optional auto-grow.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib",
+    "styles-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/textarea.tsx",
+      "content": "\"use client\";\n\nimport {\n  useCallback,\n  useEffect,\n  useRef,\n  useState,\n  type ChangeEvent,\n  type TextareaHTMLAttributes,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\n\nexport interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {\n  autoGrow?: boolean;\n  error?: string;\n  label?: string;\n  theme?: CrumbleTheme;\n}\n\nexport function Textarea({\n  autoGrow = false,\n  className,\n  error,\n  id,\n  label,\n  onBlur,\n  onChange,\n  onFocus,\n  theme: themeProp,\n  ...props\n}: TextareaProps) {\n  const [focused, setFocused] = useState(false);\n  const wrapperRef = useRef<HTMLDivElement>(null);\n  const textareaRef = useRef<HTMLTextAreaElement>(null);\n  const svgRef = useRef<SVGSVGElement>(null);\n  const textareaId =\n    id ?? `textarea-${label?.toLowerCase().replace(/\\s+/g, \"-\") ?? \"field\"}`;\n  const { drawRect, theme } = useRough({\n    stableId: textareaId,\n    svgRef,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(() => {\n    const svg = svgRef.current;\n    const wrapper = wrapperRef.current;\n\n    if (!svg || !wrapper) return;\n\n    svg.replaceChildren();\n\n    const width = wrapper.offsetWidth;\n    const height = wrapper.offsetHeight;\n    svg.setAttribute(\"width\", String(width));\n    svg.setAttribute(\"height\", String(height));\n    svg.setAttribute(\"viewBox\", `0 0 ${width} ${height}`);\n\n    const stroke = error\n      ? \"hsl(var(--destructive))\"\n      : focused\n        ? \"hsl(var(--foreground))\"\n        : \"hsl(var(--border))\";\n\n    const node = drawRect(1, 1, width - 2, height - 2, {\n      fill: \"none\",\n      stroke,\n    });\n\n    if (node) {\n      svg.appendChild(node);\n    }\n  }, [drawRect, error, focused]);\n\n  useEffect(() => {\n    draw();\n  }, [draw, focused, theme]);\n\n  useEffect(() => {\n    const wrapper = wrapperRef.current;\n    if (!wrapper) return;\n\n    const observer = new ResizeObserver(() => draw());\n    observer.observe(wrapper);\n\n    return () => observer.disconnect();\n  }, [draw]);\n\n  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {\n    if (autoGrow && textareaRef.current) {\n      textareaRef.current.style.height = \"auto\";\n      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;\n      draw();\n    }\n\n    onChange?.(event);\n  };\n\n  return (\n    <div className={cn(\"flex flex-col gap-1.5\", className)}>\n      {label ? (\n        <label\n          htmlFor={textareaId}\n          className=\"text-[11px] font-medium uppercase tracking-wider text-muted-foreground\"\n        >\n          {label}\n        </label>\n      ) : null}\n      <div ref={wrapperRef} className=\"relative min-h-24\">\n        <svg\n          ref={svgRef}\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute inset-0 h-full w-full overflow-visible\"\n        />\n        <textarea\n          ref={textareaRef}\n          id={textareaId}\n          onBlur={(event) => {\n            setFocused(false);\n            onBlur?.(event);\n          }}\n          onChange={handleChange}\n          onFocus={(event) => {\n            setFocused(true);\n            onFocus?.(event);\n          }}\n          className={cn(\n            \"absolute inset-0 h-full w-full border-none bg-transparent px-3 py-2.5 font-[inherit] text-sm text-foreground outline-none\",\n            autoGrow ? \"resize-none\" : \"resize-y\",\n          )}\n          {...props}\n        />\n      </div>\n      {error ? <span className=\"text-xs text-destructive\">{error}</span> : null}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/textarea.tsx"
+    }
+  ]
+}

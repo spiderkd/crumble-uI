@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rough-line",
+  "type": "registry:ui",
+  "title": "Rough Line",
+  "description": "Hand-drawn line primitive.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/primitives/rough-line.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef } from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport type { CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\n\nexport interface RoughLineProps {\n  className?: string;\n  id?: string;\n  length?: number;\n  orientation?: \"horizontal\" | \"vertical\";\n  stroke?: string;\n  strokeWidth?: number;\n  theme?: CrumbleTheme;\n}\n\nexport function RoughLine({\n  className,\n  id,\n  length,\n  orientation = \"horizontal\",\n  stroke,\n  strokeWidth,\n  theme: themeProp,\n}: RoughLineProps) {\n  const containerRef = useRef<HTMLDivElement>(null);\n  const { drawLine, svgRef, theme } = useRough({\n    stableId: id,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(() => {\n    const container = containerRef.current;\n    const svg = svgRef.current;\n\n    if (!container || !svg) return;\n\n    svg.replaceChildren();\n\n    const width = orientation === \"horizontal\" ? (length ?? container.offsetWidth) : 20;\n    const height = orientation === \"vertical\" ? (length ?? container.offsetHeight) : 20;\n\n    svg.setAttribute(\"width\", String(width));\n    svg.setAttribute(\"height\", String(height));\n    svg.setAttribute(\"viewBox\", `0 0 ${width} ${height}`);\n\n    const node =\n      orientation === \"horizontal\"\n        ? drawLine(2, 10, width - 2, 10, {\n            stroke: stroke ?? \"currentColor\",\n            strokeWidth,\n          })\n        : drawLine(10, 2, 10, height - 2, {\n            stroke: stroke ?? \"currentColor\",\n            strokeWidth,\n          });\n\n    if (node) {\n      svg.appendChild(node);\n    }\n  }, [drawLine, length, orientation, stroke, strokeWidth, svgRef]);\n\n  useEffect(() => {\n    draw();\n  }, [draw, theme]);\n\n  useEffect(() => {\n    const container = containerRef.current;\n    if (!container) return;\n\n    const observer = new ResizeObserver(() => draw());\n    observer.observe(container);\n\n    return () => observer.disconnect();\n  }, [draw]);\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\n        orientation === \"horizontal\" ? \"w-full\" : \"h-full\",\n        className,\n      )}\n    >\n      <svg ref={svgRef} aria-hidden=\"true\" className=\"overflow-visible\" />\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/primitives/rough-line.tsx"
+    }
+  ]
+}

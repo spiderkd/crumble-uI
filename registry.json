@@ -1,0 +1,274 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "crumble",
+  "homepage": "https://crumble.dev",
+  "items": [
+    {
+      "name": "rough-lib",
+      "type": "registry:lib",
+      "title": "Rough Theme Config",
+      "description": "Core Rough.js theme presets and global config for Crumble.",
+      "dependencies": ["roughjs"],
+      "files": [
+        {
+          "path": "lib/rough.ts",
+          "type": "registry:lib",
+          "target": "lib/rough.ts"
+        }
+      ]
+    },
+    {
+      "name": "styles-lib",
+      "type": "registry:lib",
+      "title": "Crumble Styles",
+      "description": "Shared inline style helpers for Crumble form controls.",
+      "files": [
+        {
+          "path": "lib/styles.ts",
+          "type": "registry:lib",
+          "target": "lib/styles.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-rough",
+      "type": "registry:hook",
+      "title": "useRough",
+      "description": "Shared Rough.js SVG hook for Crumble primitives.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib"],
+      "files": [
+        {
+          "path": "hooks/use-rough.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-rough.ts"
+        }
+      ]
+    },
+    {
+      "name": "rough-rect",
+      "type": "registry:ui",
+      "title": "Rough Rect",
+      "description": "Hand-drawn rectangle primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-rect.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-rect.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rough-circle",
+      "type": "registry:ui",
+      "title": "Rough Circle",
+      "description": "Hand-drawn circle primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-circle.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-circle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rough-line",
+      "type": "registry:ui",
+      "title": "Rough Line",
+      "description": "Hand-drawn line primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-line.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-line.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rough-path",
+      "type": "registry:ui",
+      "title": "Rough Path",
+      "description": "Hand-drawn SVG path primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-path.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-path.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rough-arrow",
+      "type": "registry:ui",
+      "title": "Rough Arrow",
+      "description": "Hand-drawn curved arrow primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-arrow.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-arrow.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rough-highlight",
+      "type": "registry:ui",
+      "title": "Rough Highlight",
+      "description": "Hand-drawn annotation primitive.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/primitives/rough-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/primitives/rough-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Hand-drawn button with hover redraw.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Hand-drawn card with optional stacked paper effect.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Hand-drawn text input.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib", "styles-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Hand-drawn textarea with optional auto-grow.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib", "styles-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/textarea.tsx"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Hand-drawn checkbox with rough tick mark.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/checkbox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Hand-drawn radio buttons with filled inner circle.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/radio.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/radio.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Hand-drawn select with rough chevron indicator.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["use-rough", "rough-lib", "styles-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Hand-drawn range slider with rough track and thumb.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib", "styles-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/slider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Hand-drawn toggle switch.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["rough-lib"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/toggle.tsx"
+        }
+      ]
+    }
+  ]
+}

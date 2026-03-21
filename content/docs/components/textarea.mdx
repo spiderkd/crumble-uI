@@ -1,0 +1,46 @@
+---
+title: Textarea
+description: A hand-drawn textarea with optional auto-grow.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Textarea } from "@/registry/new-york/ui/textarea"
+
+<PreviewContainer
+  componentName="textarea"
+  code={`import { Textarea } from '@/components/crumble/ui/textarea'
+
+<Textarea label="Message" placeholder="Write something..." />`}
+>
+  <div className="w-full max-w-xs">
+    <Textarea label="Message" placeholder="Write something..." />
+  </div>
+</PreviewContainer>
+
+## Installation
+
+```bash
+npx shadcn add https://crumble.dev/r/textarea.json
+```
+
+## Auto-grow
+
+<PreviewContainer
+  componentName="textarea"
+  code={`<Textarea label="Notes" placeholder="Starts small, grows as you type..." autoGrow />`}
+>
+  <div className="w-full max-w-xs">
+    <Textarea label="Notes" placeholder="Starts small, grows as you type..." autoGrow />
+  </div>
+</PreviewContainer>
+
+## Error state
+
+<PreviewContainer
+  componentName="textarea"
+  code={`<Textarea label="Message" error="Message is required" />`}
+>
+  <div className="w-full max-w-xs">
+    <Textarea label="Message" error="Message is required" />
+  </div>
+</PreviewContainer>

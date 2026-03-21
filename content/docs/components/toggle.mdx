@@ -1,0 +1,33 @@
+---
+title: Toggle
+description: A hand-drawn toggle switch with a sliding thumb.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Toggle } from "@/registry/new-york/ui/toggle"
+
+<PreviewContainer
+  componentName="toggle"
+  code={`import { Toggle } from '@/components/crumble/ui/toggle'
+
+<Toggle label="Notifications" />`}
+>
+  <Toggle label="Notifications" />
+</PreviewContainer>
+
+## States
+
+<PreviewContainer
+  componentName="toggle"
+  code={`<Toggle label="Off by default" />
+<Toggle label="On by default" defaultChecked />
+<Toggle label="Disabled off" disabled />
+<Toggle label="Disabled on" disabled defaultChecked />`}
+>
+  <div className="flex flex-col gap-3">
+    <Toggle label="Off by default" />
+    <Toggle label="On by default" defaultChecked />
+    <Toggle label="Disabled off" disabled />
+    <Toggle label="Disabled on" disabled defaultChecked />
+  </div>
+</PreviewContainer>

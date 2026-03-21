@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rough-rect",
+  "type": "registry:ui",
+  "title": "Rough Rect",
+  "description": "Hand-drawn rectangle primitive.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/primitives/rough-rect.tsx",
+      "content": "\"use client\";\n\nimport {\n  useCallback,\n  useEffect,\n  useRef,\n  type CSSProperties,\n  type ReactNode,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { randomSeed, type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { useCrumble } from \"@/lib/crumble-context\";\n\nexport interface RoughRectProps {\n  animateOnHover?: boolean;\n  children?: ReactNode;\n  className?: string;\n  fill?: string;\n  id?: string;\n  onClick?: () => void;\n  padding?: number;\n  rounded?: boolean;\n  stroke?: string;\n  style?: CSSProperties;\n  theme?: CrumbleTheme;\n}\n\nexport function RoughRect({\n  animateOnHover: animateOnHoverProp,\n  children,\n  className,\n  fill,\n  id,\n  onClick,\n  padding = 8,\n  rounded = false,\n  stroke,\n  style,\n  theme: themeProp,\n}: RoughRectProps) {\n  const containerRef = useRef<HTMLDivElement>(null);\n  const { animateOnHover: contextHover } = useCrumble();\n  const { drawRect, svgRef, theme } = useRough({\n    stableId: id,\n    theme: themeProp,\n    variant: \"border\",\n  });\n  const shouldAnimateHover = animateOnHoverProp ?? contextHover;\n\n  const draw = useCallback(\n    (reseed = false) => {\n      const svg = svgRef.current;\n      const container = containerRef.current;\n\n      if (!svg || !container) return;\n\n      svg.replaceChildren();\n\n      const width = container.offsetWidth;\n      const height = container.offsetHeight;\n      const inset = 2;\n\n      svg.setAttribute(\"width\", String(width));\n      svg.setAttribute(\"height\", String(height));\n      svg.setAttribute(\"viewBox\", `0 0 ${width} ${height}`);\n\n      const node = drawRect(inset, inset, width - inset * 2, height - inset * 2, {\n        fill: fill ?? \"none\",\n        roughness: rounded ? 0.5 : undefined,\n        seed: reseed ? randomSeed() : undefined,\n        stroke: stroke ?? \"currentColor\",\n      });\n\n      if (node) {\n        svg.appendChild(node);\n      }\n    },\n    [drawRect, fill, rounded, stroke, svgRef],\n  );\n\n  useEffect(() => {\n    draw();\n  }, [draw, theme]);\n\n  useEffect(() => {\n    const container = containerRef.current;\n    if (!container) return;\n\n    const observer = new ResizeObserver(() => draw());\n    observer.observe(container);\n\n    return () => observer.disconnect();\n  }, [draw]);\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative\", className)}\n      onClick={onClick}\n      onMouseEnter={() => {\n        if (shouldAnimateHover) draw(true);\n      }}\n      onMouseLeave={() => {\n        if (shouldAnimateHover) draw(false);\n      }}\n      style={style}\n    >\n      <svg\n        ref={svgRef}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 h-full w-full overflow-visible\"\n      />\n      <div className=\"relative\" style={{ padding }}>\n        {children}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/primitives/rough-rect.tsx"
+    }
+  ]
+}

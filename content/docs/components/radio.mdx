@@ -1,0 +1,59 @@
+---
+title: Radio
+description: Hand-drawn radio buttons with a filled inner circle when selected.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { RadioGroup } from "@/registry/new-york/ui/radio"
+
+<PreviewContainer
+  componentName="radio"
+  code={`import { RadioGroup } from '@/components/crumble/ui/radio'
+
+<RadioGroup
+  name="plan"
+  defaultValue="monthly"
+  options={[
+    { value: 'monthly', label: 'Monthly' },
+    { value: 'yearly', label: 'Yearly' },
+    { value: 'lifetime', label: 'Lifetime' },
+  ]}
+/>`}
+>
+  <RadioGroup
+    name="plan-preview"
+    defaultValue="monthly"
+    options={[
+      { value: "monthly", label: "Monthly" },
+      { value: "yearly", label: "Yearly" },
+      { value: "lifetime", label: "Lifetime" },
+    ]}
+  />
+</PreviewContainer>
+
+## Horizontal layout
+
+<PreviewContainer
+  componentName="radio"
+  code={`<RadioGroup
+  name="size"
+  orientation="horizontal"
+  defaultValue="md"
+  options={[
+    { value: 'sm', label: 'Small' },
+    { value: 'md', label: 'Medium' },
+    { value: 'lg', label: 'Large' },
+  ]}
+/>`}
+>
+  <RadioGroup
+    name="size-preview"
+    orientation="horizontal"
+    defaultValue="md"
+    options={[
+      { value: "sm", label: "Small" },
+      { value: "md", label: "Medium" },
+      { value: "lg", label: "Large" },
+    ]}
+  />
+</PreviewContainer>

@@ -1,0 +1,18 @@
+---
+title: RoughLine
+description: Hand-drawn line primitive for dividers and axes.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { RoughLine } from "@/registry/new-york/primitives/rough-line"
+
+<PreviewContainer
+  componentName="rough-line"
+  code={`import { RoughLine } from '@/components/crumble/primitives/rough-line'
+
+<RoughLine orientation="horizontal" />`}
+>
+  <div className="w-full max-w-md">
+    <RoughLine orientation="horizontal" />
+  </div>
+</PreviewContainer>

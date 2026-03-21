@@ -1,0 +1,77 @@
+---
+title: Button
+description: A hand-drawn button with a wobbly border that redraws on hover.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Button } from "@/registry/new-york/ui/button"
+
+<PreviewContainer
+  componentName="button"
+  code={`import { Button } from '@/components/crumble/ui/button'
+
+<Button>Click me</Button>`}
+>
+  <div className="flex flex-wrap gap-3">
+    <Button>Default</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="destructive">Destructive</Button>
+  </div>
+</PreviewContainer>
+
+## Installation
+
+```bash
+npx shadcn add https://crumble.dev/r/button.json
+```
+
+## Variants
+
+<PreviewContainer
+  componentName="button"
+  code={`<Button variant="default">Default</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive">Destructive</Button>`}
+>
+  <div className="flex flex-wrap gap-3">
+    <Button variant="default">Default</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="destructive">Destructive</Button>
+  </div>
+</PreviewContainer>
+
+## Sizes
+
+<PreviewContainer
+  componentName="button"
+  code={`<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>`}
+>
+  <div className="flex flex-wrap items-center gap-3">
+    <Button size="sm">Small</Button>
+    <Button size="md">Medium</Button>
+    <Button size="lg">Large</Button>
+  </div>
+</PreviewContainer>
+
+## Themes
+
+<PreviewContainer
+  componentName="button"
+  code={`<Button theme="pencil">Pencil</Button>
+<Button theme="ink">Ink</Button>
+<Button theme="crayon">Crayon</Button>`}
+>
+  <div className="flex flex-wrap gap-3">
+    <Button theme="pencil">Pencil</Button>
+    <Button theme="ink">Ink</Button>
+    <Button theme="crayon">Crayon</Button>
+  </div>
+</PreviewContainer>
+
+## Disabled
+
+<PreviewContainer componentName="button" code={`<Button disabled>Disabled</Button>`}>
+  <Button disabled>Disabled</Button>
+</PreviewContainer>

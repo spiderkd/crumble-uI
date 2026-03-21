@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-rough",
+  "type": "registry:hook",
+  "title": "useRough",
+  "description": "Shared Rough.js SVG hook for Crumble primitives.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "hooks/use-rough.ts",
+      "content": "\"use client\";\n\nimport { useCallback, useRef, type RefObject } from \"react\";\nimport rough from \"roughjs\";\nimport type { Options } from \"roughjs/bin/core\";\nimport type { RoughSVG } from \"roughjs/bin/svg\";\nimport {\n  getRoughOptions,\n  randomSeed,\n  stableSeed,\n  type ComponentVariant,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\nimport { useCrumble } from \"@/lib/crumble-context\";\n\ninterface UseRoughProps {\n  variant?: ComponentVariant;\n  options?: Partial<Options>;\n  stableId?: string;\n  theme?: CrumbleTheme;\n  svgRef?: RefObject<SVGSVGElement | null>;\n}\n\nexport function useRough({\n  variant = \"border\",\n  options,\n  stableId,\n  theme: themeProp,\n  svgRef: externalSvgRef,\n}: UseRoughProps = {}) {\n  const internalSvgRef = useRef<SVGSVGElement>(null);\n  const svgRef = externalSvgRef ?? internalSvgRef;\n  const rcRef = useRef<RoughSVG | null>(null);\n  const lastSvgRef = useRef<SVGSVGElement | null>(null);\n  const { animateOnHover, animateOnMount, theme: contextTheme } = useCrumble();\n  const theme = themeProp ?? contextTheme;\n\n  const getRenderer = useCallback(() => {\n    if (!svgRef.current) return null;\n\n    if (rcRef.current && lastSvgRef.current === svgRef.current) {\n      return rcRef.current;\n    }\n\n    rcRef.current = rough.svg(svgRef.current);\n    lastSvgRef.current = svgRef.current;\n    return rcRef.current;\n  }, [svgRef]);\n\n  const getOptions = useCallback(\n    (extra?: Partial<Options>) => {\n      const resolvedSeed =\n        extra?.seed ??\n        (stableId\n          ? stableSeed(stableId)\n          : animateOnHover\n            ? randomSeed()\n            : stableSeed(\"crumble-default\"));\n\n      return getRoughOptions(theme, variant, {\n        ...options,\n        ...extra,\n        seed: resolvedSeed,\n      });\n    },\n    [animateOnHover, options, stableId, theme, variant],\n  );\n\n  const drawRect = useCallback(\n    (\n      x: number,\n      y: number,\n      width: number,\n      height: number,\n      extra?: Partial<Options>,\n    ) => {\n      const rc = getRenderer();\n      if (!rc) return null;\n\n      return rc.rectangle(x, y, width, height, getOptions(extra));\n    },\n    [getOptions, getRenderer],\n  );\n\n  const drawCircle = useCallback(\n    (\n      cx: number,\n      cy: number,\n      diameter: number,\n      extra?: Partial<Options>,\n    ) => {\n      const rc = getRenderer();\n      if (!rc) return null;\n\n      return rc.circle(cx, cy, diameter, getOptions(extra));\n    },\n    [getOptions, getRenderer],\n  );\n\n  const drawLine = useCallback(\n    (\n      x1: number,\n      y1: number,\n      x2: number,\n      y2: number,\n      extra?: Partial<Options>,\n    ) => {\n      const rc = getRenderer();\n      if (!rc) return null;\n\n      return rc.line(x1, y1, x2, y2, getOptions(extra));\n    },\n    [getOptions, getRenderer],\n  );\n\n  const drawPath = useCallback(\n    (pathData: string, extra?: Partial<Options>) => {\n      const rc = getRenderer();\n      if (!rc) return null;\n\n      return rc.path(pathData, getOptions(extra));\n    },\n    [getOptions, getRenderer],\n  );\n  return {\n    animateOnHover,\n    animateOnMount,\n    drawCircle,\n    drawLine,\n    drawPath,\n    drawRect,\n    getOptions,\n    rc: rcRef,\n    svgRef,\n    theme,\n  };\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-rough.ts"
+    }
+  ]
+}

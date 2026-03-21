@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rough-path",
+  "type": "registry:ui",
+  "title": "Rough Path",
+  "description": "Hand-drawn SVG path primitive.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/primitives/rough-path.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect } from \"react\";\nimport type { Options } from \"roughjs/bin/core\";\nimport { randomSeed, type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { useCrumble } from \"@/lib/crumble-context\";\n\nexport interface RoughPathProps {\n  className?: string;\n  d: string;\n  fill?: string;\n  height: number;\n  id?: string;\n  options?: Partial<Options>;\n  stroke?: string;\n  theme?: CrumbleTheme;\n  width: number;\n}\n\nexport function RoughPath({\n  className,\n  d,\n  fill,\n  height,\n  id,\n  options,\n  stroke,\n  theme: themeProp,\n  width,\n}: RoughPathProps) {\n  const { animateOnHover } = useCrumble();\n  const { drawPath, svgRef, theme } = useRough({\n    options,\n    stableId: id,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(\n    (reseed = false) => {\n      const svg = svgRef.current;\n      if (!svg) return;\n\n      svg.replaceChildren();\n\n      const node = drawPath(d, {\n        fill: fill ?? \"none\",\n        seed: reseed ? randomSeed() : undefined,\n        stroke: stroke ?? \"currentColor\",\n      });\n\n      if (node) {\n        svg.appendChild(node);\n      }\n    },\n    [d, drawPath, fill, stroke, svgRef],\n  );\n\n  useEffect(() => {\n    draw();\n  }, [draw, theme]);\n\n  return (\n    <svg\n      ref={svgRef}\n      aria-hidden=\"true\"\n      className={className}\n      height={height}\n      onMouseEnter={() => {\n        if (animateOnHover) draw(true);\n      }}\n      onMouseLeave={() => {\n        if (animateOnHover) draw(false);\n      }}\n      viewBox={`0 0 ${width} ${height}`}\n      width={width}\n    />\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/primitives/rough-path.tsx"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+---
+title: RoughHighlight
+description: Wrap any text with a hand-drawn annotation.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { RoughHighlight } from "@/registry/new-york/primitives/rough-highlight"
+
+<PreviewContainer
+  componentName="rough-highlight"
+  code={`import { RoughHighlight } from '@/components/crumble/primitives/rough-highlight'
+
+<p>
+  This is <RoughHighlight type="highlight" color="#fbbf24">highlighted</RoughHighlight> text.
+</p>`}
+>
+  <p className="text-base leading-relaxed">
+    This is{" "}
+    <RoughHighlight type="highlight" color="#fbbf24" opacity={0.4}>
+      highlighted
+    </RoughHighlight>{" "}
+    text with a rough annotation.
+  </p>
+</PreviewContainer>
+
+## All types
+
+<PreviewContainer
+  componentName="rough-highlight"
+  code={`<RoughHighlight type="underline">Underline</RoughHighlight>
+<RoughHighlight type="box">Box</RoughHighlight>
+<RoughHighlight type="circle">Circle</RoughHighlight>
+<RoughHighlight type="highlight" color="#fbbf24">Highlight</RoughHighlight>`}
+>
+  <div className="flex flex-col gap-4 text-base">
+    <p><RoughHighlight type="underline">Underline</RoughHighlight></p>
+    <p><RoughHighlight type="box">Box</RoughHighlight></p>
+    <p><RoughHighlight type="circle">Circle</RoughHighlight></p>
+    <p><RoughHighlight type="highlight" color="#fbbf24" opacity={0.4}>Highlight</RoughHighlight></p>
+  </div>
+</PreviewContainer>

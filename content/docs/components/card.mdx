@@ -1,0 +1,82 @@
+---
+title: Card
+description: A hand-drawn card container with an optional stacked paper effect.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Button } from "@/registry/new-york/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/registry/new-york/ui/card"
+
+<PreviewContainer
+  componentName="card"
+  code={`import { Card } from '@/components/crumble/ui/card'
+
+<Card padding={20}>
+  <p className="font-medium">Card title</p>
+  <p className="mt-1 text-sm text-muted-foreground">Some content here</p>
+</Card>`}
+>
+  <Card padding={20}>
+    <p className="text-sm font-medium">Card title</p>
+    <p className="mt-1 text-xs text-muted-foreground">Some content goes here</p>
+  </Card>
+</PreviewContainer>
+
+## Installation
+
+```bash
+npx shadcn add https://crumble.dev/r/card.json
+```
+
+## Stacked effect
+
+<PreviewContainer
+  componentName="card"
+  code={`<Card stacked padding={20}>
+  <p className="font-medium">Stacked card</p>
+  <p className="mt-1 text-sm text-muted-foreground">Feels like paper</p>
+</Card>`}
+>
+  <Card stacked padding={20}>
+    <p className="text-sm font-medium">Stacked card</p>
+    <p className="mt-1 text-xs text-muted-foreground">Feels like paper</p>
+  </Card>
+</PreviewContainer>
+
+## With sub-components
+
+<PreviewContainer
+  componentName="card"
+  code={`<Card padding={24}>
+  <CardHeader>
+    <CardTitle>Getting started</CardTitle>
+    <CardDescription>Install your first component</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">Content goes here</p>
+  </CardContent>
+  <CardFooter>
+    <Button size="sm">Continue</Button>
+  </CardFooter>
+</Card>`}
+>
+  <Card padding={24}>
+    <CardHeader>
+      <CardTitle>Getting started</CardTitle>
+      <CardDescription>Install your first component</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm text-muted-foreground">Content goes here</p>
+    </CardContent>
+    <CardFooter>
+      <Button size="sm">Continue</Button>
+    </CardFooter>
+  </Card>
+</PreviewContainer>

@@ -1,0 +1,40 @@
+---
+title: Introduction
+description: What Crumble is and when to use it.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Button } from "@/registry/new-york/ui/button"
+
+Crumble is a hand-drawn component library for React. Each component renders a wobbly, sketched border using [Rough.js](https://roughjs.com), a small SVG library that makes shapes look like they were drawn by hand.
+
+## Three themes
+
+Every component supports three visual personalities out of the box.
+
+<PreviewContainer
+  componentName="button"
+  code={`<div className="flex gap-3">
+  <Button theme="pencil">Pencil</Button>
+  <Button theme="ink">Ink</Button>
+  <Button theme="crayon">Crayon</Button>
+</div>`}
+>
+  <div className="flex flex-wrap gap-3">
+    <Button theme="pencil">Pencil</Button>
+    <Button theme="ink">Ink</Button>
+    <Button theme="crayon">Crayon</Button>
+  </div>
+</PreviewContainer>
+
+## How it works
+
+Every component is two layers: a real HTML element that handles browser behaviour and accessibility, plus a Rough.js SVG overlay that sits on top as a purely visual layer with `pointer-events: none`.
+
+The SVG border redraws on hover using a new random seed, giving a subtle alive feeling without needing an animation framework.
+
+## When to use it
+
+Crumble is a good fit for personal projects, creative tools, educational apps, indie games, portfolios, and anything that benefits from feeling human-made.
+
+It is not designed for enterprise dashboards or anything that needs to look formally professional to clients.

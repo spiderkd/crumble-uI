@@ -1,0 +1,46 @@
+---
+title: Slider
+description: A hand-drawn range slider with a sketchy track and circle thumb.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Slider } from "@/registry/new-york/ui/slider"
+
+<PreviewContainer
+  componentName="slider"
+  code={`import { Slider } from '@/components/crumble/ui/slider'
+
+<Slider label="Volume" defaultValue={40} />`}
+>
+  <div className="w-full max-w-xs">
+    <Slider label="Volume" defaultValue={40} />
+  </div>
+</PreviewContainer>
+
+## Custom range and format
+
+<PreviewContainer
+  componentName="slider"
+  code={`<Slider
+  label="Price"
+  min={0}
+  max={500}
+  defaultValue={150}
+/>\n\n<p className="mt-2 text-right text-sm text-muted-foreground">$150</p>`}
+>
+  <div className="w-full max-w-xs">
+    <Slider label="Price" min={0} max={500} defaultValue={150} />
+    <p className="mt-2 text-right text-sm text-muted-foreground">$150</p>
+  </div>
+</PreviewContainer>
+
+## Hide value
+
+<PreviewContainer
+  componentName="slider"
+  code={`<Slider label="Opacity" defaultValue={70} showValue={false} />`}
+>
+  <div className="w-full max-w-xs">
+    <Slider label="Opacity" defaultValue={70} showValue={false} />
+  </div>
+</PreviewContainer>

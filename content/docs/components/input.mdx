@@ -1,0 +1,48 @@
+---
+title: Input
+description: A hand-drawn text input with box or underline style.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer"
+import { Input } from "@/registry/new-york/ui/input"
+
+<PreviewContainer
+  componentName="input"
+  code={`import { Input } from '@/components/crumble/ui/input'
+
+<Input label="Name" placeholder="Enter your name" />`}
+>
+  <div className="w-full max-w-xs">
+    <Input label="Name" placeholder="Enter your name" />
+  </div>
+</PreviewContainer>
+
+## Installation
+
+```bash
+npx shadcn add https://crumble.dev/r/input.json
+```
+
+## Styles
+
+<PreviewContainer
+  componentName="input"
+  code={`<Input label="Box style" inputStyle="box" placeholder="Box" />
+<Input label="Underline style" inputStyle="underline" placeholder="Underline" />`}
+>
+  <div className="flex w-full max-w-xs flex-col gap-5">
+    <Input label="Box style" inputStyle="box" placeholder="Box" />
+    <Input label="Underline style" inputStyle="underline" placeholder="Underline" />
+  </div>
+</PreviewContainer>
+
+## Error state
+
+<PreviewContainer
+  componentName="input"
+  code={`<Input label="Email" placeholder="you@example.com" error="Invalid email address" />`}
+>
+  <div className="w-full max-w-xs">
+    <Input label="Email" placeholder="you@example.com" error="Invalid email address" />
+  </div>
+</PreviewContainer>

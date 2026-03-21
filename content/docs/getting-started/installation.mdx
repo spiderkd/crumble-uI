@@ -1,0 +1,49 @@
+---
+title: Installation
+description: Add Crumble to your project in one command.
+---
+
+import { Button } from "@/registry/new-york/ui/button"
+
+Crumble uses the [shadcn CLI](https://ui.shadcn.com/docs/cli) for distribution. Each component is a registry JSON file that resolves into copyable source in your project.
+
+## Prerequisites
+
+- React 18+
+- Next.js 13+ App Router or any React setup with path aliases
+- Tailwind CSS
+- shadcn CLI initialized with `npx shadcn init`
+
+## Install any component
+
+```bash
+npx shadcn add https://crumble.dev/r/button.json
+```
+
+This copies `button.tsx` into your project and automatically installs `roughjs` plus shared files like `use-rough.ts` and `rough.ts` through `registryDependencies`.
+
+## Global theme
+
+All components default to `pencil`. To change it globally, call `configureCrumble` once anywhere in your app:
+
+```ts
+import { configureCrumble } from "@/lib/rough"
+
+configureCrumble({ theme: "ink" })
+```
+
+## Per-component override
+
+```tsx
+<Button theme="crayon">This one is crayon</Button>
+<Button>This one uses global config</Button>
+```
+
+## Disable animation behaviour
+
+```ts
+configureCrumble({
+  animateOnMount: false,
+  animateOnHover: false,
+})
+```

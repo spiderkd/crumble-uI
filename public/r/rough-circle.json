@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rough-circle",
+  "type": "registry:ui",
+  "title": "Rough Circle",
+  "description": "Hand-drawn circle primitive.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "use-rough",
+    "rough-lib"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/primitives/rough-circle.tsx",
+      "content": "\"use client\";\n\nimport {\n  useCallback,\n  useEffect,\n  type ReactNode,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { randomSeed, type CrumbleTheme } from \"@/lib/rough\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { useCrumble } from \"@/lib/crumble-context\";\n\nexport interface RoughCircleProps {\n  children?: ReactNode;\n  className?: string;\n  diameter: number;\n  fill?: string;\n  id?: string;\n  stroke?: string;\n  theme?: CrumbleTheme;\n}\n\nexport function RoughCircle({\n  children,\n  className,\n  diameter,\n  fill,\n  id,\n  stroke,\n  theme: themeProp,\n}: RoughCircleProps) {\n  const { animateOnHover } = useCrumble();\n  const { drawCircle, svgRef, theme } = useRough({\n    stableId: id,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(\n    (reseed = false) => {\n      const svg = svgRef.current;\n      if (!svg) return;\n\n      svg.replaceChildren();\n      svg.setAttribute(\"width\", String(diameter));\n      svg.setAttribute(\"height\", String(diameter));\n      svg.setAttribute(\"viewBox\", `0 0 ${diameter} ${diameter}`);\n\n      const node = drawCircle(diameter / 2, diameter / 2, diameter - 4, {\n        fill: fill ?? \"none\",\n        seed: reseed ? randomSeed() : undefined,\n        stroke: stroke ?? \"currentColor\",\n      });\n\n      if (node) {\n        svg.appendChild(node);\n      }\n    },\n    [diameter, drawCircle, fill, stroke, svgRef],\n  );\n\n  useEffect(() => {\n    draw();\n  }, [draw, theme]);\n\n  return (\n    <div\n      className={cn(\n        \"relative inline-flex items-center justify-center\",\n        className,\n      )}\n      onMouseEnter={() => {\n        if (animateOnHover) draw(true);\n      }}\n      onMouseLeave={() => {\n        if (animateOnHover) draw(false);\n      }}\n      style={{ height: diameter, width: diameter }}\n    >\n      <svg\n        ref={svgRef}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 overflow-visible\"\n        height={diameter}\n        width={diameter}\n      />\n      {children ? <div className=\"relative z-10\">{children}</div> : null}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/primitives/rough-circle.tsx"
+    }
+  ]
+}
