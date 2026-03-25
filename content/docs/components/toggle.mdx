@@ -3,8 +3,8 @@ title: Toggle
 description: A hand-drawn toggle switch with a sliding circle thumb.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Toggle } from "@/components/ui/toggle"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Toggle } from "@/registry/new-york/ui/toggle";
 
 <PreviewContainer
   componentName="toggle"
@@ -40,10 +40,7 @@ npx shadcn add https://crumble.dev/r/toggle.json
 
 ## Without label
 
-<PreviewContainer
-  componentName="toggle"
-  code={`<Toggle />`}
->
+<PreviewContainer componentName="toggle" code={`<Toggle />`}>
   <Toggle />
 </PreviewContainer>
 
@@ -57,7 +54,7 @@ npx shadcn add https://crumble.dev/r/toggle.json
 >
   <div className="flex flex-col gap-3">
     <Toggle label="Pencil" theme="pencil" defaultChecked />
-    <Toggle label="Ink"    theme="ink"    defaultChecked />
+    <Toggle label="Ink" theme="ink" defaultChecked />
     <Toggle label="Crayon" theme="crayon" defaultChecked />
   </div>
 </PreviewContainer>

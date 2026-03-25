@@ -1,6 +1,6 @@
 "use client";
 
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "@/registry/new-york/ui/progress";
 
 export function ProgressStorageDemo() {
   return (

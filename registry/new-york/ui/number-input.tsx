@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,9 +10,18 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface NumberInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+export interface NumberInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange">,
+    CrumbleColorProps {
   className?: string;
   defaultValue?: number;
   disabled?: boolean;
@@ -111,13 +121,16 @@ export function NumberInput({
   defaultValue = 0,
   disabled = false,
   error,
+  fill,
   id,
   label,
   max,
   min,
   onChange,
   step = 1,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   value: controlledValue,
   ...props
 }: NumberInputProps) {
@@ -128,6 +141,9 @@ export function NumberInput({
 
   const value = controlledValue ?? internalValue;
   const inputId = id ?? `number-${label?.toLowerCase().replace(/\s+/g, "-") ?? "input"}`;
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const drawBorder = useCallback(() => {
     const svg = svgRef.current;
@@ -176,7 +192,7 @@ export function NumberInput({
   };
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5", className)} style={roughStyle}>
       {label ? (
         <label htmlFor={inputId} className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}

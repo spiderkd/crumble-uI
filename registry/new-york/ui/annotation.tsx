@@ -7,6 +7,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type CSSProperties,
@@ -15,12 +16,21 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type AnnotationType = "box" | "circle" | "underline" | "bracket" | "arrow-label";
 export type AnnotationSide = "top" | "bottom" | "left" | "right";
 
-export interface AnnotationProps extends HTMLAttributes<HTMLSpanElement> {
+export interface AnnotationProps
+  extends HTMLAttributes<HTMLSpanElement>,
+    CrumbleColorProps {
   animate?: boolean;
   animationDuration?: number;
   color?: string;
@@ -50,19 +60,24 @@ export function Annotation({
   children,
   className,
   color = "currentColor",
+  fill,
   id,
   label,
   labelSide = "top",
   padding = 5,
+  stroke,
+  strokeMuted,
   style,
-  theme = "pencil",
+  theme: themeProp,
   type = "box",
   ...props
 }: AnnotationProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const svgRef       = useRef<SVGSVGElement>(null);
   const annoId = id ?? "annotation";
-
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   const duration = animationDuration ?? (theme === "ink" ? 350 : theme === "crayon" ? 700 : 550);
 
   const draw = useCallback(() => {
@@ -207,7 +222,7 @@ export function Annotation({
     <span
       ref={containerRef}
       className={cn("relative inline-block", className)}
-      style={style}
+      style={{ ...roughStyle, ...style }}
       {...props}
     >
       {children}

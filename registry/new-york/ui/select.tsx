@@ -1,184 +1,17 @@
-// "use client";
-
-// import {
-//   useCallback,
-//   useEffect,
-//   useRef,
-//   useState,
-//   type SelectHTMLAttributes,
-// } from "react";
-// import { cn } from "@/lib/utils";
-// import { type CrumbleTheme } from "@/lib/rough";
-// import { useRough } from "@/hooks/use-rough";
-
-// export interface SelectOption {
-//   disabled?: boolean;
-//   label: string;
-//   value: string;
-// }
-
-// export interface SelectProps extends Omit<
-//   SelectHTMLAttributes<HTMLSelectElement>,
-//   "children"
-// > {
-//   error?: string;
-//   label?: string;
-//   options: SelectOption[];
-//   placeholder?: string;
-//   theme?: CrumbleTheme;
-// }
-
-// const HEIGHT = 40;
-
-// export function Select({
-//   className,
-//   error,
-//   id,
-//   label,
-//   onBlur,
-//   onFocus,
-//   options,
-//   placeholder,
-//   theme: themeProp,
-//   ...props
-// }: SelectProps) {
-//   const [focused, setFocused] = useState(false);
-//   const wrapperRef = useRef<HTMLDivElement>(null);
-//   const svgRef = useRef<SVGSVGElement>(null);
-//   const arrowRef = useRef<SVGSVGElement>(null);
-//   const selectId =
-//     id ?? `select-${label?.toLowerCase().replace(/\s+/g, "-") ?? "field"}`;
-//   const { drawLine, drawRect, theme } = useRough({
-//     stableId: selectId,
-//     svgRef,
-//     theme: themeProp,
-//     variant: "border",
-//   });
-
-//   const draw = useCallback(() => {
-//     const arrow = arrowRef.current;
-//     const svg = svgRef.current;
-//     const wrapper = wrapperRef.current;
-
-//     if (!svg || !wrapper) return;
-
-//     svg.replaceChildren();
-
-//     const width = wrapper.offsetWidth;
-//     svg.setAttribute("width", String(width));
-//     svg.setAttribute("height", String(HEIGHT));
-//     svg.setAttribute("viewBox", `0 0 ${width} ${HEIGHT}`);
-
-//     const stroke = error
-//       ? "color-mix(in srgb, currentColor 10%, red)"
-//       : focused
-//         ? "currentColor"
-//         : "color-mix(in srgb, currentColor 40%, transparent)";
-
-//     const box = drawRect(1, 1, width - 2, HEIGHT - 2, {
-//       fill: "none",
-//       stroke,
-//     });
-
-//     if (box) {
-//       svg.appendChild(box);
-//     }
-
-//     if (!arrow) return;
-
-//     arrow.replaceChildren();
-
-//     const leftLine = drawLine(2, 4, 8, 10, { stroke, strokeWidth: 1.5 });
-//     const rightLine = drawLine(8, 10, 14, 4, { stroke, strokeWidth: 1.5 });
-
-//     if (leftLine) {
-//       arrow.appendChild(leftLine);
-//     }
-
-//     if (rightLine) {
-//       arrow.appendChild(rightLine);
-//     }
-//   }, [drawLine, drawRect, error, focused]);
-
-//   useEffect(() => {
-//     draw();
-//   }, [draw, focused, theme]);
-
-//   useEffect(() => {
-//     const wrapper = wrapperRef.current;
-//     if (!wrapper) return;
-
-//     const observer = new ResizeObserver(() => draw());
-//     observer.observe(wrapper);
-
-//     return () => observer.disconnect();
-//   }, [draw]);
-
-//   return (
-//     <div className={cn("flex flex-col gap-1.5", className)}>
-//       {label ? (
-//         <label
-//           htmlFor={selectId}
-//           className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground"
-//         >
-//           {label}
-//         </label>
-//       ) : null}
-//       <div ref={wrapperRef} className="relative h-10">
-//         <svg
-//           ref={svgRef}
-//           aria-hidden="true"
-//           className="pointer-events-none absolute inset-0 overflow-visible"
-//         />
-//         <svg
-//           ref={arrowRef}
-//           aria-hidden="true"
-//           height={14}
-//           width={16}
-//           className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 overflow-visible"
-//         />
-//         <select
-//           id={selectId}
-//           onBlur={(event) => {
-//             setFocused(false);
-//             onBlur?.(event);
-//           }}
-//           onFocus={(event) => {
-//             setFocused(true);
-//             onFocus?.(event);
-//           }}
-//           className="absolute inset-0 h-full w-full cursor-pointer appearance-none border-none bg-transparent py-0 pl-3 pr-9 text-sm text-foreground outline-none"
-//           {...props}
-//         >
-//           {placeholder ? (
-//             <option value="" disabled>
-//               {placeholder}
-//             </option>
-//           ) : null}
-//           {options.map((option) => (
-//             <option
-//               key={option.value}
-//               disabled={option.disabled}
-//               value={option.value}
-//             >
-//               {option.label}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-//       {error ? <span className="text-xs text-destructive">{error}</span> : null}
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-import { randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
-import { useRough } from "@/hooks/use-rough";
 import rough from "roughjs";
-import { getRoughOptions } from "@/lib/rough";
+import { useRough } from "@/hooks/use-rough";
+import {
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
+import { cn } from "@/lib/utils";
 
 export interface SelectOption {
   disabled?: boolean;
@@ -186,7 +19,7 @@ export interface SelectOption {
   value: string;
 }
 
-export interface SelectProps {
+export interface SelectProps extends CrumbleColorProps {
   className?: string;
   defaultValue?: string;
   disabled?: boolean;
@@ -210,6 +43,7 @@ export function Select({
   defaultValue,
   disabled,
   error,
+  fill,
   id,
   label,
   onBlur,
@@ -217,21 +51,22 @@ export function Select({
   onFocus,
   options,
   placeholder,
+  stroke,
+  strokeMuted,
   theme: themeProp,
   value: controlledValue,
 }: SelectProps) {
   const [open, setOpen] = useState(false);
   const [focused, setFocused] = useState(false);
   const [internalValue, setInternalValue] = useState(defaultValue ?? "");
-
   const value = controlledValue ?? internalValue;
-  const selectedOption = options.find((o) => o.value === value);
+  const selectedOption = options.find((option) => option.value === value);
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const arrowRef = useRef<SVGSVGElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const optionSvgRefs = useRef<Map<string, SVGSVGElement>>(new Map());
 
   const selectId =
@@ -244,7 +79,6 @@ export function Select({
     variant: "border",
   });
 
-  // Draw trigger box + chevron
   const drawTrigger = useCallback(
     (reseed = false) => {
       const svg = svgRef.current;
@@ -257,7 +91,8 @@ export function Select({
       svg.setAttribute("width", String(width));
       svg.setAttribute("height", String(TRIGGER_HEIGHT));
       svg.setAttribute("viewBox", `0 0 ${width} ${TRIGGER_HEIGHT}`);
-      const stroke = error
+
+      const currentStroke = error
         ? "color-mix(in srgb, currentColor 10%, red)"
         : focused
           ? "currentColor"
@@ -266,13 +101,16 @@ export function Select({
       const box = drawRect(1, 1, width - 2, TRIGGER_HEIGHT - 2, {
         fill: "none",
         seed: reseed ? randomSeed() : stableSeed(selectId),
-        stroke,
+        stroke: currentStroke,
       });
       if (box) svg.appendChild(box);
 
       if (!arrow) return;
       arrow.replaceChildren();
-      const chevronStroke = disabled ? "var(--cr-stroke-muted)" : stroke;
+      const chevronStroke = disabled
+        ? "var(--cr-stroke-muted)"
+        : currentStroke;
+
       const leftLine = drawLine(2, open ? 10 : 4, 8, open ? 4 : 10, {
         stroke: chevronStroke,
         strokeWidth: 1.5,
@@ -281,13 +119,13 @@ export function Select({
         stroke: chevronStroke,
         strokeWidth: 1.5,
       });
+
       if (leftLine) arrow.appendChild(leftLine);
       if (rightLine) arrow.appendChild(rightLine);
     },
-    [drawLine, drawRect, error, focused, open, disabled, selectId],
+    [disabled, drawLine, drawRect, error, focused, open, selectId],
   );
 
-  // Draw a single option row background
   const drawOption = useCallback(
     (
       svg: SVGSVGElement,
@@ -303,8 +141,8 @@ export function Select({
 
       if (!isHighlighted && !isSelected) return;
 
-      const rc = rough.svg(svg);
-      const opts = getRoughOptions(theme, "fill", {
+      const renderer = rough.svg(svg);
+      const options = getRoughOptions(theme, "fill", {
         fill: isHighlighted ? "currentColor" : "none",
         fillStyle: "hachure",
         fillWeight: isSelected ? 1.5 : 1,
@@ -313,67 +151,72 @@ export function Select({
         strokeWidth: 0,
       });
 
-      svg.appendChild(rc.rectangle(2, 2, width - 4, OPTION_HEIGHT - 4, opts));
+      svg.appendChild(
+        renderer.rectangle(2, 2, width - 4, OPTION_HEIGHT - 4, options),
+      );
     },
     [theme],
   );
 
-  // Draw the dropdown panel border
   const drawDropdown = useCallback(
     (svg: SVGSVGElement, width: number, height: number) => {
       svg.replaceChildren();
       svg.setAttribute("width", String(width));
       svg.setAttribute("height", String(height));
       svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-      const rc = rough.svg(svg);
-      const opts = getRoughOptions(theme, "border", {
+
+      const renderer = rough.svg(svg);
+      const options = getRoughOptions(theme, "border", {
         fill: "none",
         seed: stableSeed(`${selectId}-dropdown`),
         stroke: "var(--cr-stroke)",
       });
-      svg.appendChild(rc.rectangle(1, 1, width - 2, height - 2, opts));
+
+      svg.appendChild(renderer.rectangle(1, 1, width - 2, height - 2, options));
     },
-    [theme, selectId],
+    [selectId, theme],
   );
 
   useEffect(() => {
     drawTrigger();
-  }, [drawTrigger, theme, open]);
+  }, [drawTrigger, open, theme]);
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return;
-    const handler = (e: MouseEvent) => {
+
+    const handler = (event: MouseEvent) => {
       if (
         wrapperRef.current &&
-        !wrapperRef.current.contains(e.target as Node)
+        !wrapperRef.current.contains(event.target as Node)
       ) {
         setOpen(false);
         setFocused(false);
         onBlur?.();
       }
     };
+
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [open, onBlur]);
+  }, [onBlur, open]);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setOpen(false);
         triggerRef.current?.focus();
       }
     };
+
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [open]);
 
-  // Resize observer on trigger
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
+
     const observer = new ResizeObserver(() => drawTrigger());
     observer.observe(wrapper);
     return () => observer.disconnect();
@@ -389,7 +232,7 @@ export function Select({
   };
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5", className)} style={roughStyle}>
       {label ? (
         <label
           htmlFor={selectId}
@@ -400,7 +243,6 @@ export function Select({
       ) : null}
 
       <div ref={wrapperRef} className="relative">
-        {/* Trigger */}
         <div
           ref={triggerRef}
           id={selectId}
@@ -415,7 +257,7 @@ export function Select({
           )}
           onClick={() => {
             if (disabled) return;
-            setOpen((o) => !o);
+            setOpen((current) => !current);
             setFocused(true);
             onFocus?.();
           }}
@@ -431,14 +273,14 @@ export function Select({
               onBlur?.();
             }
           }}
-          onKeyDown={(e) => {
+          onKeyDown={(event) => {
             if (disabled) return;
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setOpen((o) => !o);
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              setOpen((current) => !current);
             }
-            if (e.key === "ArrowDown") {
-              e.preventDefault();
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
               setOpen(true);
             }
           }}
@@ -471,33 +313,29 @@ export function Select({
           />
         </div>
 
-        {/* Dropdown panel */}
         {open ? (
           <div
-            ref={dropdownRef}
             role="listbox"
             aria-label={label}
             className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-background"
             style={{ minWidth: "100%" }}
           >
-            {/* Rough border around the whole dropdown */}
             {(() => {
               const totalHeight = options.length * OPTION_HEIGHT;
               return (
                 <svg
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 overflow-visible"
-                  ref={(el) => {
-                    if (el) {
-                      const width = el.parentElement?.offsetWidth ?? 200;
-                      drawDropdown(el, width, totalHeight);
+                  ref={(element) => {
+                    if (element) {
+                      const width = element.parentElement?.offsetWidth ?? 200;
+                      drawDropdown(element, width, totalHeight);
                     }
                   }}
                 />
               );
             })()}
 
-            {/* Options */}
             {options.map((option) => {
               const isSelected = option.value === value;
               return (
@@ -514,29 +352,40 @@ export function Select({
                   )}
                   style={{ height: OPTION_HEIGHT }}
                   onClick={() => handleSelect(option)}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={(event) => {
                     const svg = optionSvgRefs.current.get(option.value);
-                    if (svg) {
-                      const width = (e.currentTarget as HTMLElement)
-                        .offsetWidth;
-                      drawOption(svg, width, true, isSelected, option.value);
-                    }
+                    if (!svg) return;
+
+                    drawOption(
+                      svg,
+                      event.currentTarget.offsetWidth,
+                      true,
+                      isSelected,
+                      option.value,
+                    );
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={(event) => {
                     const svg = optionSvgRefs.current.get(option.value);
-                    if (svg) {
-                      const width = (e.currentTarget as HTMLElement)
-                        .offsetWidth;
-                      drawOption(svg, width, false, isSelected, option.value);
-                    }
+                    if (!svg) return;
+
+                    drawOption(
+                      svg,
+                      event.currentTarget.offsetWidth,
+                      false,
+                      isSelected,
+                      option.value,
+                    );
                   }}
                 >
                   <svg
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 overflow-visible"
-                    ref={(el) => {
-                      if (el) optionSvgRefs.current.set(option.value, el);
-                      else optionSvgRefs.current.delete(option.value);
+                    ref={(element) => {
+                      if (element) {
+                        optionSvgRefs.current.set(option.value, element);
+                      } else {
+                        optionSvgRefs.current.delete(option.value);
+                      }
                     }}
                   />
                   <span className="relative z-10">{option.label}</span>

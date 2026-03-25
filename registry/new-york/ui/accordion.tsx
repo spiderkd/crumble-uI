@@ -8,11 +8,18 @@ import {
   useRef,
   useState,
   type HTMLAttributes,
-  type ReactNode,
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 interface AccordionContextValue {
   animateOnHover: boolean;
@@ -30,7 +37,9 @@ const AccordionContext = createContext<AccordionContextValue>({
   toggle: () => {},
 });
 
-export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
+export interface AccordionProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnHover?: boolean;
   defaultValue?: string | string[];
   multiple?: boolean;
@@ -43,11 +52,16 @@ export function Accordion({
   children,
   className,
   defaultValue,
+  fill,
   multiple = false,
   onValueChange,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   ...props
 }: AccordionProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
   const [openItems, setOpenItems] = useState<Set<string>>(() => {
     if (!defaultValue) return new Set();
     return new Set(Array.isArray(defaultValue) ? defaultValue : [defaultValue]);
@@ -67,9 +81,11 @@ export function Accordion({
     });
   };
 
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
+
   return (
     <AccordionContext.Provider value={{ animateOnHover, multiple, openItems, theme, toggle }}>
-      <div className={cn("flex flex-col", className)} {...props}>
+      <div className={cn("flex flex-col", className)} style={roughStyle} {...props}>
         {children}
       </div>
     </AccordionContext.Provider>

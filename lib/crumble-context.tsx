@@ -2,28 +2,20 @@
 
 import {
   createContext,
-  useEffect,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type PropsWithChildren,
 } from "react";
 import {
+  CrumbleContext,
   getCrumbleConfig,
   type CrumbleConfig,
   type CrumbleTheme,
 } from "@/lib/rough";
 
-export interface CrumbleContextValue extends CrumbleConfig {
-  setTheme: (theme: CrumbleTheme) => void;
-}
-
-const noopSetTheme = () => {};
-
-export const CrumbleContext = createContext<CrumbleContextValue>({
-  ...getCrumbleConfig(),
-  setTheme: noopSetTheme,
-});
+const SetThemeContext = createContext<(theme: CrumbleTheme) => void>(() => {});
 
 export function CrumbleProvider({
   children,
@@ -32,41 +24,38 @@ export function CrumbleProvider({
   animateOnHover,
 }: PropsWithChildren<Partial<CrumbleConfig>>) {
   const config = getCrumbleConfig();
-  const resolvedTheme = theme ?? config.theme;
-  const resolvedAnimateOnMount = animateOnMount ?? config.animateOnMount;
-  const resolvedAnimateOnHover = animateOnHover ?? config.animateOnHover;
-  const [currentTheme, setCurrentTheme] = useState(resolvedTheme);
+  const [currentTheme, setCurrentTheme] = useState<CrumbleTheme>(
+    theme ?? config.theme,
+  );
 
   useEffect(() => {
-    setCurrentTheme(resolvedTheme);
-  }, [resolvedTheme]);
+    if (theme !== undefined) {
+      setCurrentTheme(theme);
+    }
+  }, [theme]);
 
-  const value = useMemo(
+  const contextValue = useMemo(
     () => ({
-      animateOnHover: resolvedAnimateOnHover,
-      animateOnMount: resolvedAnimateOnMount,
-      setTheme: setCurrentTheme,
       theme: currentTheme,
+      animateOnMount: animateOnMount ?? config.animateOnMount,
+      animateOnHover: animateOnHover ?? config.animateOnHover,
     }),
-    [resolvedAnimateOnHover, resolvedAnimateOnMount, currentTheme],
+    [animateOnHover, animateOnMount, config, currentTheme],
   );
 
   return (
-    <CrumbleContext.Provider value={value}>
-      <div data-crumble-theme={currentTheme}>{children}</div>
+    <CrumbleContext.Provider value={contextValue}>
+      <SetThemeContext.Provider value={setCurrentTheme}>
+        <div data-crumble-theme={currentTheme}>{children}</div>
+      </SetThemeContext.Provider>
     </CrumbleContext.Provider>
   );
 }
 
 export function useCrumble() {
   const context = useContext(CrumbleContext);
-
-  if (context.setTheme === noopSetTheme) {
-    return {
-      ...getCrumbleConfig(),
-      setTheme: noopSetTheme,
-    };
-  }
-
-  return context;
+  const setTheme = useContext(SetThemeContext);
+  return { ...context, setTheme };
 }
+
+export { CrumbleContext };

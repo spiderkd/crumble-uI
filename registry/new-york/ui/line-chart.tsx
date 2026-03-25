@@ -2,13 +2,21 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type HTMLAttributes,
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export interface LineChartSeries {
   color?: string;
@@ -17,7 +25,9 @@ export interface LineChartSeries {
   label: string;
 }
 
-export interface LineChartProps extends HTMLAttributes<HTMLDivElement> {
+export interface LineChartProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnMount?: boolean;
   formatValue?: (v: number) => string;
   formatX?: (i: number) => string;
@@ -54,6 +64,7 @@ function catmullRomPath(points: [number, number][]): string {
 export function LineChart({
   animateOnMount = true,
   className,
+  fill,
   formatValue = (v) => String(v),
   formatX,
   height = 240,
@@ -62,12 +73,17 @@ export function LineChart({
   series,
   showDots = true,
   showGrid = true,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   ...props
 }: LineChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const chartId = id ?? "line-chart";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const scale = (v: number, dMin: number, dMax: number, rMin: number, rMax: number) =>
     dMax === dMin ? rMin : rMin + ((v - dMin) / (dMax - dMin)) * (rMax - rMin);
@@ -219,7 +235,12 @@ export function LineChart({
   }, [draw]);
 
   return (
-    <div ref={containerRef} className={cn("w-full", className)} style={{ height }} {...props}>
+    <div
+      ref={containerRef}
+      className={cn("w-full", className)}
+      style={{ ...roughStyle, height }}
+      {...props}
+    >
       <svg ref={svgRef} aria-label="Line chart" role="img" className="overflow-visible" />
     </div>
   );

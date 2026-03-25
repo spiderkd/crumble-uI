@@ -3,8 +3,8 @@ title: Sticky Note
 description: A hand-drawn sticky note with a folded corner and five color variants.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { StickyNote } from "@/components/ui/sticky-note"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { StickyNote } from "@/registry/new-york/ui/sticky-note";
 
 <PreviewContainer
   componentName="sticky-note"
@@ -68,9 +68,15 @@ npx shadcn add https://crumble.dev/r/sticky-note.json
 </div>`}
 >
   <div className="flex flex-wrap gap-4">
-    <StickyNote color="yellow" rotate={-1.5} title="Idea">Add dark mode.</StickyNote>
-    <StickyNote color="pink"   rotate={1}    title="Bug">Fix the nav menu.</StickyNote>
-    <StickyNote color="blue"   rotate={-0.5} title="Note">Ship by Friday.</StickyNote>
+    <StickyNote color="yellow" rotate={-1.5} title="Idea">
+      Add dark mode.
+    </StickyNote>
+    <StickyNote color="pink" rotate={1} title="Bug">
+      Fix the nav menu.
+    </StickyNote>
+    <StickyNote color="blue" rotate={-0.5} title="Note">
+      Ship by Friday.
+    </StickyNote>
   </div>
 </PreviewContainer>
 
@@ -82,7 +88,11 @@ npx shadcn add https://crumble.dev/r/sticky-note.json
 <StickyNote color="yellow" theme="crayon">Crayon theme</StickyNote>`}
 >
   <div className="flex gap-3">
-    <StickyNote color="yellow" theme="ink">Ink theme</StickyNote>
-    <StickyNote color="yellow" theme="crayon">Crayon theme</StickyNote>
+    <StickyNote color="yellow" theme="ink">
+      Ink theme
+    </StickyNote>
+    <StickyNote color="yellow" theme="crayon">
+      Crayon theme
+    </StickyNote>
   </div>
 </PreviewContainer>

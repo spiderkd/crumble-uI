@@ -3,9 +3,9 @@ title: Pie Chart
 description: A hand-drawn pie or donut chart with hachure-filled slices and d3-shape arc math.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { PieChart } from "@/components/ui/pie-chart"
-import { PieChartSourcesDemo } from "@/components/demos/pie-chart-demo"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { PieChart } from "@/registry/new-york/ui/pie-chart";
+import { PieChartSourcesDemo } from "@/components/demos/pie-chart-demo";
 
 <PreviewContainer
   componentName="pie-chart"
@@ -54,9 +54,9 @@ npx shadcn add https://crumble.dev/r/pie-chart.json
     <PieChart
       donut
       data={[
-        { label: "Completed",   value: 68 },
+        { label: "Completed", value: 68 },
         { label: "In progress", value: 22 },
-        { label: "Pending",     value: 10 },
+        { label: "Pending", value: 10 },
       ]}
     />
   </div>
@@ -117,8 +117,8 @@ npx shadcn add https://crumble.dev/r/pie-chart.json
     <PieChart
       theme="crayon"
       data={[
-        { label: "Red",   value: 40 },
-        { label: "Blue",  value: 35 },
+        { label: "Red", value: 40 },
+        { label: "Blue", value: 35 },
         { label: "Green", value: 25 },
       ]}
     />

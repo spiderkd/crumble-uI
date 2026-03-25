@@ -1,16 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import rough from "roughjs";
-import { cn } from "@/lib/utils";
 import {
+  CrumbleContext,
   getRoughOptions,
+  resolveRoughVars,
   stableSeed,
+  type CrumbleColorProps,
   type CrumbleTheme,
 } from "@/lib/rough";
-// registry components are standalone — default to pencil theme
+import { cn } from "@/lib/utils";
 
-export interface ToggleProps {
+export interface ToggleProps extends CrumbleColorProps {
   checked?: boolean;
   className?: string;
   defaultChecked?: boolean;
@@ -29,9 +31,12 @@ export function Toggle({
   className,
   defaultChecked = false,
   disabled,
+  fill,
   id,
   label,
   onChange,
+  stroke,
+  strokeMuted,
   theme: themeProp,
 }: ToggleProps) {
   const [internalValue, setInternalValue] = useState(defaultChecked);
@@ -39,7 +44,9 @@ export function Toggle({
   const toggleId =
     id ?? `toggle-${label?.toLowerCase().replace(/\s+/g, "-") ?? "field"}`;
   const currentValue = checked ?? internalValue;
-  const theme = themeProp ?? "pencil";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(
     (isOn: boolean) => {
@@ -51,13 +58,13 @@ export function Toggle({
       const renderer = rough.svg(svg);
       const options = getRoughOptions(theme, "interactive", {
         seed: stableSeed(toggleId),
-        stroke: disabled ? "hsl(var(--muted-foreground))" : "currentColor",
+        stroke: disabled ? "var(--cr-stroke-muted)" : "var(--cr-stroke)",
       });
 
       svg.appendChild(
         renderer.rectangle(1, 1, WIDTH - 2, HEIGHT - 2, {
           ...options,
-          fill: isOn ? "currentColor" : "none",
+          fill: isOn ? "var(--cr-stroke)" : "none",
           fillStyle: "solid",
           roughness: 0.8,
         }),
@@ -70,11 +77,11 @@ export function Toggle({
           fill: isOn
             ? "hsl(var(--background))"
             : disabled
-              ? "hsl(var(--muted-foreground))"
-              : "currentColor",
+              ? "var(--cr-stroke-muted)"
+              : "var(--cr-stroke)",
           fillStyle: "solid",
           seed: stableSeed(`${toggleId}-thumb`),
-          stroke: isOn ? "hsl(var(--background))" : "currentColor",
+          stroke: isOn ? "hsl(var(--background))" : "var(--cr-stroke)",
         }),
       );
     },
@@ -101,6 +108,7 @@ export function Toggle({
         className,
       )}
       htmlFor={toggleId}
+      style={roughStyle}
     >
       <div onClick={handleClick} className="relative h-6 w-11 shrink-0">
         <input

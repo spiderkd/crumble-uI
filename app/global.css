@@ -87,6 +87,7 @@
   --color-ivory: oklch(97.22% 0.002 102.31);
   --cr-stroke: currentColor;
   --cr-stroke-muted: color-mix(in srgb, currentColor 40%, transparent);
+  --cr-stroke-error: var(--destructive);
   --cr-fill: transparent;
   --cr-sketch-duration: 600ms;
   --cr-sketch-easing: cubic-bezier(0.4, 0, 0.2, 1);
@@ -155,22 +156,6 @@
 [data-crumble-theme="crayon"] {
   --cr-weight: 3.5px;
   --cr-sketch-duration: 600ms;
-}
-
-.crumble-border {
-  position: relative;
-}
-
-.crumble-border[data-crumble-theme="pencil"] {
-  filter: url(#crumble-wobble-pencil);
-}
-
-.crumble-border[data-crumble-theme="ink"] {
-  filter: url(#crumble-wobble-ink);
-}
-
-.crumble-border[data-crumble-theme="crayon"] {
-  filter: url(#crumble-wobble-crayon);
 }
 
 @layer base {

@@ -8,12 +8,18 @@ import {
   type InputHTMLAttributes,
 } from "react";
 import { cn } from "@/lib/utils";
-import { type CrumbleTheme } from "@/lib/rough";
+import {
+  resolveRoughVars,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 import { useRough } from "@/hooks/use-rough";
 
 export type InputStyle = "box" | "underline";
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends InputHTMLAttributes<HTMLInputElement>,
+    CrumbleColorProps {
   error?: string;
   inputStyle?: InputStyle;
   label?: string;
@@ -25,11 +31,14 @@ const HEIGHT = 40;
 export function Input({
   className,
   error,
+  fill,
   id,
   inputStyle = "box",
   label,
   onBlur,
   onFocus,
+  stroke,
+  strokeMuted,
   theme: themeProp,
   ...props
 }: InputProps) {
@@ -44,6 +53,7 @@ export function Input({
     theme: themeProp,
     variant: "border",
   });
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(() => {
     const svg = svgRef.current;
@@ -102,7 +112,7 @@ export function Input({
   }, [draw]);
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5", className)} style={roughStyle}>
       {label ? (
         <label
           htmlFor={inputId}

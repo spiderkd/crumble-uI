@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -10,9 +11,16 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface FileUploadProps {
+export interface FileUploadProps extends CrumbleColorProps {
   accept?: string;
   className?: string;
   disabled?: boolean;
@@ -27,11 +35,14 @@ export function FileUpload({
   accept,
   className,
   disabled = false,
+  fill,
   id,
   label,
   multiple = false,
   onChange,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: FileUploadProps) {
   const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -39,6 +50,9 @@ export function FileUpload({
   const svgRef = useRef<SVGSVGElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const uploadId = id ?? "file-upload";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(() => {
     const svg = svgRef.current;
@@ -104,7 +118,7 @@ export function FileUpload({
   };
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5", className)} style={roughStyle}>
       {label ? (
         <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}

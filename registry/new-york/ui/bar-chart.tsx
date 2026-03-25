@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,7 +10,14 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export interface BarChartDataPoint {
   color?: string;
@@ -17,7 +25,9 @@ export interface BarChartDataPoint {
   value: number;
 }
 
-export interface BarChartProps extends HTMLAttributes<HTMLDivElement> {
+export interface BarChartProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnMount?: boolean;
   axisLabel?: string;
   data: BarChartDataPoint[];
@@ -37,17 +47,23 @@ export function BarChart({
   axisLabel,
   className,
   data,
+  fill,
   formatValue = (v) => String(v),
   height = 240,
   id,
   showGrid = true,
   showValues = true,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   ...props
 }: BarChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const chartId = id ?? "bar-chart";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   // Linear scale helper
   const scale = (value: number, domainMin: number, domainMax: number, rangeMin: number, rangeMax: number) =>
@@ -221,7 +237,12 @@ export function BarChart({
   }, [draw]);
 
   return (
-    <div ref={containerRef} className={cn("w-full", className)} style={{ height }} {...props}>
+    <div
+      ref={containerRef}
+      className={cn("w-full", className)}
+      style={{ ...roughStyle, height }}
+      {...props}
+    >
       <svg ref={svgRef} aria-label="Bar chart" role="img" className="overflow-visible" />
     </div>
   );

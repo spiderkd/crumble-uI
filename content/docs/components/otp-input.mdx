@@ -3,8 +3,8 @@ title: OTP Input
 description: A row of hand-drawn single-character boxes for one-time passwords.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { OtpInput } from "@/components/ui/otp-input"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { OtpInput } from "@/registry/new-york/ui/otp-input";
 
 <PreviewContainer
   componentName="otp-input"
@@ -32,10 +32,7 @@ npx shadcn add https://crumble.dev/r/otp-input.json
 
 ## Short code
 
-<PreviewContainer
-  componentName="otp-input"
-  code={`<OtpInput length={4} />`}
->
+<PreviewContainer componentName="otp-input" code={`<OtpInput length={4} />`}>
   <OtpInput length={4} />
 </PreviewContainer>
 

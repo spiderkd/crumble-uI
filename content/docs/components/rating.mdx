@@ -3,8 +3,8 @@ title: Rating
 description: A hand-drawn star rating with hover fill and hachure.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Rating } from "@/components/ui/rating"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Rating } from "@/registry/new-york/ui/rating";
 
 <PreviewContainer
   componentName="rating"
@@ -38,10 +38,7 @@ npx shadcn add https://crumble.dev/r/rating.json
 
 ## Read only
 
-<PreviewContainer
-  componentName="rating"
-  code={`<Rating value={4} readOnly />`}
->
+<PreviewContainer componentName="rating" code={`<Rating value={4} readOnly />`}>
   <Rating value={4} readOnly />
 </PreviewContainer>
 

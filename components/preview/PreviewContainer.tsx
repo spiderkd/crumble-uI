@@ -3,8 +3,13 @@
 import { useState, type ReactNode } from "react";
 import { CrumbleProvider } from "@/lib/crumble-context";
 import type { CrumbleTheme } from "@/lib/rough";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/registry/new-york/ui/tabs";
+import { Button } from "@/registry/new-york/ui/button";
 import { RoughLine } from "@/components/primitives/rough-line";
 import { cn } from "@/lib/utils";
 

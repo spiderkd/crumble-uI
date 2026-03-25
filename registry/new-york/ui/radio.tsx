@@ -1,14 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import rough from "roughjs";
-import { cn } from "@/lib/utils";
 import {
-  randomSeed,
-  stableSeed,
+  CrumbleContext,
   getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
   type CrumbleTheme,
 } from "@/lib/rough";
+import { cn } from "@/lib/utils";
 
 export interface RadioOption {
   disabled?: boolean;
@@ -16,7 +19,7 @@ export interface RadioOption {
   value: string;
 }
 
-export interface RadioGroupProps {
+export interface RadioGroupProps extends CrumbleColorProps {
   className?: string;
   defaultValue?: string;
   name: string;
@@ -44,8 +47,8 @@ function RadioItem({
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const id = `radio-${name}-${option.value}`;
-  const animateOnHover = true;
-  const theme = themeProp ?? "pencil";
+  const { animateOnHover, theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
 
   const draw = useCallback(
     (isOn: boolean, reseed = false) => {
@@ -54,25 +57,25 @@ function RadioItem({
 
       svg.replaceChildren();
 
-      const rc = rough.svg(svg);
+      const renderer = rough.svg(svg);
       const seed = reseed ? randomSeed() : stableSeed(id);
       const options = getRoughOptions(theme, "interactive", {
         fill: "none",
         seed,
         stroke: option.disabled
-          ? "hsl(var(--muted-foreground))"
-          : "currentColor",
+          ? "var(--cr-stroke-muted)"
+          : "var(--cr-stroke)",
       });
 
-      svg.appendChild(rc.circle(SIZE / 2, SIZE / 2, SIZE - 2, options));
+      svg.appendChild(renderer.circle(SIZE / 2, SIZE / 2, SIZE - 2, options));
 
       if (isOn) {
         svg.appendChild(
-          rc.circle(SIZE / 2, SIZE / 2, SIZE / 2, {
+          renderer.circle(SIZE / 2, SIZE / 2, SIZE / 2, {
             ...options,
             fill: option.disabled
-              ? "hsl(var(--muted-foreground))"
-              : "currentColor",
+              ? "var(--cr-stroke-muted)"
+              : "var(--cr-stroke)",
             fillStyle: "solid",
             stroke: "none",
           }),
@@ -93,10 +96,14 @@ function RadioItem({
         option.disabled && "cursor-not-allowed opacity-40",
       )}
       onMouseEnter={() => {
-        if (!option.disabled && animateOnHover) draw(checked, true);
+        if (!option.disabled && animateOnHover) {
+          draw(checked, true);
+        }
       }}
       onMouseLeave={() => {
-        if (!option.disabled && animateOnHover) draw(checked, false);
+        if (!option.disabled && animateOnHover) {
+          draw(checked, false);
+        }
       }}
     >
       <div className="relative h-5 w-5 shrink-0">
@@ -129,14 +136,18 @@ function RadioItem({
 export function RadioGroup({
   className,
   defaultValue,
+  fill,
   name,
   onChange,
   options,
   orientation = "vertical",
+  stroke,
+  strokeMuted,
   theme,
   value,
 }: RadioGroupProps) {
   const [selected, setSelected] = useState(defaultValue ?? value ?? "");
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const handleChange = (nextValue: string) => {
     setSelected(nextValue);
@@ -150,6 +161,7 @@ export function RadioGroup({
         orientation === "vertical" ? "flex-col gap-3" : "flex-row gap-5",
         className,
       )}
+      style={roughStyle}
       role="radiogroup"
     >
       {options.map((option) => (

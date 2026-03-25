@@ -1,4 +1,5 @@
 import type { Options } from "roughjs/bin/core";
+import { createContext, type CSSProperties } from "react";
 
 export type CrumbleTheme = "pencil" | "ink" | "crayon";
 
@@ -117,4 +118,42 @@ export function configureCrumble(options: Partial<CrumbleConfig>): void {
 
 export function getCrumbleConfig(): CrumbleConfig {
   return { ...config };
+}
+
+export interface CrumbleContextValue {
+  theme: CrumbleTheme;
+  animateOnMount: boolean;
+  animateOnHover: boolean;
+}
+
+export const CrumbleContext = createContext<CrumbleContextValue>({
+  theme: "pencil",
+  animateOnMount: true,
+  animateOnHover: true,
+});
+
+export interface CrumbleColorProps {
+  stroke?: string;
+  strokeMuted?: string;
+  fill?: string;
+}
+
+export function resolveRoughVars({
+  stroke,
+  strokeMuted,
+  fill,
+}: CrumbleColorProps = {}): CSSProperties {
+  const resolved: Record<string, string | undefined> = {
+    "--cr-stroke": stroke,
+    "--cr-stroke-muted":
+      strokeMuted ??
+      (stroke
+        ? `color-mix(in srgb, ${stroke} 40%, transparent)`
+        : undefined),
+    "--cr-fill": fill,
+  };
+
+  return Object.fromEntries(
+    Object.entries(resolved).filter(([, value]) => value !== undefined),
+  ) as CSSProperties;
 }

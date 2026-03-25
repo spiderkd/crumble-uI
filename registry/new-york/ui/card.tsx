@@ -9,16 +9,21 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "@/lib/utils";
-import { randomSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  randomSeed,
+  resolveRoughVars,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 import { useRough } from "@/hooks/use-rough";
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+export interface CardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   children: ReactNode;
-  fill?: string;
   id?: string;
   padding?: number;
   stacked?: boolean;
-  stroke?: string;
   style?: CSSProperties;
   theme?: CrumbleTheme;
 }
@@ -32,6 +37,7 @@ export function Card({
   padding = 20,
   stacked = false,
   stroke,
+  strokeMuted,
   style,
   theme: themeProp,
   ...props
@@ -46,6 +52,7 @@ export function Card({
     theme: themeProp,
     variant: "border",
   });
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const drawInto = useCallback(
     (
@@ -155,7 +162,11 @@ export function Card({
   }, [draw]);
 
   return (
-    <div onClick={onClick} className="relative inline-block">
+    <div
+      onClick={onClick}
+      className="relative inline-block"
+      style={{ ...roughStyle, ...style }}
+    >
       {stacked ? (
         <>
           <svg
@@ -179,7 +190,6 @@ export function Card({
         onMouseLeave={() => {
           if (animateOnHover) draw(false);
         }}
-        style={style}
         {...props}
       >
         <svg

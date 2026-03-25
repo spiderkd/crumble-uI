@@ -3,8 +3,8 @@ title: Timeline
 description: A vertical event list with rough circle nodes and connecting lines.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Timeline, TimelineItem } from "@/components/ui/timeline"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Timeline, TimelineItem } from "@/registry/new-york/ui/timeline";
 
 <PreviewContainer
   componentName="timeline"
@@ -51,8 +51,8 @@ npx shadcn add https://crumble.dev/r/timeline.json
 >
   <div className="w-full max-w-xs">
     <Timeline theme="crayon">
-      <TimelineItem title="Step one"   status="complete" />
-      <TimelineItem title="Step two"   status="active" />
+      <TimelineItem title="Step one" status="complete" />
+      <TimelineItem title="Step two" status="active" />
       <TimelineItem title="Step three" status="pending" isLast />
     </Timeline>
   </div>

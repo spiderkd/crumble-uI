@@ -1,11 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface RatingProps {
+export interface RatingProps extends CrumbleColorProps {
   className?: string;
   defaultValue?: number;
   disabled?: boolean;
@@ -119,12 +127,15 @@ export function Rating({
   className,
   defaultValue = 0,
   disabled = false,
+  fill,
   id,
   label,
   max = 5,
   onChange,
   size = 24,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   value: controlledValue,
 }: RatingProps) {
   const [internalValue, setInternalValue] = useState(defaultValue);
@@ -132,6 +143,9 @@ export function Rating({
 
   const value = controlledValue ?? internalValue;
   const ratingId = id ?? `rating-${label ?? "stars"}`;
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const handleClick = (index: number) => {
     if (disabled) return;
@@ -141,7 +155,7 @@ export function Rating({
   };
 
   return (
-    <div className={cn("flex flex-col gap-1", className)}>
+    <div className={cn("flex flex-col gap-1", className)} style={roughStyle}>
       {label ? (
         <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}

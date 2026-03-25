@@ -7,20 +7,29 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type HTMLAttributes,
-  type SVGAttributes,
 } from "react";
 import rough from "roughjs";
 import { line as d3Line, area as d3Area, curveCatmullRom } from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type SparklineType = "line" | "area" | "bar";
 
-export interface SparklineProps extends HTMLAttributes<HTMLSpanElement> {
+export interface SparklineProps
+  extends HTMLAttributes<HTMLSpanElement>,
+    CrumbleColorProps {
   animateOnMount?: boolean;
   color?: string;
   data: number[];
@@ -36,15 +45,21 @@ export function Sparkline({
   className,
   color,
   data,
+  fill,
   height = 32,
   id,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   type = "line",
   width = 80,
   ...props
 }: SparklineProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const sparkId = id ?? "sparkline";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(() => {
     const svg = svgRef.current;
@@ -176,6 +191,7 @@ export function Sparkline({
   return (
     <span
       className={cn("inline-flex items-center", className)}
+      style={roughStyle}
       {...props}
     >
       <svg

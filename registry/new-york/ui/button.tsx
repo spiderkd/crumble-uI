@@ -8,13 +8,20 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "@/lib/utils";
-import { randomSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  randomSeed,
+  resolveRoughVars,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 import { useRough } from "@/hooks/use-rough";
 
 export type ButtonVariant = "default" | "ghost" | "destructive";
 export type ButtonSize = "sm" | "md" | "lg";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    CrumbleColorProps {
   children: ReactNode;
   size?: ButtonSize;
   theme?: CrumbleTheme;
@@ -43,14 +50,18 @@ export function Button({
   children,
   className,
   disabled,
+  fill,
   onClick,
   size = "md",
+  stroke,
+  strokeMuted,
   theme: themeProp,
   variant = "default",
   ...props
 }: ButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   const { animateOnHover, drawRect, theme } = useRough({
     stableId: `btn-${typeof children === "string" ? children : "content"}`,
     svgRef,
@@ -113,6 +124,7 @@ export function Button({
       )}
       disabled={disabled}
       onClick={onClick}
+      style={roughStyle}
       onMouseDown={() => {
         if (!disabled) draw(true);
       }}

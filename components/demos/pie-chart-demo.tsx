@@ -1,6 +1,6 @@
 "use client";
 
-import { PieChart } from "@/components/ui/pie-chart";
+import { PieChart } from "@/registry/new-york/ui/pie-chart";
 
 export function PieChartSourcesDemo() {
   return (
@@ -8,8 +8,8 @@ export function PieChartSourcesDemo() {
       <PieChart
         formatValue={(v) => `${v}k`}
         data={[
-          { label: "Direct",   value: 120 },
-          { label: "Organic",  value: 85 },
+          { label: "Direct", value: 120 },
+          { label: "Organic", value: 85 },
           { label: "Referral", value: 45 },
         ]}
       />

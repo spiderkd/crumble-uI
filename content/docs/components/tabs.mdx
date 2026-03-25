@@ -3,8 +3,13 @@ title: Tabs
 description: Tab navigation where the active tab gets a hand-drawn underline that redraws on switch.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/registry/new-york/ui/tabs";
 
 <PreviewContainer
   componentName="tabs"
@@ -57,7 +62,9 @@ npx shadcn add https://crumble.dev/r/tabs.json
     <TabsList>
       <TabsTrigger value="overview">Overview</TabsTrigger>
       <TabsTrigger value="analytics">Analytics</TabsTrigger>
-      <TabsTrigger value="reports" disabled>Reports</TabsTrigger>
+      <TabsTrigger value="reports" disabled>
+        Reports
+      </TabsTrigger>
     </TabsList>
     <TabsContent value="overview">
       <p className="text-sm text-muted-foreground">Overview content</p>
@@ -86,7 +93,11 @@ npx shadcn add https://crumble.dev/r/tabs.json
       <TabsTrigger value="a">Alpha</TabsTrigger>
       <TabsTrigger value="b">Beta</TabsTrigger>
     </TabsList>
-    <TabsContent value="a"><p className="text-sm text-muted-foreground">Alpha content</p></TabsContent>
-    <TabsContent value="b"><p className="text-sm text-muted-foreground">Beta content</p></TabsContent>
+    <TabsContent value="a">
+      <p className="text-sm text-muted-foreground">Alpha content</p>
+    </TabsContent>
+    <TabsContent value="b">
+      <p className="text-sm text-muted-foreground">Beta content</p>
+    </TabsContent>
   </Tabs>
 </PreviewContainer>

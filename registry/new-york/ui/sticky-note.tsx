@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type CSSProperties,
@@ -10,11 +11,21 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type StickyNoteColor = "yellow" | "pink" | "blue" | "green" | "orange";
 
-export interface StickyNoteProps extends HTMLAttributes<HTMLDivElement> {
+export interface StickyNoteProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title">,
+    CrumbleColorProps {
   animateOnHover?: boolean;
   color?: StickyNoteColor;
   id?: string;
@@ -36,10 +47,13 @@ export function StickyNote({
   children,
   className,
   color = "yellow",
+  fill,
   id,
   rotate = 0,
+  stroke,
+  strokeMuted,
   style,
-  theme = "pencil",
+  theme: themeProp,
   title,
   ...props
 }: StickyNoteProps) {
@@ -47,6 +61,9 @@ export function StickyNote({
   const svgRef       = useRef<SVGSVGElement>(null);
   const foldSvgRef   = useRef<SVGSVGElement>(null);
   const noteId = id ?? "sticky-note";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const { bg, border: borderColor } = noteColors[color];
   const FOLD = 20; // fold triangle size
@@ -130,7 +147,7 @@ export function StickyNote({
 
   return (
     <div
-      style={{ ...rotateStyle, ...style }}
+      style={{ ...roughStyle, ...rotateStyle, ...style }}
       className={cn("relative inline-block", className)}
       onMouseEnter={() => { if (animateOnHover) draw(true); }}
       onMouseLeave={() => { if (animateOnHover) draw(false); }}

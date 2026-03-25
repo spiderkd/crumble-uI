@@ -11,7 +11,14 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 // ---------- context ----------
 
@@ -19,21 +26,40 @@ interface TimelineContextValue {
   theme: CrumbleTheme;
 }
 
-const TimelineContext = createContext<TimelineContextValue>({ theme: "pencil" });
+const TimelineThemeContext = createContext<TimelineContextValue>({
+  theme: "pencil",
+});
 
 // ---------- root ----------
 
-export interface TimelineProps extends HTMLAttributes<HTMLOListElement> {
+export interface TimelineProps
+  extends HTMLAttributes<HTMLOListElement>,
+    CrumbleColorProps {
   theme?: CrumbleTheme;
 }
 
-export function Timeline({ children, className, theme = "pencil", ...props }: TimelineProps) {
+export function Timeline({
+  children,
+  className,
+  fill,
+  stroke,
+  strokeMuted,
+  theme: themeProp,
+  ...props
+}: TimelineProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   return (
-    <TimelineContext.Provider value={{ theme }}>
-      <ol className={cn("relative flex flex-col", className)} {...(props as object)}>
+    <TimelineThemeContext.Provider value={{ theme }}>
+      <ol
+        className={cn("relative flex flex-col", className)}
+        style={roughStyle}
+        {...(props as object)}
+      >
         {children}
       </ol>
-    </TimelineContext.Provider>
+    </TimelineThemeContext.Provider>
   );
 }
 
@@ -41,7 +67,7 @@ export function Timeline({ children, className, theme = "pencil", ...props }: Ti
 
 export type TimelineStatus = "complete" | "active" | "pending";
 
-export interface TimelineItemProps extends HTMLAttributes<HTMLLIElement> {
+export interface TimelineItemProps extends Omit<HTMLAttributes<HTMLLIElement>, "title"> {
   description?: ReactNode;
   id?: string;
   isLast?: boolean;
@@ -63,7 +89,7 @@ export function TimelineItem({
   title,
   ...props
 }: TimelineItemProps) {
-  const { theme } = useContext(TimelineContext);
+  const { theme } = useContext(TimelineThemeContext);
   const nodeSvgRef = useRef<SVGSVGElement>(null);
   const lineSvgRef = useRef<SVGSVGElement>(null);
   const lineContainerRef = useRef<HTMLDivElement>(null);

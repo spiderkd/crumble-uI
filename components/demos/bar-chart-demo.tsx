@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart } from "@/components/ui/bar-chart";
+import { BarChart } from "@/registry/new-york/ui/bar-chart";
 
 export function BarChartRevenueDemo() {
   return (

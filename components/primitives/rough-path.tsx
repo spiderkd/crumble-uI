@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from "react";
 import type { Options } from "roughjs/bin/core";
 import { randomSeed, type CrumbleTheme } from "@/lib/rough";
-import { useRough } from "@/registry/new-york/hooks/use-rough";
+import { useRough } from "@/hooks/use-rough";
 
 export interface RoughPathProps {
   className?: string;

@@ -9,9 +9,9 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import type { DrawerSide } from "@/components/ui/drawer";
+} from "@/registry/new-york/ui/drawer";
+import { Button } from "@/registry/new-york/ui/button";
+import type { DrawerSide } from "@/registry/new-york/ui/drawer";
 import type { CrumbleTheme } from "@/lib/rough";
 
 export function DrawerDemo({ theme }: { theme?: CrumbleTheme }) {

@@ -1,11 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface AvatarProps {
+export interface AvatarProps extends CrumbleColorProps {
   animateOnHover?: boolean;
   className?: string;
   fallback?: string;
@@ -18,8 +26,11 @@ export interface AvatarProps {
 export interface AvatarGroupProps {
   avatars: AvatarProps[];
   className?: string;
+  fill?: string;
   max?: number;
   size?: number;
+  stroke?: string;
+  strokeMuted?: string;
   theme?: CrumbleTheme;
 }
 
@@ -27,13 +38,19 @@ function AvatarCircle({
   animateOnHover = true,
   className,
   fallback,
+  fill,
   id,
   size = 40,
   src,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: AvatarProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const stableId = id ?? `avatar-${fallback ?? "user"}`;
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(
     (reseed = false) => {
@@ -65,7 +82,7 @@ function AvatarCircle({
   return (
     <div
       className={cn("relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full", className)}
-      style={{ width: size, height: size }}
+      style={{ ...roughStyle, width: size, height: size }}
       onMouseEnter={() => { if (animateOnHover) draw(true); }}
       onMouseLeave={() => { if (animateOnHover) draw(false); }}
     >
@@ -98,16 +115,25 @@ export function Avatar(props: AvatarProps) {
 export function AvatarGroup({
   avatars,
   className,
+  fill,
   max = 4,
   size = 40,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: AvatarGroupProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
   const visible = avatars.slice(0, max);
   const overflow = avatars.length - max;
   const overlap = Math.round(size * 0.3);
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   return (
-    <div className={cn("flex items-center", className)} style={{ gap: 0 }}>
+    <div
+      className={cn("flex items-center", className)}
+      style={{ ...roughStyle, gap: 0 }}
+    >
       {visible.map((avatar, i) => (
         <div key={i} style={{ marginLeft: i === 0 ? 0 : -overlap, zIndex: i }}>
           <AvatarCircle {...avatar} size={size} theme={theme} />

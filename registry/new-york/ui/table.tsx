@@ -2,20 +2,27 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type HTMLAttributes,
-  type ReactNode,
   type TdHTMLAttributes,
   type ThHTMLAttributes,
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 // ---------- context ----------
 
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 
 interface TableContextValue {
   rowIndex: number;
@@ -25,13 +32,26 @@ const TableContext = createContext<TableContextValue>({ rowIndex: 0, theme: "pen
 
 // ---------- Table root ----------
 
-export interface TableProps extends HTMLAttributes<HTMLDivElement> {
+export interface TableProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   theme?: CrumbleTheme;
 }
 
-export function Table({ children, className, theme = "pencil", ...props }: TableProps) {
+export function Table({
+  children,
+  className,
+  fill,
+  stroke,
+  strokeMuted,
+  theme: themeProp,
+  ...props
+}: TableProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   return (
-    <div className={cn("w-full overflow-auto", className)} {...props}>
+    <div className={cn("w-full overflow-auto", className)} style={roughStyle} {...props}>
       <table className="w-full border-collapse">
         <TableContext.Provider value={{ rowIndex: 0, theme }}>
           {children}

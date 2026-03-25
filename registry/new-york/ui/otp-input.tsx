@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -10,9 +11,16 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface OtpInputProps {
+export interface OtpInputProps extends CrumbleColorProps {
   className?: string;
   disabled?: boolean;
   id?: string;
@@ -86,17 +94,23 @@ function OtpCell({
 export function OtpInput({
   className,
   disabled = false,
+  fill,
   id,
   label,
   length = 6,
   onChange,
   onComplete,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: OtpInputProps) {
   const [digits, setDigits] = useState<string[]>(Array(length).fill(""));
   const [focusIndex, setFocusIndex] = useState(-1);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const otpId = id ?? "otp";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const updateDigits = (next: string[]) => {
     setDigits(next);
@@ -146,7 +160,7 @@ export function OtpInput({
   };
 
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)} style={roughStyle}>
       {label ? (
         <label className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}

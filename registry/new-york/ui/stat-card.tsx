@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type HTMLAttributes,
@@ -9,11 +10,21 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type TrendDirection = "up" | "down" | "flat";
 
-export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface StatCardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnHover?: boolean;
   description?: ReactNode;
   id?: string;
@@ -28,9 +39,12 @@ export function StatCard({
   animateOnHover = true,
   className,
   description,
+  fill,
   id,
   label,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   trend,
   trendLabel,
   value,
@@ -40,6 +54,9 @@ export function StatCard({
   const svgRef       = useRef<SVGSVGElement>(null);
   const trendSvgRef  = useRef<SVGSVGElement>(null);
   const cardId = id ?? `stat-${label.toLowerCase().replace(/\s+/g, "-")}`;
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   // Card border
   const draw = useCallback((reseed = false) => {
@@ -116,6 +133,7 @@ export function StatCard({
     <div
       ref={containerRef}
       className={cn("relative p-5 min-w-[160px]", className)}
+      style={roughStyle}
       onMouseEnter={() => { if (animateOnHover) draw(true); }}
       onMouseLeave={() => { if (animateOnHover) draw(false); }}
       {...props}

@@ -1,581 +1,335 @@
-// import Link from "next/link";
-// import { Button } from "@/components/ui/button";
-// import { Card } from "@/components/ui/card";
-// import { RoughHighlight } from "@/components/primitives/rough-highlight";
-// import { RoughLine } from "@/components/primitives/rough-line";
-
-// const componentPreviews = [
-//   {
-//     name: "Button",
-//     slug: "button",
-//     desc: "Wobbly border, hover redraw, three variants",
-//   },
-//   {
-//     name: "Card",
-//     slug: "card",
-//     desc: "Stacked paper effect, resizes with content",
-//   },
-//   { name: "Input", slug: "input", desc: "Box or underline style, focus state" },
-//   {
-//     name: "Textarea",
-//     slug: "textarea",
-//     desc: "Auto-grow, rough border on focus",
-//   },
-//   { name: "Checkbox", slug: "checkbox", desc: "Rough tick mark, hover redraw" },
-//   { name: "Radio", slug: "radio", desc: "Filled inner circle when selected" },
-//   { name: "Select", slug: "select", desc: "Hand-drawn chevron indicator" },
-//   { name: "Slider", slug: "slider", desc: "Sketchy track and circle thumb" },
-//   { name: "Toggle", slug: "toggle", desc: "Thumb slides inside rough track" },
-// ];
-
-// export default function Page() {
-//   return (
-//     <main className="min-h-screen bg-background text-foreground">
-//       <section className="flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center">
-//         <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-//           a shadcn-style component library
-//         </p>
-
-//         <h1 className="mb-6 max-w-2xl text-[clamp(40px,7vw,72px)] leading-[1.1] font-medium">
-//           UI that looks{" "}
-//           <span className="font-[family-name:var(--font-display)] italic">
-//             <RoughHighlight
-//               type="highlight"
-//               color="#fbbf24"
-//               opacity={0.35}
-//               animate
-//             >
-//               hand-drawn
-//             </RoughHighlight>
-//           </span>
-//         </h1>
-
-//         <p className="mb-10 max-w-md text-lg leading-relaxed text-muted-foreground">
-//           Wobbly, sketchy React components built on Rough.js. One command
-//           installs. You own the code.
-//         </p>
-
-//         <div className="mb-16 flex flex-wrap items-center justify-center gap-3">
-//           <Link href="/docs/getting-started/introduction">
-//             <Button size="lg">Get started</Button>
-//           </Link>
-//           <Link href="/docs/components/button">
-//             <Button size="lg" variant="ghost">
-//               Browse components
-//             </Button>
-//           </Link>
-//         </div>
-
-//         <div className="flex items-center gap-3 rounded-lg border border-border/40 bg-secondary px-5 py-2.5">
-//           <code className="font-mono text-[13px] text-muted-foreground">
-//             npx shadcn add https://crumble.dev/r/button.json
-//           </code>
-//         </div>
-//       </section>
-
-//       <div className="mx-auto max-w-3xl px-6">
-//         <RoughLine orientation="horizontal" />
-//       </div>
-
-//       <section className="mx-auto max-w-5xl px-6 py-20">
-//         <p className="mb-10 text-center text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-//           what ships
-//         </p>
-//         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-//           {componentPreviews.map((item) => (
-//             <Link
-//               key={item.slug}
-//               href={`/docs/components/${item.slug}`}
-//               className="no-underline"
-//             >
-//               <Card padding={20} className="h-full cursor-pointer">
-//                 <p className="mb-1 text-[13px] font-medium text-foreground">
-//                   {item.name}
-//                 </p>
-//                 <p className="text-[12px] leading-relaxed text-muted-foreground">
-//                   {item.desc}
-//                 </p>
-//               </Card>
-//             </Link>
-//           ))}
-//         </div>
-//       </section>
-
-//       <section className="bg-secondary/50 px-6 py-20">
-//         <div className="mx-auto max-w-xl text-center">
-//           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-//             three themes
-//           </p>
-//           <h2 className="mb-3 text-3xl font-medium text-foreground">
-//             one prop away
-//           </h2>
-//           <p className="mb-12 text-base leading-relaxed text-muted-foreground">
-//             Switch between pencil, ink, and crayon, or set it globally once.
-//           </p>
-//           <div className="flex flex-wrap justify-center gap-6">
-//             {(["pencil", "ink", "crayon"] as const).map((theme) => (
-//               <div key={theme} className="flex flex-col items-center gap-2">
-//                 <Button theme={theme} size="lg">
-//                   {theme}
-//                 </Button>
-//                 <span className="text-[11px] uppercase tracking-widest text-muted-foreground">
-//                   {theme}
-//                 </span>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       <footer className="border-t border-border/30 px-6 py-8 text-center">
-//         <p className="text-[13px] text-muted-foreground">
-//           crumble - hand-drawn components for React
-//         </p>
-//       </footer>
-//     </main>
-//   );
-// }
-
-"use client";
-
-import { useState, type ReactNode } from "react";
 import Link from "next/link";
-import { CrumbleProvider } from "@/lib/crumble-context";
-import type { CrumbleTheme } from "@/lib/rough";
-import { cn } from "@/lib/utils";
-
-// Primitives
+import { Button } from "@/registry/new-york/ui/button";
+import { Card } from "@/registry/new-york/ui/card";
+import { Badge } from "@/registry/new-york/ui/badge";
 import { RoughHighlight } from "@/components/primitives/rough-highlight";
 import { RoughLine } from "@/components/primitives/rough-line";
-import { RoughRect } from "@/components/primitives/rough-rect";
+import { BentoGrid } from "@/components/BentoGrid/BentoGrid";
 
-// UI components
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
-import { Toggle } from "@/components/ui/toggle";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Rating } from "@/components/ui/rating";
-import { StatCard } from "@/components/ui/stat-card";
-import { Avatar, AvatarGroup } from "@/components/ui/avatar";
-import { StickyNote } from "@/components/ui/sticky-note";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { BarChart } from "@/components/ui/bar-chart";
-import { Annotation } from "@/components/ui/annotation";
+// ─── Static data ──────────────────────────────────────────────────────────────
 
-const THEMES: CrumbleTheme[] = ["pencil", "ink", "crayon"];
+const THEMES = [
+  {
+    name: "pencil" as const,
+    label: "Pencil",
+    desc: "Light, delicate, 1px strokes",
+    weight: "1px",
+    color: "#6b7280",
+  },
+  {
+    name: "ink" as const,
+    label: "Ink",
+    desc: "Bold, confident, 2px strokes",
+    weight: "2px",
+    color: "#111827",
+  },
+  {
+    name: "crayon" as const,
+    label: "Crayon",
+    desc: "Thick, waxy, 3.5px strokes",
+    weight: "3.5px",
+    color: "#7c3aed",
+  },
+] as const;
 
-// ─── Demo card wrapper ────────────────────────────────────────────────────────
+const FEATURES = [
+  {
+    title: "Rough.js powered",
+    desc: "Every border, line, and shape is generated at runtime by Rough.js — no PNGs, no SVG assets, no icon fonts.",
+    icon: "✦",
+  },
+  {
+    title: "You own the code",
+    desc: "shadcn-style install: one command copies the component source into your repo. Update it however you like.",
+    icon: "◈",
+  },
+  {
+    title: "Three sketch themes",
+    desc: "Switch between pencil, ink, and crayon globally or per-component with a single prop.",
+    icon: "◇",
+  },
+  {
+    title: "Animates on mount",
+    desc: "Paths draw themselves into existence on first render. No configuration needed — it just works.",
+    icon: "◎",
+  },
+] as const;
 
-function DemoCard({
-  children,
-  label,
-  className,
-  href,
-}: {
-  children: ReactNode;
-  label: string;
-  className?: string;
-  href?: string;
-}) {
-  const inner = (
-    <Card padding={20} className={cn("h-full flex flex-col gap-3", className)}>
-      <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-        {label}
-      </p>
-      <div className="flex flex-1 items-center justify-center">{children}</div>
-    </Card>
-  );
-
-  if (href) {
-    return (
-      <Link href={href} className="no-underline">
-        {inner}
-      </Link>
-    );
-  }
-  return <div>{inner}</div>;
-}
-
-// ─── Section wrapper ──────────────────────────────────────────────────────────
-
-function ShowcaseSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <section className="mx-auto max-w-5xl px-6 py-16">
-      <p className="mb-8 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-        {title}
-      </p>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-// ─── Bar chart data ───────────────────────────────────────────────────────────
-
-const chartData = [
-  { label: "Mon", value: 42 },
-  { label: "Tue", value: 67 },
-  { label: "Wed", value: 53 },
-  { label: "Thu", value: 81 },
-  { label: "Fri", value: 61 },
-];
-
-// ─── Main page ────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Page() {
-  const [theme, setTheme] = useState<CrumbleTheme>("pencil");
-
   return (
-    <CrumbleProvider theme={theme}>
-      <main className="min-h-screen bg-background text-foreground">
-        {/* ── Hero ────────────────────────────────────────────────────── */}
-        <section className="flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center">
-          <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-            a shadcn-style component library
-          </p>
+    <main className="min-h-screen bg-background text-foreground">
+      {/* ── Hero ── */}
+      <section className="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
+        {/* Faint grid texture */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg,currentColor 0,currentColor 1px,transparent 1px,transparent 40px)," +
+              "repeating-linear-gradient(90deg,currentColor 0,currentColor 1px,transparent 1px,transparent 40px)",
+          }}
+        />
 
-          <h1 className="mb-6 max-w-2xl text-[clamp(40px,7vw,72px)] leading-[1.1] font-medium">
-            UI that looks{" "}
+        <div className="relative z-10 flex max-w-3xl flex-col items-center gap-6">
+          {/* Eyebrow */}
+          <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="h-px w-6 bg-current opacity-40" />
+            open-source · shadcn-style · rough.js
+            <span className="h-px w-6 bg-current opacity-40" />
+          </span>
+
+          {/* Headline */}
+          <h1 className="text-[clamp(42px,8vw,80px)] font-medium leading-[1.05] tracking-tight">
+            React UI that looks{" "}
             <span className="font-[family-name:var(--font-display)] italic">
               <RoughHighlight
                 type="highlight"
                 color="#fbbf24"
-                opacity={0.35}
+                opacity={0.3}
                 animate
+                id="hero-highlight"
               >
                 hand-drawn
               </RoughHighlight>
             </span>
           </h1>
 
-          <p className="mb-10 max-w-md text-lg leading-relaxed text-muted-foreground">
-            Wobbly, sketchy React components built on Rough.js. One command
-            installs. You own the code.
+          {/* Sub */}
+          <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
+            Wobbly, sketchy components built on Rough.js. Install with one
+            command, own the source, customise everything.
           </p>
 
-          {/* Global theme switcher */}
-          <div className="mb-8 flex items-center gap-3">
-            <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-              theme
-            </span>
-            <div className="flex gap-2">
-              {THEMES.map((t) => (
-                <Button
-                  key={t}
-                  size="sm"
-                  theme={t}
-                  variant={theme === t ? "default" : "ghost"}
-                  onClick={() => setTheme(t)}
-                >
-                  {t}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-16 flex flex-wrap items-center justify-center gap-3">
+          {/* CTA row */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/docs/getting-started/introduction">
               <Button size="lg">Get started</Button>
             </Link>
             <Link href="/docs/components/button">
               <Button size="lg" variant="ghost">
-                Browse components
+                Browse components →
               </Button>
             </Link>
           </div>
 
-          <div className="flex items-center gap-3 rounded-lg border border-border/40 bg-secondary px-5 py-2.5">
+          {/* Install snippet */}
+          <div className="mt-2 flex items-center gap-3 rounded-lg border border-border/50 bg-secondary/60 px-5 py-2.5 backdrop-blur-sm">
             <code className="font-mono text-[13px] text-muted-foreground">
               npx shadcn add https://crumble.dev/r/button.json
             </code>
           </div>
-        </section>
-
-        <div className="mx-auto max-w-3xl px-6">
-          <RoughLine orientation="horizontal" />
         </div>
 
-        {/* ── Form controls ───────────────────────────────────────────── */}
-        <ShowcaseSection title="form controls">
-          <DemoCard label="Button" href="/docs/components/button">
-            <div className="flex flex-wrap gap-2 justify-center">
-              <Button size="sm">Default</Button>
-              <Button size="sm" variant="ghost">
-                Ghost
-              </Button>
-              <Button size="sm" variant="destructive">
-                Delete
-              </Button>
-            </div>
-          </DemoCard>
+        {/* Bottom fade */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"
+        />
+      </section>
 
-          <DemoCard label="Input" href="/docs/components/input">
-            <div className="w-full">
-              <Input label="Name" placeholder="Ada Lovelace" />
-            </div>
-          </DemoCard>
+      {/* ── Divider ── */}
+      <div className="mx-auto max-w-3xl px-6">
+        <RoughLine orientation="horizontal" id="divider-1" />
+      </div>
 
-          <DemoCard label="Checkbox" href="/docs/components/checkbox">
-            <div className="flex flex-col gap-2">
-              <Checkbox label="Remember me" defaultChecked />
-              <Checkbox label="Send updates" />
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Toggle" href="/docs/components/toggle">
-            <div className="flex items-center gap-3">
-              <Toggle defaultChecked />
-              <span className="text-sm text-muted-foreground">Enabled</span>
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Slider" href="/docs/components/slider">
-            <div className="w-full px-2">
-              <Slider defaultValue={65} />
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Rating" href="/docs/components/rating">
-            <Rating defaultValue={3} max={5} />
-          </DemoCard>
-        </ShowcaseSection>
-
-        <div className="mx-auto max-w-3xl px-6">
-          <RoughLine orientation="horizontal" />
-        </div>
-
-        {/* ── Data display ────────────────────────────────────────────── */}
-        <ShowcaseSection title="data display">
-          <DemoCard label="Badge" href="/docs/components/badge">
-            <div className="flex flex-wrap gap-2 justify-center">
-              <Badge>default</Badge>
-              <Badge variant="success">success</Badge>
-              <Badge variant="warning">warning</Badge>
-              <Badge variant="destructive">error</Badge>
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Stat card" href="/docs/components/stat-card">
-            <StatCard
-              label="Revenue"
-              value="$42.1k"
-              trend="up"
-              trendLabel="+12% this week"
-            />
-          </DemoCard>
-
-          <DemoCard label="Avatar group" href="/docs/components/avatar">
-            <AvatarGroup
-              avatars={[
-                { fallback: "AB" },
-                { fallback: "CD" },
-                { fallback: "EF" },
-                { fallback: "GH" },
-              ]}
-              max={3}
-            />
-          </DemoCard>
-
-          <DemoCard label="Progress" href="/docs/components/progress">
-            <div className="flex flex-col gap-3 w-full">
-              <Progress value={72} label="Design" showValue />
-              <Progress value={48} label="Dev" showValue />
-              <Progress value={91} label="QA" showValue />
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Accordion" href="/docs/components/accordion">
-            <div className="w-full">
-              <Accordion defaultValue="item-1">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger value="item-1">
-                    What is Crumble?
-                  </AccordionTrigger>
-                  <AccordionContent value="item-1">
-                    Hand-drawn React components.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                  <AccordionTrigger value="item-2">
-                    How do I install it?
-                  </AccordionTrigger>
-                  <AccordionContent value="item-2">
-                    npx shadcn add crumble.dev/r/*.json
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Tabs" href="/docs/components/tabs">
-            <div className="w-full">
-              <Tabs defaultValue="design">
-                <TabsList>
-                  <TabsTrigger value="design">Design</TabsTrigger>
-                  <TabsTrigger value="code">Code</TabsTrigger>
-                  <TabsTrigger value="preview">Preview</TabsTrigger>
-                </TabsList>
-                <TabsContent value="design">
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Design tools go here.
-                  </p>
-                </TabsContent>
-                <TabsContent value="code">
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Code editor here.
-                  </p>
-                </TabsContent>
-                <TabsContent value="preview">
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Live preview here.
-                  </p>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </DemoCard>
-        </ShowcaseSection>
-
-        <div className="mx-auto max-w-3xl px-6">
-          <RoughLine orientation="horizontal" />
-        </div>
-
-        {/* ── Charts ──────────────────────────────────────────────────── */}
-        <ShowcaseSection title="charts">
-          {/* Bar chart spans 2 columns */}
-          <div className="col-span-full lg:col-span-2">
-            <DemoCard label="Bar chart" href="/docs/components/bar-chart">
-              <div className="w-full">
-                <BarChart data={chartData} height={180} showGrid showValues />
-              </div>
-            </DemoCard>
-          </div>
-
-          <DemoCard label="Separator" href="/docs/components/separator">
-            <div className="flex flex-col gap-3 w-full">
-              <Separator />
-              <Separator label="or" />
-              <Separator orientation="horizontal" />
-            </div>
-          </DemoCard>
-
-          <DemoCard label="Sticky note" href="/docs/components/sticky-note">
-            <div className="flex gap-3">
-              <StickyNote color="yellow" rotate={-2} className="w-24">
-                <p className="text-xs">Don't forget milk 🥛</p>
-              </StickyNote>
-              <StickyNote color="pink" rotate={1.5} className="w-24">
-                <p className="text-xs">Ship it! 🚀</p>
-              </StickyNote>
-            </div>
-          </DemoCard>
-        </ShowcaseSection>
-
-        <div className="mx-auto max-w-3xl px-6">
-          <RoughLine orientation="horizontal" />
-        </div>
-
-        {/* ── Primitives ──────────────────────────────────────────────── */}
-        <ShowcaseSection title="primitives">
-          <DemoCard
-            label="RoughHighlight"
-            href="/docs/primitives/rough-highlight"
-          >
-            <p className="text-base leading-loose text-center">
-              Mark{" "}
-              <RoughHighlight type="highlight" color="#fbbf24" opacity={0.4}>
-                important
-              </RoughHighlight>{" "}
-              text or{" "}
-              <RoughHighlight type="underline" color="currentColor">
-                underline
-              </RoughHighlight>{" "}
-              it
-            </p>
-          </DemoCard>
-
-          <DemoCard label="RoughRect" href="/docs/primitives/rough-rect">
-            <RoughRect padding={16} className="w-full">
-              <p className="text-sm text-center text-muted-foreground">
-                Wrap any content with a sketchy border
-              </p>
-            </RoughRect>
-          </DemoCard>
-
-          <DemoCard label="Annotation" href="/docs/components/annotation">
-            <div className="flex items-center gap-6">
-              <Annotation type="circle" color="currentColor">
-                <span className="text-sm font-medium">circle</span>
-              </Annotation>
-              <Annotation type="box" color="currentColor">
-                <span className="text-sm font-medium">box</span>
-              </Annotation>
-            </div>
-          </DemoCard>
-
-          <DemoCard label="RoughLine" href="/docs/primitives/rough-line">
-            <div className="flex flex-col gap-3 w-full">
-              <RoughLine orientation="horizontal" />
-              <RoughLine orientation="horizontal" />
-              <RoughLine orientation="horizontal" />
-            </div>
-          </DemoCard>
-        </ShowcaseSection>
-
-        <div className="mx-auto max-w-3xl px-6">
-          <RoughLine orientation="horizontal" />
-        </div>
-
-        {/* ── Three themes section ─────────────────────────────────────── */}
-        <section className="bg-secondary/50 px-6 py-20">
-          <div className="mx-auto max-w-xl text-center">
-            <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-              three themes
-            </p>
-            <h2 className="mb-3 text-3xl font-medium text-foreground">
-              one prop away
-            </h2>
-            <p className="mb-12 text-base leading-relaxed text-muted-foreground">
-              Switch between pencil, ink, and crayon — or set it globally once.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              {THEMES.map((t) => (
-                <div key={t} className="flex flex-col items-center gap-2">
-                  <Button theme={t} size="lg" onClick={() => setTheme(t)}>
-                    {t}
-                  </Button>
-                  <span className="text-[11px] uppercase tracking-widest text-muted-foreground">
-                    {t}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <footer className="border-t border-border/30 px-6 py-8 text-center">
-          <p className="text-[13px] text-muted-foreground">
-            crumble — hand-drawn components for React
+      {/* ── Theme showcase ── */}
+      <section className="mx-auto max-w-4xl px-6 py-20">
+        <div className="mb-12 text-center">
+          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            three themes
           </p>
-        </footer>
-      </main>
-    </CrumbleProvider>
+          <h2 className="text-3xl font-medium">One prop. Three aesthetics.</h2>
+          <p className="mt-3 text-base text-muted-foreground">
+            Set{" "}
+            <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[13px]">
+              theme
+            </code>{" "}
+            globally via{" "}
+            <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[13px]">
+              CrumbleProvider
+            </code>{" "}
+            or override per-component.
+          </p>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-3">
+          {THEMES.map((t) => (
+            <Card
+              key={t.name}
+              theme={t.name}
+              padding={24}
+              className="flex flex-col gap-4"
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-[family-name:var(--font-display)] text-xl italic">
+                  {t.label}
+                </span>
+                <Badge theme={t.name} variant="outline">
+                  {t.weight} stroke
+                </Badge>
+              </div>
+
+              <p className="text-[13px] leading-relaxed text-muted-foreground">
+                {t.desc}
+              </p>
+
+              <div className="mt-auto flex gap-2">
+                <Button theme={t.name} size="sm">
+                  Primary
+                </Button>
+                <Button theme={t.name} size="sm" variant="ghost">
+                  Ghost
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="mx-auto max-w-3xl px-6">
+        <RoughLine orientation="horizontal" id="divider-2" />
+      </div>
+
+      {/* ── Bento component grid ── */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-12 flex flex-col items-center gap-3 text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            what ships
+          </p>
+          <h2 className="text-3xl font-medium">
+            <RoughHighlight
+              type="underline"
+              color="currentColor"
+              opacity={0.35}
+              animate
+              id="bento-heading"
+            >
+              Everything you need. All interactive.
+            </RoughHighlight>
+          </h2>
+          <p className="max-w-sm text-base text-muted-foreground">
+            Every card below is a live component — click, drag, and type for
+            real. Hover any card to jump to its docs.
+          </p>
+        </div>
+
+        <BentoGrid />
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="mx-auto max-w-3xl px-6">
+        <RoughLine orientation="horizontal" id="divider-3" />
+      </div>
+
+      {/* ── Features ── */}
+      <section className="mx-auto max-w-4xl px-6 py-20">
+        <div className="mb-12 text-center">
+          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            why crumble
+          </p>
+          <h2 className="text-3xl font-medium">
+            <RoughHighlight
+              type="underline"
+              color="currentColor"
+              opacity={0.4}
+              animate
+              id="features-heading"
+            >
+              Designed to be different
+            </RoughHighlight>
+          </h2>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          {FEATURES.map((f) => (
+            <Card key={f.title} padding={24} className="flex gap-4">
+              <span className="mt-0.5 shrink-0 text-xl text-muted-foreground">
+                {f.icon}
+              </span>
+              <div>
+                <p className="mb-1.5 text-[14px] font-medium">{f.title}</p>
+                <p className="text-[13px] leading-relaxed text-muted-foreground">
+                  {f.desc}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CTA banner ── */}
+      <section className="bg-secondary/40 px-6 py-20">
+        <div className="mx-auto max-w-xl text-center">
+          <h2 className="mb-4 text-3xl font-medium">
+            Ready to get{" "}
+            <span className="font-[family-name:var(--font-display)] italic">
+              <RoughHighlight
+                type="box"
+                color="currentColor"
+                opacity={0.15}
+                animate
+                id="cta-box"
+              >
+                sketchy?
+              </RoughHighlight>
+            </span>
+          </h2>
+          <p className="mb-8 text-base leading-relaxed text-muted-foreground">
+            Copy a component in one command. No lock-in, no magic, just source
+            you own.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link href="/docs/getting-started/introduction">
+              <Button size="lg">Read the docs</Button>
+            </Link>
+            <Link
+              href="https://github.com/your-org/crumble"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button size="lg" variant="ghost">
+                GitHub ↗
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-border/30 px-6 py-8">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 text-[12px] text-muted-foreground">
+          <span className="font-[family-name:var(--font-display)] italic text-[15px] text-foreground">
+            crumble
+          </span>
+          <span>hand-drawn components for React · MIT license</span>
+          <div className="flex gap-4">
+            <Link
+              href="/docs"
+              className="hover:text-foreground transition-colors"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/docs/components/button"
+              className="hover:text-foreground transition-colors"
+            >
+              Components
+            </Link>
+            <Link
+              href="https://github.com/your-org/crumble"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              GitHub
+            </Link>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }

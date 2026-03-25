@@ -3,8 +3,8 @@ title: Radio
 description: Hand-drawn radio buttons with a filled inner circle when selected.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { RadioGroup } from "@/components/ui/radio"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { RadioGroup } from "@/registry/new-york/ui/radio";
 
 <PreviewContainer
   componentName="radio"
@@ -84,8 +84,8 @@ npx shadcn add https://crumble.dev/r/radio.json
     name="tier-preview"
     defaultValue="free"
     options={[
-      { value: "free",       label: "Free" },
-      { value: "pro",        label: "Pro" },
+      { value: "free", label: "Free" },
+      { value: "pro", label: "Pro" },
       { value: "enterprise", label: "Enterprise", disabled: true },
     ]}
   />

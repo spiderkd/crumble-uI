@@ -3,9 +3,9 @@ title: Tooltip
 description: A hand-drawn callout that appears on hover with a rough polygon arrow.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Tooltip } from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Tooltip } from "@/registry/new-york/ui/tooltip";
+import { Button } from "@/registry/new-york/ui/button";
 
 <PreviewContainer
   componentName="tooltip"
@@ -36,10 +36,18 @@ npx shadcn add https://crumble.dev/r/tooltip.json
 <Tooltip content="On the left" side="left"><Button size="sm">Left</Button></Tooltip>`}
 >
   <div className="flex flex-wrap gap-3">
-    <Tooltip content="On top"       side="top"><Button size="sm">Top</Button></Tooltip>
-    <Tooltip content="On the right" side="right"><Button size="sm">Right</Button></Tooltip>
-    <Tooltip content="At the bottom" side="bottom"><Button size="sm">Bottom</Button></Tooltip>
-    <Tooltip content="On the left"  side="left"><Button size="sm">Left</Button></Tooltip>
+    <Tooltip content="On top" side="top">
+      <Button size="sm">Top</Button>
+    </Tooltip>
+    <Tooltip content="On the right" side="right">
+      <Button size="sm">Right</Button>
+    </Tooltip>
+    <Tooltip content="At the bottom" side="bottom">
+      <Button size="sm">Bottom</Button>
+    </Tooltip>
+    <Tooltip content="On the left" side="left">
+      <Button size="sm">Left</Button>
+    </Tooltip>
   </div>
 </PreviewContainer>
 
@@ -65,8 +73,20 @@ npx shadcn add https://crumble.dev/r/tooltip.json
 <Tooltip content="Crayon tooltip" theme="crayon"><Button size="sm" theme="crayon">Crayon</Button></Tooltip>`}
 >
   <div className="flex flex-wrap gap-3">
-    <Tooltip content="Pencil tooltip" theme="pencil"><Button size="sm" theme="pencil">Pencil</Button></Tooltip>
-    <Tooltip content="Ink tooltip"    theme="ink"><Button size="sm" theme="ink">Ink</Button></Tooltip>
-    <Tooltip content="Crayon tooltip" theme="crayon"><Button size="sm" theme="crayon">Crayon</Button></Tooltip>
+    <Tooltip content="Pencil tooltip" theme="pencil">
+      <Button size="sm" theme="pencil">
+        Pencil
+      </Button>
+    </Tooltip>
+    <Tooltip content="Ink tooltip" theme="ink">
+      <Button size="sm" theme="ink">
+        Ink
+      </Button>
+    </Tooltip>
+    <Tooltip content="Crayon tooltip" theme="crayon">
+      <Button size="sm" theme="crayon">
+        Crayon
+      </Button>
+    </Tooltip>
   </div>
 </PreviewContainer>

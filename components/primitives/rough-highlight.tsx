@@ -14,7 +14,7 @@ import {
   stableSeed,
   type CrumbleTheme,
 } from "@/lib/rough";
-import { useRough } from "@/registry/new-york/hooks/use-rough";
+import { useRough } from "@/hooks/use-rough";
 
 export type HighlightType =
   | "underline"

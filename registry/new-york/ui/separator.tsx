@@ -1,11 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface SeparatorProps {
+export interface SeparatorProps extends CrumbleColorProps {
   className?: string;
   id?: string;
   label?: string;
@@ -15,14 +22,20 @@ export interface SeparatorProps {
 
 export function Separator({
   className,
+  fill,
   id,
   label,
   orientation = "horizontal",
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: SeparatorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const sepId = id ?? "separator";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(() => {
     const container = containerRef.current;
@@ -85,6 +98,7 @@ export function Separator({
         isH ? "w-full" : "h-full flex-col",
         className,
       )}
+      style={roughStyle}
     >
       <svg ref={svgRef} aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-visible" />
       {label ? (

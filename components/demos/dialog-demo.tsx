@@ -8,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/registry/new-york/ui/dialog";
+import { Button } from "@/registry/new-york/ui/button";
 import type { CrumbleTheme } from "@/lib/rough";
 
 export function DialogDemo({ theme }: { theme?: CrumbleTheme }) {

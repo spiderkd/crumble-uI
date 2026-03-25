@@ -3,8 +3,8 @@ title: Textarea
 description: A hand-drawn textarea with optional auto-grow and resize support.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Textarea } from "@/components/ui/textarea"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Textarea } from "@/registry/new-york/ui/textarea";
 
 <PreviewContainer
   componentName="textarea"
@@ -32,7 +32,11 @@ The textarea expands as you type. The SVG border tracks the height via `ResizeOb
   code={`<Textarea label="Notes" placeholder="Starts small, grows as you type..." autoGrow />`}
 >
   <div className="w-full max-w-xs">
-    <Textarea label="Notes" placeholder="Starts small, grows as you type..." autoGrow />
+    <Textarea
+      label="Notes"
+      placeholder="Starts small, grows as you type..."
+      autoGrow
+    />
   </div>
 </PreviewContainer>
 
@@ -68,7 +72,7 @@ The textarea expands as you type. The SVG border tracks the height via `ResizeOb
 >
   <div className="flex w-full max-w-xs flex-col gap-5">
     <Textarea label="Pencil" placeholder="pencil" theme="pencil" />
-    <Textarea label="Ink"    placeholder="ink"    theme="ink" />
+    <Textarea label="Ink" placeholder="ink" theme="ink" />
     <Textarea label="Crayon" placeholder="crayon" theme="crayon" />
   </div>
 </PreviewContainer>

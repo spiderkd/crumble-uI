@@ -8,11 +8,18 @@ import {
   useRef,
   useState,
   type HTMLAttributes,
-  type ReactNode,
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 interface TabsContextValue {
   activeTab: string;
@@ -28,7 +35,9 @@ const TabsContext = createContext<TabsContextValue>({
   theme: "pencil",
 });
 
-export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
+export interface TabsProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnHover?: boolean;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -41,13 +50,19 @@ export function Tabs({
   children,
   className,
   defaultValue = "",
+  fill,
   onValueChange,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   value: controlledValue,
   ...props
 }: TabsProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
   const [internalValue, setInternalValue] = useState(defaultValue);
   const activeTab = controlledValue ?? internalValue;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const setActiveTab = (next: string) => {
     setInternalValue(next);
@@ -56,7 +71,7 @@ export function Tabs({
 
   return (
     <TabsContext.Provider value={{ activeTab, animateOnHover, setActiveTab, theme }}>
-      <div className={cn("flex flex-col gap-0", className)} {...props}>
+      <div className={cn("flex flex-col gap-0", className)} style={roughStyle} {...props}>
         {children}
       </div>
     </TabsContext.Provider>

@@ -17,7 +17,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/registry/new-york/ui/button";
 import { useCrumble } from "@/lib/crumble-context";
 
 export function CopyPage({ content }: { content: string }) {

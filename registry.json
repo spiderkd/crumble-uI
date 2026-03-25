@@ -7,7 +7,7 @@
       "name": "rough-lib",
       "type": "registry:lib",
       "title": "Rough Theme Config",
-      "description": "Core Rough.js theme presets and global config for Crumble.",
+      "description": "Core Rough.js theme presets, global config, shared CrumbleContext (with safe defaults - no Provider required), and resolveRoughVars() for per-component color overrides.",
       "dependencies": ["roughjs"],
       "files": [
         {
@@ -34,7 +34,7 @@
       "name": "use-rough",
       "type": "registry:hook",
       "title": "useRough",
-      "description": "Shared Rough.js SVG hook for Crumble primitives.",
+      "description": "Shared Rough.js SVG hook. Reads theme and animation config from CrumbleContext - works standalone with defaults or inside CrumbleProvider for live theme switching.",
       "dependencies": ["roughjs"],
       "registryDependencies": ["rough-lib"],
       "files": [

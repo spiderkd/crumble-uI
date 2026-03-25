@@ -3,8 +3,8 @@ title: Separator
 description: A hand-drawn horizontal or vertical divider line.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Separator } from "@/components/ui/separator"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Separator } from "@/registry/new-york/ui/separator";
 
 <PreviewContainer
   componentName="separator"
@@ -25,10 +25,7 @@ npx shadcn add https://crumble.dev/r/separator.json
 
 ## With label
 
-<PreviewContainer
-  componentName="separator"
-  code={`<Separator label="OR" />`}
->
+<PreviewContainer componentName="separator" code={`<Separator label="OR" />`}>
   <div className="w-full max-w-sm py-4">
     <Separator label="OR" />
   </div>

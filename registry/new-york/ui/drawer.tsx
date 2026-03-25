@@ -13,7 +13,14 @@ import {
 import { createPortal } from "react-dom";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 // ---------- context ----------
 
@@ -33,7 +40,7 @@ const DrawerContext = createContext<DrawerContextValue>({
 
 export type DrawerSide = "left" | "right" | "top" | "bottom";
 
-export interface DrawerProps {
+export interface DrawerProps extends CrumbleColorProps {
   children: ReactNode;
   onOpenChange?: (open: boolean) => void;
   open: boolean;
@@ -45,12 +52,18 @@ export interface DrawerProps {
 
 export function Drawer({
   children,
+  fill,
   onOpenChange,
   open,
   side = "right",
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: DrawerProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
   const onClose = () => onOpenChange?.(false);
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   useEffect(() => {
     if (!open) return;
@@ -67,7 +80,7 @@ export function Drawer({
 
   return (
     <DrawerContext.Provider value={{ onClose, side, theme }}>
-      {children}
+      <div style={roughStyle}>{children}</div>
     </DrawerContext.Provider>
   );
 }

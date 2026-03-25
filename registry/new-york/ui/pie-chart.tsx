@@ -7,6 +7,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -15,7 +16,14 @@ import {
 import rough from "roughjs";
 import { arc as d3Arc, pie as d3Pie, type PieArcDatum } from "d3-shape";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export interface PieChartSlice {
   color?: string;
@@ -23,7 +31,9 @@ export interface PieChartSlice {
   value: number;
 }
 
-export interface PieChartProps extends HTMLAttributes<HTMLDivElement> {
+export interface PieChartProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   animateOnMount?: boolean;
   data: PieChartSlice[];
   donut?: boolean;
@@ -50,18 +60,24 @@ export function PieChart({
   className,
   data,
   donut = false,
+  fill,
   formatValue = (v, t) => `${Math.round((v / t) * 100)}%`,
   height = 260,
   id,
   showLabels = true,
   showLegend = true,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   ...props
 }: PieChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const chartId = id ?? "pie-chart";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const total = data.reduce((s, d) => s + d.value, 0);
 
@@ -246,7 +262,12 @@ export function PieChart({
   }, [draw]);
 
   return (
-    <div ref={containerRef} className={cn("w-full", className)} style={{ height }} {...props}>
+    <div
+      ref={containerRef}
+      className={cn("w-full", className)}
+      style={{ ...roughStyle, height }}
+      {...props}
+    >
       <svg
         ref={svgRef}
         aria-label={donut ? "Donut chart" : "Pie chart"}

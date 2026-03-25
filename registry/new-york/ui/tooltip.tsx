@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,11 +10,18 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type TooltipSide = "top" | "bottom" | "left" | "right";
 
-export interface TooltipProps {
+export interface TooltipProps extends CrumbleColorProps {
   children: ReactNode;
   className?: string;
   content: ReactNode;
@@ -31,15 +39,21 @@ export function Tooltip({
   className,
   content,
   delayMs = 400,
+  fill,
   id,
   side = "top",
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
 }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipId = id ?? "tooltip";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(() => {
     const tooltip = tooltipRef.current;
@@ -136,7 +150,7 @@ export function Tooltip({
             <div className={cn(
               "relative px-3 py-1.5 text-xs text-popover-foreground",
               className,
-            )}>
+            )} style={roughStyle}>
               {content}
             </div>
           </div>

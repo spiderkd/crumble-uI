@@ -7,7 +7,7 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 import { randomSeed, type CrumbleTheme } from "@/lib/rough";
-import { useRough } from "@/registry/new-york/hooks/use-rough";
+import { useRough } from "@/hooks/use-rough";
 
 export interface RoughCircleProps {
   children?: ReactNode;

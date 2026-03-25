@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from "react";
 import type { CrumbleTheme } from "@/lib/rough";
-import { useRough } from "@/registry/new-york/hooks/use-rough";
+import { useRough } from "@/hooks/use-rough";
 
 export interface RoughArrowProps {
   className?: string;

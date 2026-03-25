@@ -3,8 +3,8 @@ title: Stat Card
 description: A hand-drawn card preset for dashboard metrics with an optional trend arrow.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { StatCard } from "@/components/ui/stat-card"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { StatCard } from "@/registry/new-york/ui/stat-card";
 
 <PreviewContainer
   componentName="stat-card"
@@ -30,9 +30,14 @@ npx shadcn add https://crumble.dev/r/stat-card.json
 <StatCard label="Sessions" value="18.5k" trend="flat" trendLabel="no change" />`}
 >
   <div className="flex flex-wrap gap-4">
-    <StatCard label="Users"    value="2,840" trend="up"   trendLabel="+12%" />
-    <StatCard label="Churn"    value="3.2%"  trend="down" trendLabel="-0.4%" />
-    <StatCard label="Sessions" value="18.5k" trend="flat" trendLabel="no change" />
+    <StatCard label="Users" value="2,840" trend="up" trendLabel="+12%" />
+    <StatCard label="Churn" value="3.2%" trend="down" trendLabel="-0.4%" />
+    <StatCard
+      label="Sessions"
+      value="18.5k"
+      trend="flat"
+      trendLabel="no change"
+    />
   </div>
 </PreviewContainer>
 

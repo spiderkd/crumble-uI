@@ -1,11 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface ProgressProps {
+export interface ProgressProps extends CrumbleColorProps {
   className?: string;
   id?: string;
   label?: string;
@@ -19,15 +26,21 @@ const TRACK_H = 16;
 
 export function Progress({
   className,
+  fill,
   id,
   label,
   max = 100,
   showValue = false,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   value = 0,
 }: ProgressProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   const progressId = id ?? `progress-${label?.toLowerCase().replace(/\s+/g, "-") ?? "bar"}`;
 
   const pct = Math.min(Math.max(value / max, 0), 1);
@@ -81,7 +94,7 @@ export function Progress({
   }, [draw]);
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5", className)} style={roughStyle}>
       {label || showValue ? (
         <div className="flex justify-between">
           {label ? (

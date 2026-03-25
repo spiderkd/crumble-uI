@@ -3,8 +3,8 @@ title: Sparkline
 description: An inline mini chart that drops naturally into text and table cells.
 ---
 
-import { PreviewContainer } from "@/components/preview/PreviewContainer"
-import { Sparkline } from "@/components/ui/sparkline"
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { Sparkline } from "@/registry/new-york/ui/sparkline";
 
 <PreviewContainer
   componentName="sparkline"
@@ -102,7 +102,7 @@ npx shadcn add https://crumble.dev/r/sparkline.json
 >
   <div className="flex flex-col gap-3">
     <Sparkline theme="pencil" data={[30, 50, 40, 65, 55, 75]} />
-    <Sparkline theme="ink"    data={[30, 50, 40, 65, 55, 75]} />
+    <Sparkline theme="ink" data={[30, 50, 40, 65, 55, 75]} />
     <Sparkline theme="crayon" data={[30, 50, 40, 65, 55, 75]} />
   </div>
 </PreviewContainer>

@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,18 +10,19 @@ import {
   type InputHTMLAttributes,
 } from "react";
 import rough from "roughjs";
-import { cn } from "@/lib/utils";
 import {
+  CrumbleContext,
   getRoughOptions,
+  resolveRoughVars,
   stableSeed,
+  type CrumbleColorProps,
   type CrumbleTheme,
 } from "@/lib/rough";
-// registry defaults: no CrumbleContext
+import { cn } from "@/lib/utils";
 
-export interface SliderProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "type"
-> {
+export interface SliderProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type">,
+    CrumbleColorProps {
   formatValue?: (value: number) => string;
   label?: string;
   showValue?: boolean;
@@ -33,6 +35,7 @@ const THUMB_SIZE = 20;
 export function Slider({
   className,
   defaultValue,
+  fill,
   formatValue,
   id,
   label,
@@ -40,6 +43,8 @@ export function Slider({
   min = 0,
   onChange,
   showValue = true,
+  stroke,
+  strokeMuted,
   theme: themeProp,
   value,
   ...props
@@ -51,7 +56,9 @@ export function Slider({
   const sliderId =
     id ?? `slider-${label?.toLowerCase().replace(/\s+/g, "-") ?? "field"}`;
   const pct = (current - Number(min)) / (Number(max) - Number(min));
-  const theme = themeProp ?? "pencil";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const drawAll = useCallback(() => {
     const thumbSvg = thumbRef.current;
@@ -91,7 +98,7 @@ export function Slider({
           {
             ...baseOptions,
             seed: stableSeed(`${sliderId}-fill`),
-            stroke: "currentColor",
+            stroke: "var(--cr-stroke)",
             strokeWidth: TRACK_HEIGHT,
           },
         ),
@@ -109,7 +116,7 @@ export function Slider({
           fill: "hsl(var(--background))",
           fillStyle: "solid",
           seed: stableSeed(`${sliderId}-thumb`),
-          stroke: "currentColor",
+          stroke: "var(--cr-stroke)",
         }),
       ),
     );
@@ -125,7 +132,6 @@ export function Slider({
 
     const observer = new ResizeObserver(() => drawAll());
     observer.observe(wrapper);
-
     return () => observer.disconnect();
   }, [drawAll]);
 
@@ -135,7 +141,7 @@ export function Slider({
   };
 
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)} style={roughStyle}>
       {label || showValue ? (
         <div className="flex justify-between">
           {label ? (

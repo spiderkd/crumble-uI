@@ -2,16 +2,25 @@
 
 import {
   useCallback,
+  useContext,
   useEffect,
   useRef,
   type HTMLAttributes,
-  type ReactNode,
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
-export interface NotebookProps extends HTMLAttributes<HTMLDivElement> {
+export interface NotebookProps
+  extends HTMLAttributes<HTMLDivElement>,
+    CrumbleColorProps {
   id?: string;
   lineColor?: string;
   lineSpacing?: number;
@@ -23,19 +32,25 @@ export interface NotebookProps extends HTMLAttributes<HTMLDivElement> {
 export function Notebook({
   children,
   className,
+  fill,
   id,
   lineColor,
   lineSpacing = 28,
   marginColor,
   showMargin = true,
+  stroke,
+  strokeMuted,
   style,
-  theme = "pencil",
+  theme: themeProp,
   ...props
 }: NotebookProps) {
   const containerRef   = useRef<HTMLDivElement>(null);
   const linesCanvasRef = useRef<SVGSVGElement>(null);
   const borderSvgRef   = useRef<SVGSVGElement>(null);
   const notebookId = id ?? "notebook";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const MARGIN_X = showMargin ? 40 : 0;
 
@@ -117,7 +132,7 @@ export function Notebook({
     <div
       ref={containerRef}
       className={cn("relative min-h-[200px] bg-background", className)}
-      style={style}
+      style={{ ...roughStyle, ...style }}
       {...props}
     >
       {/* Ruled lines layer (behind content) */}

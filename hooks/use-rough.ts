@@ -5,13 +5,13 @@ import rough from "roughjs";
 import type { Options } from "roughjs/bin/core";
 import type { RoughSVG } from "roughjs/bin/svg";
 import {
+  CrumbleContext,
   getRoughOptions,
   randomSeed,
   stableSeed,
   type ComponentVariant,
   type CrumbleTheme,
 } from "@/lib/rough";
-import { CrumbleContext } from "@/lib/crumble-context";
 
 interface UseRoughProps {
   variant?: ComponentVariant;
@@ -32,7 +32,6 @@ export function useRough({
   const svgRef = externalSvgRef ?? internalSvgRef;
   const rcRef = useRef<RoughSVG | null>(null);
   const lastSvgRef = useRef<SVGSVGElement | null>(null);
-  // Read live theme + config from context
   const {
     animateOnHover,
     animateOnMount,
@@ -116,6 +115,7 @@ export function useRough({
     },
     [getOptions, getRenderer],
   );
+
   return {
     animateOnHover,
     animateOnMount,

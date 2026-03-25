@@ -11,7 +11,14 @@ import {
 } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 // ---------- context ----------
 
@@ -27,18 +34,29 @@ const DialogContext = createContext<DialogContextValue>({
 
 // ---------- root ----------
 
-export interface DialogProps {
+export interface DialogProps extends CrumbleColorProps {
   children: ReactNode;
   onOpenChange?: (open: boolean) => void;
   open: boolean;
   theme?: CrumbleTheme;
 }
 
-export function Dialog({ children, onOpenChange, open, theme = "pencil" }: DialogProps) {
+export function Dialog({
+  children,
+  fill,
+  onOpenChange,
+  open,
+  stroke,
+  strokeMuted,
+  theme: themeProp,
+}: DialogProps) {
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
   const onClose = () => onOpenChange?.(false);
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
   return (
     <DialogContext.Provider value={{ onClose, theme }}>
-      {children}
+      <div style={roughStyle}>{children}</div>
     </DialogContext.Provider>
   );
 }

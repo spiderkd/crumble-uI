@@ -1,9 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 const SWATCHES = [
   "#ef4444", "#f97316", "#eab308", "#22c55e",
@@ -11,7 +19,7 @@ const SWATCHES = [
   "#ffffff", "#d1d5db", "#6b7280", "#111827",
 ];
 
-export interface ColorPickerProps {
+export interface ColorPickerProps extends CrumbleColorProps {
   className?: string;
   defaultValue?: string;
   id?: string;
@@ -91,11 +99,14 @@ function Swatch({
 export function ColorPicker({
   className,
   defaultValue = "#3b82f6",
+  fill,
   id,
   label,
   onChange,
+  stroke,
+  strokeMuted,
   swatches = SWATCHES,
-  theme = "pencil",
+  theme: themeProp,
   value: controlledValue,
 }: ColorPickerProps) {
   const [internalValue, setInternalValue] = useState(defaultValue);
@@ -103,6 +114,9 @@ export function ColorPicker({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputSvgRef = useRef<SVGSVGElement>(null);
   const pickerId = id ?? "color-picker";
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const value = controlledValue ?? internalValue;
 
@@ -151,7 +165,7 @@ export function ColorPicker({
   };
 
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)} style={roughStyle}>
       {label ? (
         <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}

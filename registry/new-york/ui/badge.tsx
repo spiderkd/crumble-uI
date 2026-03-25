@@ -1,13 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import { useCallback, useContext, useEffect, useRef, type ReactNode } from "react";
 import rough from "roughjs";
 import { cn } from "@/lib/utils";
-import { getRoughOptions, randomSeed, stableSeed, type CrumbleTheme } from "@/lib/rough";
+import {
+  CrumbleContext,
+  getRoughOptions,
+  randomSeed,
+  resolveRoughVars,
+  stableSeed,
+  type CrumbleColorProps,
+  type CrumbleTheme,
+} from "@/lib/rough";
 
 export type BadgeVariant = "default" | "success" | "warning" | "destructive" | "outline";
 
-export interface BadgeProps {
+export interface BadgeProps extends CrumbleColorProps {
   animateOnHover?: boolean;
   children: ReactNode;
   className?: string;
@@ -36,13 +44,19 @@ export function Badge({
   animateOnHover = true,
   children,
   className,
+  fill,
   id,
-  theme = "pencil",
+  stroke,
+  strokeMuted,
+  theme: themeProp,
   variant = "default",
 }: BadgeProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const stableId = id ?? `badge-${variant}`;
+  const { theme: contextTheme } = useContext(CrumbleContext);
+  const theme = themeProp ?? contextTheme;
+  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });
 
   const draw = useCallback(
     (reseed = false) => {
@@ -91,6 +105,7 @@ export function Badge({
         variantText[variant],
         className,
       )}
+      style={roughStyle}
       onMouseEnter={() => { if (animateOnHover) draw(true); }}
       onMouseLeave={() => { if (animateOnHover) draw(false); }}
     >
