@@ -13,15 +13,8 @@
         "provider": "google",
         "import": "Caveat",
         "variable": "--font-display",
-        "subsets": [
-          "latin"
-        ],
-        "weight": [
-          "400",
-          "500",
-          "600",
-          "700"
-        ],
+        "subsets": ["latin"],
+        "weight": ["400", "500", "600", "700"],
         "dependency": "@fontsource-variable/caveat"
       }
     },
@@ -37,10 +30,7 @@
           "cssVariables": true
         }
       },
-      "dependencies": [
-        "roughjs",
-        "tw-animate-css"
-      ],
+      "dependencies": ["roughjs", "tw-animate-css"],
       "registryDependencies": [
         "http://localhost:3000/r/font-display.json",
         "utils"
@@ -99,9 +89,7 @@
       "type": "registry:lib",
       "title": "Rough Theme Config",
       "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all Crumble components.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "files": [
         {
           "path": "registry/new-york/lib/rough.ts",
@@ -115,10 +103,7 @@
       "type": "registry:lib",
       "title": "Utils",
       "description": "cn() helper — clsx + tailwind-merge.",
-      "dependencies": [
-        "clsx",
-        "tailwind-merge"
-      ],
+      "dependencies": ["clsx", "tailwind-merge"],
       "files": [
         {
           "path": "registry/new-york/lib/utils.ts",
@@ -132,12 +117,8 @@
       "type": "registry:hook",
       "title": "useRough",
       "description": "Core Rough.js SVG drawing hook — drawRect, drawLine, drawCircle, drawPath, getOptions, theme-aware.",
-      "dependencies": [
-        "roughjs"
-      ],
-      "registryDependencies": [
-        "http://localhost:3000/r/rough-lib.json"
-      ],
+      "dependencies": ["roughjs"],
+      "registryDependencies": ["http://localhost:3000/r/rough-lib.json"],
       "files": [
         {
           "path": "registry/new-york/hooks/use-rough.ts",
@@ -151,9 +132,7 @@
       "type": "registry:ui",
       "title": "RoughArrow",
       "description": "Hand-drawn curved arrow SVG primitive.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -173,9 +152,7 @@
       "type": "registry:ui",
       "title": "RoughCircle",
       "description": "Hand-drawn circle SVG primitive.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -195,9 +172,7 @@
       "type": "registry:ui",
       "title": "RoughHighlight",
       "description": "Hand-drawn text annotation — underline, box, circle, highlight, strike-through, bracket.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -217,9 +192,7 @@
       "type": "registry:ui",
       "title": "RoughLine",
       "description": "Hand-drawn horizontal or vertical line primitive.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -239,9 +212,7 @@
       "type": "registry:ui",
       "title": "RoughPath",
       "description": "Hand-drawn SVG path primitive for arbitrary d strings.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -261,9 +232,7 @@
       "type": "registry:ui",
       "title": "RoughRect",
       "description": "Hand-drawn rectangle wrapper with optional children.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -283,9 +252,7 @@
       "type": "registry:ui",
       "title": "Annotation",
       "description": "Inline rough callout annotation — box, circle, underline, bracket, arrow-label types.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/rough-lib.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -304,9 +271,7 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Hand-drawn button with hover redraw animation. Supports default, ghost, and destructive variants.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -326,9 +291,7 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Hand-drawn card with optional stacked paper effect.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -348,9 +311,7 @@
       "type": "registry:ui",
       "title": "Checkbox",
       "description": "Hand-drawn checkbox with tick animation.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -370,9 +331,7 @@
       "type": "registry:ui",
       "title": "Input",
       "description": "Hand-drawn text input — box or underline style with focus and error states.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -392,9 +351,7 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "Hand-drawn tabs with rough active-tab underline indicator.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -414,9 +371,7 @@
       "type": "registry:ui",
       "title": "CalloutArrow",
       "description": "Hand-drawn curved arrow connecting two DOM elements via refs. Uses common-ancestor positioning — zero scroll listeners, zero redraws on scroll.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/rough-lib.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -435,9 +390,7 @@
       "type": "registry:ui",
       "title": "Accordion",
       "description": "Collapsible sections with rough chevrons and hand-drawn separators.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -457,9 +410,7 @@
       "type": "registry:ui",
       "title": "Avatar",
       "description": "A hand-drawn circle border around a profile image or initials fallback.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -479,9 +430,7 @@
       "type": "registry:ui",
       "title": "Badge",
       "description": "A hand-drawn label badge with rough border and semantic variants.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -501,9 +450,7 @@
       "type": "registry:ui",
       "title": "Bar Chart",
       "description": "A hand-drawn bar chart with hachure-filled bars and animated mount.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -523,9 +470,7 @@
       "type": "registry:ui",
       "title": "Color Picker",
       "description": "A hand-drawn color picker with preset swatches and editable hex input.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -545,9 +490,7 @@
       "type": "registry:ui",
       "title": "Combobox",
       "description": "A searchable hand-drawn select with filtered dropdown and keyboard navigation.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -567,9 +510,7 @@
       "type": "registry:ui",
       "title": "Dialog",
       "description": "A modal dialog using the native browser dialog element with a rough-drawn border that redraws fresh on every open.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -589,10 +530,7 @@
       "type": "registry:ui",
       "title": "Drawer",
       "description": "A panel that slides in from any edge with a rough line on the exposed side.",
-      "dependencies": [
-        "react-dom",
-        "roughjs"
-      ],
+      "dependencies": ["react-dom", "roughjs"],
       "registryDependencies": [
         "utils",
         "http://localhost:3000/r/crumble-theme.json",
@@ -611,9 +549,7 @@
       "type": "registry:ui",
       "title": "File Upload",
       "description": "A hand-drawn dropzone that becomes more expressive when a file is dragged over it.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -633,9 +569,7 @@
       "type": "registry:ui",
       "title": "Line Chart",
       "description": "A hand-drawn line chart with Catmull-Rom curves and animated draw-on.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -655,9 +589,7 @@
       "type": "registry:ui",
       "title": "Notebook",
       "description": "A hand-drawn lined paper container with ruled lines and a red margin.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -677,9 +609,7 @@
       "type": "registry:ui",
       "title": "Number Input",
       "description": "A hand-drawn number input with rough increment and decrement buttons.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -699,9 +629,7 @@
       "type": "registry:ui",
       "title": "OTP Input",
       "description": "A row of hand-drawn single-character boxes for one-time passwords.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -721,10 +649,7 @@
       "type": "registry:ui",
       "title": "Pie Chart",
       "description": "A hand-drawn pie or donut chart with hachure-filled slices and d3-shape arc math.",
-      "dependencies": [
-        "roughjs",
-        "d3-shape"
-      ],
+      "dependencies": ["roughjs", "d3-shape"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -744,9 +669,7 @@
       "type": "registry:ui",
       "title": "Progress",
       "description": "A hand-drawn progress bar with animated hachure fill.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -766,9 +689,7 @@
       "type": "registry:ui",
       "title": "Radio",
       "description": "Hand-drawn radio buttons with a filled inner circle when selected.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/rough-lib.json",
@@ -788,9 +709,7 @@
       "type": "registry:ui",
       "title": "Rating",
       "description": "A hand-drawn star rating with hover fill and hachure.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -810,9 +729,7 @@
       "type": "registry:ui",
       "title": "Scribble",
       "description": "Draw rough freehand scribbles over content for emphasis, redaction, or playful UI effects.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -832,9 +749,7 @@
       "type": "registry:ui",
       "title": "Select",
       "description": "A hand-drawn select dropdown with a rough chevron indicator.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -854,9 +769,7 @@
       "type": "registry:ui",
       "title": "Separator",
       "description": "A hand-drawn horizontal or vertical divider line.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -876,9 +789,7 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "A hand-drawn range slider with a sketchy track and circle thumb.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/rough-lib.json",
@@ -898,11 +809,7 @@
       "type": "registry:ui",
       "title": "Sparkline",
       "description": "An inline mini chart that drops naturally into text and table cells.",
-      "dependencies": [
-        "roughjs",
-        "d3-shape",
-        "d3-scale"
-      ],
+      "dependencies": ["roughjs", "d3-shape", "d3-scale"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -922,9 +829,7 @@
       "type": "registry:ui",
       "title": "Stat Card",
       "description": "A hand-drawn card preset for dashboard metrics with an optional trend arrow.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -944,9 +849,7 @@
       "type": "registry:ui",
       "title": "Sticky Note",
       "description": "A hand-drawn sticky note with a folded corner and five color variants.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -966,9 +869,7 @@
       "type": "registry:ui",
       "title": "Table",
       "description": "A data table where row separators are hand-drawn rough lines instead of CSS borders.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -988,9 +889,7 @@
       "type": "registry:ui",
       "title": "Textarea",
       "description": "A hand-drawn textarea with optional auto-grow and resize support.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -1010,9 +909,7 @@
       "type": "registry:ui",
       "title": "Timeline",
       "description": "A vertical event list with rough circle nodes and connecting lines.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",
@@ -1032,9 +929,7 @@
       "type": "registry:ui",
       "title": "Toggle",
       "description": "A hand-drawn toggle switch with a sliding circle thumb.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "http://localhost:3000/r/crumble-theme.json",
@@ -1054,9 +949,7 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "A hand-drawn callout that appears on hover with a rough polygon arrow.",
-      "dependencies": [
-        "roughjs"
-      ],
+      "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
         "utils",

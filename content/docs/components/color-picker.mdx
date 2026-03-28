@@ -1,0 +1,67 @@
+---
+title: color-picker
+description: A hand-drawn label badge with rough border and semantic variants.
+---
+
+import { PreviewContainer } from "@/components/preview/PreviewContainer";
+import { PropsTable } from "@/components/mdx/PropsTable";
+import { InstallTabs } from "@/components/mdx/InstallTabs";
+import ColorPickerDemo from "@/components/demos/colorPickerDemo.tsx";
+
+<PreviewContainer
+  componentName="color-picker"
+  code={`import { ColorPicker } from '@/components/crumble/ui/color-picker'
+
+<Badge>Default</Badge>`}
+>
+<ColorPickerDemo/>
+</PreviewContainer>
+
+## Installation
+
+<InstallTabs slug="badge" />
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      prop: "animateOnHover",
+      type: "boolean",
+      default: "true",
+      description: "Redraws the sketch lines on hover.",
+    },
+    {
+      prop: "children",
+      type: "ReactNode",
+      default: undefined,
+      description: "Content rendered inside the component.",
+      required: true,
+    },
+    {
+      prop: "className",
+      type: "string",
+      default: undefined,
+      description: "Additional Tailwind classes applied to the component.",
+    },
+    {
+      prop: "id",
+      type: "string",
+      default: undefined,
+      description:
+        "Optional stable id used for sketch seeding and accessibility.",
+    },
+    {
+      prop: "theme",
+      type: "CrumbleTheme",
+      default: undefined,
+      description: "Overrides the global Crumble theme for this instance.",
+    },
+    {
+      prop: "variant",
+      type: "BadgeVariant",
+      default: '"default"',
+      description: "Controls the `variant` behavior.",
+    },
+  ]}
+/>

@@ -8,6 +8,7 @@
   ],
   "registryDependencies": [
     "http://localhost:3000/r/rough-lib.json",
+    "http://localhost:3000/r/crumble-theme.json",
     "utils"
   ],
   "files": [

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "title": "Progress",
+  "description": "A hand-drawn progress bar with animated hachure fill.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/use-rough.json",
+    "utils",
+    "http://localhost:3000/r/crumble-theme.json",
+    "http://localhost:3000/r/rough-lib.json"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/progress.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef } from \"react\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { cn } from \"@/lib/utils\";\nimport {\n  resolveRoughVars,\n  stableSeed,\n  type CrumbleColorProps,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\n\nexport interface ProgressProps extends CrumbleColorProps {\n  className?: string;\n  id?: string;\n  label?: string;\n  max?: number;\n  showValue?: boolean;\n  theme?: CrumbleTheme;\n  value?: number;\n  formatValue?: (value: number, max: number) => string;\n}\n\nconst TRACK_H = 16;\n\nexport function Progress({\n  className,\n  fill,\n  id,\n  label,\n  max = 100,\n  showValue = false,\n  stroke,\n  strokeMuted,\n  theme: themeProp,\n  value = 0,\n  formatValue,\n}: ProgressProps) {\n  const wrapperRef = useRef<HTMLDivElement>(null);\n  const externalSvgRef = useRef<SVGSVGElement>(null);\n  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });\n  const progressId =\n    id ?? `progress-${label?.toLowerCase().replace(/\\s+/g, \"-\") ?? \"bar\"}`;\n  const pct = Math.min(Math.max(value / max, 0), 1);\n  const { drawRect, svgRef, theme } = useRough({\n    stableId: progressId,\n    svgRef: externalSvgRef,\n    theme: themeProp,\n    variant: \"fill\",\n  });\n\n  const draw = useCallback(() => {\n    const svg = svgRef.current;\n    const wrapper = wrapperRef.current;\n    if (!svg || !wrapper) return;\n\n    svg.replaceChildren();\n    const w = wrapper.offsetWidth;\n    svg.setAttribute(\"width\", String(w));\n    svg.setAttribute(\"height\", String(TRACK_H));\n    svg.setAttribute(\"viewBox\", `0 0 ${w} ${TRACK_H}`);\n\n    const track = drawRect(1, 1, w - 2, TRACK_H - 2, {\n      fill: \"none\",\n      seed: stableSeed(`${progressId}-track`),\n      stroke: \"var(--cr-stroke-muted)\",\n    });\n    if (track) svg.appendChild(track);\n\n    if (pct > 0) {\n      const fillW = Math.max((w - 4) * pct, 4);\n      const bar = drawRect(2, 2, fillW, TRACK_H - 4, {\n        seed: stableSeed(`${progressId}-fill`),\n        fill: \"currentColor\",\n        fillStyle: theme === \"ink\" ? \"solid\" : \"hachure\",\n        stroke: \"none\",\n      });\n      if (bar) svg.appendChild(bar);\n    }\n  }, [drawRect, pct, progressId, svgRef, theme]);\n\n  useEffect(() => {\n    draw();\n  }, [draw]);\n\n  useEffect(() => {\n    const wrapper = wrapperRef.current;\n    if (!wrapper) return;\n    const ro = new ResizeObserver(() => draw());\n    ro.observe(wrapper);\n    return () => ro.disconnect();\n  }, [draw]);\n\n  return (\n    <div className={cn(\"flex flex-col gap-1.5\", className)} style={roughStyle}>\n      {label || showValue ? (\n        <div className=\"flex justify-between\">\n          {label ? (\n            <span className=\"text-[11px] font-medium uppercase tracking-wider text-muted-foreground\">\n              {label}\n            </span>\n          ) : null}\n          {showValue ? (\n            <span className=\"text-[11px] tabular-nums text-muted-foreground\">\n              {formatValue ? formatValue(value, max) : `${Math.round(pct * 100)}%`}\n            </span>\n          ) : null}\n        </div>\n      ) : null}\n      <div\n        ref={wrapperRef}\n        role=\"progressbar\"\n        aria-valuenow={value}\n        aria-valuemin={0}\n        aria-valuemax={max}\n        className=\"relative\"\n        style={{ height: TRACK_H }}\n      >\n        <svg\n          ref={externalSvgRef}\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute inset-0 overflow-visible\"\n        />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/progress.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

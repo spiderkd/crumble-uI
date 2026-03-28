@@ -1,377 +1,321 @@
-{
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "crumble",
-  "homepage": "https://crumble.dev",
-  "items": [
-    {
-      "name": "font-display",
-      "type": "registry:font",
-      "title": "Caveat",
-      "description": "Handwritten display font for Crumble labels and annotations.",
-      "font": {
-        "family": "'Caveat Variable', cursive",
-        "provider": "google",
-        "import": "Caveat",
-        "variable": "--font-display",
-        "subsets": ["latin"],
-        "weight": ["400", "500", "600", "700"],
-        "dependency": "@fontsource-variable/caveat"
-      }
-    },
-    {
-      "name": "crumble-theme",
-      "type": "registry:base",
-      "title": "Crumble Design System",
-      "description": "Foundational theme, custom CSS variables, and font configuration for Crumble.",
-      "config": {
-        "style": "new-york",
-        "tailwind": {
-          "baseColor": "neutral",
-          "cssVariables": true
-        }
-      },
-      "dependencies": ["roughjs", "tw-animate-css"],
-      "registryDependencies": [
-        "http://localhost:3000/r/font-display.json",
-        "utils"
-      ],
-      "cssVars": {
-        "light": {
-          "cr-stroke": "currentColor",
-          "cr-stroke-muted": "color-mix(in srgb, currentColor 40%, transparent)",
-          "cr-stroke-error": "var(--destructive)",
-          "cr-fill": "transparent",
-          "cr-sketch-duration": "600ms",
-          "cr-sketch-easing": "cubic-bezier(0.4, 0, 0.2, 1)",
-          "cr-wiggle-duration": "120ms",
-          "cr-radius": "4px",
-          "cr-weight": "1px",
-          "color-ivory": "oklch(97.22% 0.002 102.31)",
-          "color-sandalwood": "oklch(74.51% 0.15 65.88)",
-          "color-muted-gold": "oklch(84.12% 0.12 80.11)",
-          "color-indigo": "oklch(37% 0.12 260)"
-        },
-        "dark": {
-          "cr-stroke": "currentColor",
-          "cr-stroke-muted": "color-mix(in srgb, currentColor 40%, transparent)",
-          "cr-stroke-error": "var(--destructive)",
-          "cr-fill": "transparent",
-          "cr-sketch-duration": "600ms",
-          "cr-sketch-easing": "cubic-bezier(0.4, 0, 0.2, 1)",
-          "cr-wiggle-duration": "120ms",
-          "cr-radius": "4px",
-          "cr-weight": "1px",
-          "color-ivory": "oklch(97.22% 0.002 102.31)",
-          "color-sandalwood": "oklch(74.51% 0.15 65.88)",
-          "color-muted-gold": "oklch(84.12% 0.12 80.11)",
-          "color-indigo": "oklch(37% 0.12 260)"
-        }
-      },
-      "css": {
-        "@layer base": {
-          "[data-crumble-theme='pencil']": {
-            "--cr-weight": "1px",
-            "--cr-sketch-duration": "800ms"
-          },
-          "[data-crumble-theme='ink']": {
-            "--cr-weight": "2px",
-            "--cr-sketch-duration": "400ms"
-          },
-          "[data-crumble-theme='crayon']": {
-            "--cr-weight": "3.5px",
-            "--cr-sketch-duration": "600ms"
-          }
-        }
-      }
-    },
-    {
-      "name": "rough-lib",
-      "type": "registry:lib",
-      "title": "Rough Theme Config",
-      "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all Crumble components.",
-      "dependencies": ["roughjs"],
-      "files": [
-        {
-          "path": "registry/new-york/lib/rough.ts",
-          "type": "registry:lib",
-          "target": "lib/rough.ts"
-        }
-      ]
-    },
-    {
-      "name": "utils",
-      "type": "registry:lib",
-      "title": "Utils",
-      "description": "cn() helper — clsx + tailwind-merge.",
-      "dependencies": ["clsx", "tailwind-merge"],
-      "files": [
-        {
-          "path": "registry/new-york/lib/utils.ts",
-          "type": "registry:lib",
-          "target": "lib/utils.ts"
-        }
-      ]
-    },
-    {
-      "name": "use-rough",
-      "type": "registry:hook",
-      "title": "useRough",
-      "description": "Core Rough.js SVG drawing hook — drawRect, drawLine, drawCircle, drawPath, getOptions, theme-aware.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": ["http://localhost:3000/r/rough-lib.json"],
-      "files": [
-        {
-          "path": "registry/new-york/hooks/use-rough.ts",
-          "type": "registry:hook",
-          "target": "hooks/use-rough.ts"
-        }
-      ]
-    },
-    {
-      "name": "rough-arrow",
-      "type": "registry:ui",
-      "title": "RoughArrow",
-      "description": "Hand-drawn curved arrow SVG primitive.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-arrow.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-arrow.tsx"
-        }
-      ]
-    },
-    {
-      "name": "rough-circle",
-      "type": "registry:ui",
-      "title": "RoughCircle",
-      "description": "Hand-drawn circle SVG primitive.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-circle.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-circle.tsx"
-        }
-      ]
-    },
-    {
-      "name": "rough-highlight",
-      "type": "registry:ui",
-      "title": "RoughHighlight",
-      "description": "Hand-drawn text annotation — underline, box, circle, highlight, strike-through, bracket.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-highlight.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-highlight.tsx"
-        }
-      ]
-    },
-    {
-      "name": "rough-line",
-      "type": "registry:ui",
-      "title": "RoughLine",
-      "description": "Hand-drawn horizontal or vertical line primitive.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-line.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-line.tsx"
-        }
-      ]
-    },
-    {
-      "name": "rough-path",
-      "type": "registry:ui",
-      "title": "RoughPath",
-      "description": "Hand-drawn SVG path primitive for arbitrary d strings.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-path.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-path.tsx"
-        }
-      ]
-    },
-    {
-      "name": "rough-rect",
-      "type": "registry:ui",
-      "title": "RoughRect",
-      "description": "Hand-drawn rectangle wrapper with optional children.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/primitives/rough-rect.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/primitives/rough-rect.tsx"
-        }
-      ]
-    },
-    {
-      "name": "annotation",
-      "type": "registry:ui",
-      "title": "Annotation",
-      "description": "Inline rough callout annotation — box, circle, underline, bracket, arrow-label types.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/annotation.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/annotation.tsx"
-        }
-      ]
-    },
-    {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "Hand-drawn button with hover redraw animation. Supports default, ghost, and destructive variants.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/crumble-theme.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/button.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/button.tsx"
-        }
-      ]
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "title": "Card",
-      "description": "Hand-drawn card with optional stacked paper effect.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/card.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/card.tsx"
-        }
-      ]
-    },
-    {
-      "name": "checkbox",
-      "type": "registry:ui",
-      "title": "Checkbox",
-      "description": "Hand-drawn checkbox with tick animation.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/checkbox.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/checkbox.tsx"
-        }
-      ]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "Hand-drawn text input — box or underline style with focus and error states.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/input.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/input.tsx"
-        }
-      ]
-    },
-    {
-      "name": "tabs",
-      "type": "registry:ui",
-      "title": "Tabs",
-      "description": "Hand-drawn tabs with rough active-tab underline indicator.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/use-rough.json",
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/tabs.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/tabs.tsx"
-        }
-      ]
-    },
-    {
-      "name": "callout-arrow",
-      "type": "registry:ui",
-      "title": "CalloutArrow",
-      "description": "Hand-drawn curved arrow connecting two DOM elements via refs. Uses common-ancestor positioning — zero scroll listeners, zero redraws on scroll.",
-      "dependencies": ["roughjs"],
-      "registryDependencies": [
-        "http://localhost:3000/r/rough-lib.json",
-        "utils"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/callout-arrow.tsx",
-          "type": "registry:ui",
-          "target": "components/crumble/ui/callout-arrow.tsx"
-        }
-      ]
-    }
-  ]
+"use client";
+
+/**
+ * Crumble — Analytics Dashboard Template
+ * Full-width app dashboard with stat cards, sparklines, bar chart, line chart,
+ * a data table, and a sidebar nav.
+ *
+ * Registry components: StatCard, Sparkline, BarChart, LineChart, Card,
+ *                      Badge, Avatar, Progress, Tabs, RoughLine, Button
+ */
+
+import { useState } from "react";
+import { StatCard } from "@/registry/new-york/ui/stat-card";
+import { Sparkline } from "@/registry/new-york/ui/sparkline";
+import { BarChart } from "@/registry/new-york/ui/bar-chart";
+import { LineChart } from "@/registry/new-york/ui/line-chart";
+import { Card } from "@/registry/new-york/ui/card";
+import { Badge } from "@/registry/new-york/ui/badge";
+import { Avatar } from "@/registry/new-york/ui/avatar";
+import { Progress } from "@/registry/new-york/ui/progress";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/registry/new-york/ui/tabs";
+import { Button } from "@/registry/new-york/ui/button";
+import { RoughLine } from "@/components/primitives/rough-line";
+
+const STATS = [
+  {
+    label: "Total Revenue",
+    value: "$48,295",
+    trend: "up" as const,
+    trendLabel: "↑ 12.3% vs last month",
+    sparkData: [30, 45, 28, 60, 42, 70, 55, 80, 65, 90],
+  },
+  {
+    label: "Active Users",
+    value: "3,842",
+    trend: "up" as const,
+    trendLabel: "↑ 8.1% vs last week",
+    sparkData: [20, 25, 40, 30, 55, 45, 60, 70, 65, 80],
+  },
+  {
+    label: "Conversion",
+    value: "4.7%",
+    trend: "down" as const,
+    trendLabel: "↓ 0.3pts vs last period",
+    sparkData: [50, 52, 48, 55, 47, 49, 45, 46, 48, 47],
+  },
+  {
+    label: "Avg. Session",
+    value: "3m 24s",
+    trend: "up" as const,
+    trendLabel: "↑ 18s vs last week",
+    sparkData: [60, 55, 65, 58, 70, 64, 72, 68, 75, 78],
+  },
+];
+
+const BAR_DATA = [
+  { label: "Jan", value: 42000 },
+  { label: "Feb", value: 38000 },
+  { label: "Mar", value: 55000 },
+  { label: "Apr", value: 48000 },
+  { label: "May", value: 61000 },
+  { label: "Jun", value: 57000 },
+  { label: "Jul", value: 72000 },
+];
+
+const LINE_DATA = [
+  { label: "Mon", value: 1200 },
+  { label: "Tue", value: 1850 },
+  { label: "Wed", value: 1600 },
+  { label: "Thu", value: 2100 },
+  { label: "Fri", value: 1900 },
+  { label: "Sat", value: 1100 },
+  { label: "Sun", value: 950 },
+];
+
+const TOP_PAGES = [
+  { path: "/docs/getting-started", views: 12450, change: +14 },
+  { path: "/docs/components/button", views: 8930, change: +7 },
+  { path: "/blog/rough-aesthetics", views: 6210, change: +22 },
+  { path: "/", views: 5840, change: -3 },
+  { path: "/pricing", views: 4120, change: +9 },
+];
+
+const CHANNELS = [
+  { name: "Organic Search", value: 48, color: "#6b7280" },
+  { name: "Direct", value: 22, color: "#9ca3af" },
+  { name: "Social", value: 18, color: "#d1d5db" },
+  { name: "Referral", value: 12, color: "#e5e7eb" },
+];
+
+const NAV_ITEMS = [
+  { icon: "◎", label: "Overview", active: true },
+  { icon: "◈", label: "Users" },
+  { icon: "◇", label: "Revenue" },
+  { icon: "✦", label: "Content" },
+  { icon: "⊕", label: "Sources" },
+];
+
+export default function AnalyticsDashboard() {
+  const [range, setRange] = useState("7d");
+
+  return (
+    <div className="flex min-h-screen bg-background text-foreground">
+      {/* ── Sidebar ── */}
+      <aside className="hidden lg:flex flex-col w-52 shrink-0 border-r border-border/20 px-3 py-6 gap-1">
+        <div className="px-3 mb-5">
+          <span className="font-[family-name:var(--font-display)] italic text-base">
+            crumble
+          </span>
+          <span className="text-[11px] text-muted-foreground ml-1">
+            analytics
+          </span>
+        </div>
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.label}
+            className={`flex items-center gap-2.5 px-3 py-2 rounded text-[13px] w-full text-left transition-colors ${
+              item.active
+                ? "bg-secondary font-medium text-foreground"
+                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+            }`}
+          >
+            <span className="text-[14px]">{item.icon}</span>
+            {item.label}
+          </button>
+        ))}
+
+        <div className="mt-auto px-3 pt-4 border-t border-border/20">
+          <div className="flex items-center gap-2.5">
+            <Avatar fallback="AK" size={28} id="dash-user-av" />
+            <div>
+              <p className="text-[12px] font-medium">Arjun Kapoor</p>
+              <p className="text-[10px] text-muted-foreground">Admin</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* ── Main ── */}
+      <main className="flex-1 min-w-0 flex flex-col">
+        {/* Top bar */}
+        <header className="flex items-center justify-between px-6 py-4 border-b border-border/20 shrink-0">
+          <div>
+            <h1 className="text-[16px] font-medium">Overview</h1>
+            <p className="text-[12px] text-muted-foreground">
+              crumble.dev · Last updated 2 min ago
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex border border-border/40 rounded overflow-hidden text-[12px]">
+              {["24h", "7d", "30d", "90d"].map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRange(r)}
+                  className={`px-3 py-1.5 transition-colors ${
+                    range === r
+                      ? "bg-secondary font-medium"
+                      : "text-muted-foreground hover:bg-secondary/50"
+                  }`}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+            <Button size="sm" variant="ghost">
+              Export ↓
+            </Button>
+          </div>
+        </header>
+
+        <div className="p-6 flex flex-col gap-6 overflow-y-auto">
+          {/* ── Stat cards row ── */}
+          <div className="grid gap-4 grid-cols-2 xl:grid-cols-4">
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <StatCard
+                  id={`dash-stat-${s.label}`}
+                  label={s.label}
+                  value={s.value}
+                  trend={s.trend}
+                  trendLabel={s.trendLabel}
+                  className="w-full"
+                />
+                <div className="mt-2 px-1">
+                  <Sparkline
+                    data={s.sparkData}
+                    type="area"
+                    height={36}
+                    id={`spark-${s.label}`}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Charts row ── */}
+          <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
+            {/* Revenue bar chart */}
+            <Card id="dash-bar" padding={24}>
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <p className="text-[13px] font-medium">Monthly Revenue</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Jan – Jul 2024
+                  </p>
+                </div>
+                <Badge id="bar-badge" variant="outline">
+                  USD
+                </Badge>
+              </div>
+              <BarChart data={BAR_DATA} height={200} id="revenue-bar-chart" />
+            </Card>
+
+            {/* Traffic line chart */}
+            <Card id="dash-line" padding={24}>
+              <div className="flex items-center justify-between mb-5">
+                <p className="text-[13px] font-medium">Daily Visitors</p>
+                <p className="text-[11px] text-muted-foreground">This week</p>
+              </div>
+              <LineChart
+                labels={["mon", "tue", "wed", "thr", "fri", "sat", "sun"]}
+                series={[
+                  {
+                    id: "revenue",
+                    label: "Revenue",
+                    data: [200, 300, 155, 480, 370, 390, 300],
+                  },
+                ]}
+                // data={LINE_DATA}
+                height={200}
+                id="traffic-line-chart"
+              />
+            </Card>
+          </div>
+
+          {/* ── Bottom row ── */}
+          <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
+            {/* Top pages table */}
+            <Card id="dash-pages" padding={0}>
+              <div className="px-5 py-4 border-b border-border/20 flex items-center justify-between">
+                <p className="text-[13px] font-medium">Top Pages</p>
+                <Button size="sm" variant="ghost" className="text-[11px]">
+                  View all →
+                </Button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-border/10 bg-secondary/30">
+                      <th className="text-left px-5 py-2.5 font-medium text-[10px] uppercase tracking-wide text-muted-foreground">
+                        Page
+                      </th>
+                      <th className="text-right px-5 py-2.5 font-medium text-[10px] uppercase tracking-wide text-muted-foreground">
+                        Views
+                      </th>
+                      <th className="text-right px-5 py-2.5 font-medium text-[10px] uppercase tracking-wide text-muted-foreground">
+                        Change
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {TOP_PAGES.map((page, i) => (
+                      <tr
+                        key={page.path}
+                        className={
+                          i < TOP_PAGES.length - 1
+                            ? "border-b border-border/10"
+                            : ""
+                        }
+                      >
+                        <td className="px-5 py-3 font-mono text-[12px] text-muted-foreground">
+                          {page.path}
+                        </td>
+                        <td className="px-5 py-3 text-right tabular-nums">
+                          {page.views.toLocaleString()}
+                        </td>
+                        <td
+                          className={`px-5 py-3 text-right tabular-nums text-[12px] ${page.change > 0 ? "text-green-600 dark:text-green-400" : "text-red-500"}`}
+                        >
+                          {page.change > 0 ? "+" : ""}
+                          {page.change}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+
+            {/* Traffic sources */}
+            <Card id="dash-sources" padding={24}>
+              <p className="text-[13px] font-medium mb-5">Traffic Sources</p>
+              <div className="flex flex-col gap-4">
+                {CHANNELS.map((ch) => (
+                  <div key={ch.name}>
+                    <div className="flex justify-between text-[12px] mb-1.5">
+                      <span className="text-muted-foreground">{ch.name}</span>
+                      <span className="font-medium tabular-nums">
+                        {ch.value}%
+                      </span>
+                    </div>
+                    <Progress
+                      id={`progress-${ch.name}`}
+                      value={ch.value}
+                      className="w-full"
+                    />
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }

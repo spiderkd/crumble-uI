@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "A hand-drawn label badge with rough border and semantic variants.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/use-rough.json",
+    "utils",
+    "http://localhost:3000/r/crumble-theme.json",
+    "http://localhost:3000/r/rough-lib.json"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/badge.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef, type ReactNode } from \"react\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { cn } from \"@/lib/utils\";\nimport {\n  randomSeed,\n  resolveRoughVars,\n  type CrumbleColorProps,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\n\nexport type BadgeVariant =\n  | \"default\"\n  | \"success\"\n  | \"warning\"\n  | \"destructive\"\n  | \"outline\";\n\nexport interface BadgeProps extends CrumbleColorProps {\n  animateOnHover?: boolean;\n  children: ReactNode;\n  className?: string;\n  id?: string;\n  theme?: CrumbleTheme;\n  variant?: BadgeVariant;\n}\n\nconst variantStroke: Record<BadgeVariant, string> = {\n  default: \"currentColor\",\n  destructive: \"var(--cr-stroke-error)\",\n  outline: \"var(--cr-stroke-muted)\",\n  success: \"oklch(0.6 0.15 145)\",\n  warning: \"oklch(0.7 0.15 75)\",\n};\n\nconst variantText: Record<BadgeVariant, string> = {\n  default: \"text-foreground\",\n  destructive: \"text-destructive\",\n  outline: \"text-muted-foreground\",\n  success: \"text-green-700 dark:text-green-400\",\n  warning: \"text-amber-700 dark:text-amber-400\",\n};\n\nexport function Badge({\n  animateOnHover = true,\n  children,\n  className,\n  fill,\n  id,\n  stroke,\n  strokeMuted,\n  theme: themeProp,\n  variant = \"default\",\n}: BadgeProps) {\n  const containerRef = useRef<HTMLSpanElement>(null);\n  const externalSvgRef = useRef<SVGSVGElement>(null);\n  const stableId = id ?? `badge-${variant}`;\n  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });\n  const {\n    animateOnHover: animateFromContext,\n    drawRect,\n    svgRef,\n  } = useRough({\n    stableId,\n    svgRef: externalSvgRef,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(\n    (reseed = false) => {\n      const container = containerRef.current;\n      const svg = svgRef.current;\n      if (!container || !svg) return;\n\n      svg.replaceChildren();\n\n      const w = container.offsetWidth;\n      const h = container.offsetHeight;\n      svg.setAttribute(\"width\", String(w));\n      svg.setAttribute(\"height\", String(h));\n      svg.setAttribute(\"viewBox\", `0 0 ${w} ${h}`);\n\n      const rect = drawRect(1, 1, w - 2, h - 2, {\n        fill: \"none\",\n        seed: reseed ? randomSeed() : undefined,\n        stroke: variantStroke[variant],\n      });\n      if (rect) svg.appendChild(rect);\n    },\n    [drawRect, svgRef, variant],\n  );\n\n  useEffect(() => {\n    const id = requestAnimationFrame(() => draw());\n    return () => cancelAnimationFrame(id);\n  }, [draw]);\n\n  useEffect(() => {\n    const container = containerRef.current;\n    if (!container) return;\n    const ro = new ResizeObserver(() => draw());\n    ro.observe(container);\n    return () => ro.disconnect();\n  }, [draw]);\n\n  return (\n    <span\n      ref={containerRef}\n      className={cn(\n        \"relative inline-flex items-center px-2 py-0.5 text-[11px] font-medium\",\n        variantText[variant],\n        className,\n      )}\n      style={roughStyle}\n      onMouseEnter={() => {\n        if (animateOnHover && animateFromContext) draw(true);\n      }}\n      onMouseLeave={() => {\n        if (animateOnHover && animateFromContext) draw(false);\n      }}\n    >\n      <svg\n        ref={externalSvgRef}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 overflow-visible\"\n      />\n      <span className=\"relative\">{children}</span>\n    </span>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/badge.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

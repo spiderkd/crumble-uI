@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio",
+  "title": "Radio",
+  "description": "Hand-drawn radio buttons with a filled inner circle when selected.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/use-rough.json",
+    "http://localhost:3000/r/rough-lib.json",
+    "http://localhost:3000/r/crumble-theme.json",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/radio.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef, useState } from \"react\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport {\n  randomSeed,\n  resolveRoughVars,\n  type CrumbleColorProps,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface RadioOption {\n  disabled?: boolean;\n  label: string;\n  value: string;\n}\n\nexport interface RadioGroupProps extends CrumbleColorProps {\n  className?: string;\n  defaultValue?: string;\n  name: string;\n  onChange?: (value: string) => void;\n  options: RadioOption[];\n  orientation?: \"vertical\" | \"horizontal\";\n  theme?: CrumbleTheme;\n  value?: string;\n}\n\nconst SIZE = 20;\n\nfunction RadioItem({\n  checked,\n  name,\n  onChange,\n  option,\n  theme: themeProp,\n}: {\n  checked: boolean;\n  name: string;\n  onChange: (value: string) => void;\n  option: RadioOption;\n  theme?: CrumbleTheme;\n}) {\n  const id = `radio-${name}-${option.value}`;\n  const { animateOnHover, drawCircle, svgRef } = useRough({\n    stableId: id,\n    theme: themeProp,\n    variant: \"interactive\",\n  });\n\n  const draw = useCallback(\n    (isOn: boolean, reseed = false) => {\n      const svg = svgRef.current;\n      if (!svg) return;\n\n      svg.replaceChildren();\n\n      const stroke = option.disabled ? \"var(--cr-stroke-muted)\" : \"var(--cr-stroke)\";\n      const outer = drawCircle(SIZE / 2, SIZE / 2, SIZE - 2, {\n        fill: \"none\",\n        seed: reseed ? randomSeed() : undefined,\n        stroke,\n      });\n      if (outer) svg.appendChild(outer);\n\n      if (isOn) {\n        const inner = drawCircle(SIZE / 2, SIZE / 2, SIZE / 2, {\n          fill: stroke,\n          fillStyle: \"solid\",\n          seed: reseed ? randomSeed() : undefined,\n          stroke: \"none\",\n        });\n        if (inner) svg.appendChild(inner);\n      }\n    },\n    [drawCircle, option.disabled, svgRef],\n  );\n\n  useEffect(() => {\n    draw(checked);\n  }, [checked, draw]);\n\n  return (\n    <label\n      className={cn(\n        \"inline-flex cursor-pointer select-none items-center gap-2.5\",\n        option.disabled && \"cursor-not-allowed opacity-40\",\n      )}\n      onMouseEnter={() => {\n        if (!option.disabled && animateOnHover) draw(checked, true);\n      }}\n      onMouseLeave={() => {\n        if (!option.disabled && animateOnHover) draw(checked, false);\n      }}\n    >\n      <div className=\"relative h-5 w-5 shrink-0\">\n        <input\n          checked={checked}\n          disabled={option.disabled}\n          id={id}\n          name={name}\n          onChange={() => onChange(option.value)}\n          className={cn(\n            \"absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0\",\n            option.disabled && \"cursor-not-allowed\",\n          )}\n          type=\"radio\"\n          value={option.value}\n        />\n        <svg\n          ref={svgRef}\n          aria-hidden=\"true\"\n          height={SIZE}\n          width={SIZE}\n          className=\"pointer-events-none overflow-visible\"\n        />\n      </div>\n      <span className=\"text-sm text-foreground\">{option.label}</span>\n    </label>\n  );\n}\n\nexport function RadioGroup({\n  className,\n  defaultValue,\n  fill,\n  name,\n  onChange,\n  options,\n  orientation = \"vertical\",\n  stroke,\n  strokeMuted,\n  theme,\n  value,\n}: RadioGroupProps) {\n  const [selected, setSelected] = useState(defaultValue ?? value ?? \"\");\n  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });\n\n  const handleChange = (nextValue: string) => {\n    setSelected(nextValue);\n    onChange?.(nextValue);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex\",\n        orientation === \"vertical\" ? \"flex-col gap-3\" : \"flex-row gap-5\",\n        className,\n      )}\n      style={roughStyle}\n      role=\"radiogroup\"\n    >\n      {options.map((option) => (\n        <RadioItem\n          key={option.value}\n          checked={(value ?? selected) === option.value}\n          name={name}\n          onChange={handleChange}\n          option={option}\n          theme={theme}\n        />\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/radio.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -5,7 +5,6 @@ import { Badge } from "@/registry/new-york/ui/badge";
 import { RoughHighlight } from "@/components/primitives/rough-highlight";
 import { RoughLine } from "@/components/primitives/rough-line";
 import { BentoGrid } from "@/components/BentoGrid/BentoGrid";
-import { ActivityFeedBlock } from "@/registry/new-york/blocks/KanbanColumnBlock";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
@@ -261,9 +260,7 @@ export default function Page() {
           ))}
         </div>
       </section>
-      <div className="mx-auto max-w-6xl px-6 py-20">
-        <ActivityFeedBlock />
-      </div>
+
       {/* ── CTA banner ── */}
       <section className="bg-secondary/40 px-6 py-20">
         <div className="mx-auto max-w-xl text-center">

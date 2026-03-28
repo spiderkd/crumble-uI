@@ -135,6 +135,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -154,6 +155,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -173,6 +175,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -192,6 +195,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -211,6 +215,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -230,6 +235,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -249,6 +255,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/rough-lib.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "utils"
       ],
       "files": [
@@ -287,6 +294,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -306,6 +314,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -325,6 +334,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -344,6 +354,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "http://localhost:3000/r/rough-lib.json",
         "utils"
       ],
@@ -363,6 +374,7 @@
       "dependencies": ["roughjs"],
       "registryDependencies": [
         "http://localhost:3000/r/rough-lib.json",
+        "http://localhost:3000/r/crumble-theme.json",
         "utils"
       ],
       "files": [
@@ -370,6 +382,585 @@
           "path": "registry/new-york/ui/callout-arrow.tsx",
           "type": "registry:ui",
           "target": "components/crumble/ui/callout-arrow.tsx"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Collapsible sections with rough chevrons and hand-drawn separators.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/accordion.tsx"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A hand-drawn circle border around a profile image or initials fallback.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/avatar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A hand-drawn label badge with rough border and semantic variants.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/badge.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "Bar Chart",
+      "description": "A hand-drawn bar chart with hachure-filled bars and animated mount.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/bar-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/bar-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "A hand-drawn color picker with preset swatches and editable hex input.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/color-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/color-picker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A searchable hand-drawn select with filtered dropdown and keyboard navigation.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/combobox.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/combobox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal dialog using the native browser dialog element with a rough-drawn border that redraws fresh on every open.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A panel that slides in from any edge with a rough line on the exposed side.",
+      "dependencies": ["react-dom", "roughjs"],
+      "registryDependencies": [
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/drawer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "A hand-drawn dropzone that becomes more expressive when a file is dragged over it.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/file-upload.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/file-upload.tsx"
+        }
+      ]
+    },
+    {
+      "name": "line-chart",
+      "type": "registry:ui",
+      "title": "Line Chart",
+      "description": "A hand-drawn line chart with Catmull-Rom curves and animated draw-on.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/line-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/line-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "notebook",
+      "type": "registry:ui",
+      "title": "Notebook",
+      "description": "A hand-drawn lined paper container with ruled lines and a red margin.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/notebook.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/notebook.tsx"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "A hand-drawn number input with rough increment and decrement buttons.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/number-input.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/number-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:ui",
+      "title": "OTP Input",
+      "description": "A row of hand-drawn single-character boxes for one-time passwords.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/otp-input.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/otp-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pie-chart",
+      "type": "registry:ui",
+      "title": "Pie Chart",
+      "description": "A hand-drawn pie or donut chart with hachure-filled slices and d3-shape arc math.",
+      "dependencies": ["roughjs", "d3-shape"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/pie-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/pie-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A hand-drawn progress bar with animated hachure fill.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/progress.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "Hand-drawn radio buttons with a filled inner circle when selected.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/rough-lib.json",
+        "http://localhost:3000/r/crumble-theme.json",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/radio.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/radio.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "A hand-drawn star rating with hover fill and hachure.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/rating.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/rating.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scribble",
+      "type": "registry:ui",
+      "title": "Scribble",
+      "description": "Draw rough freehand scribbles over content for emphasis, redaction, or playful UI effects.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/scribble.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/scribble.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A hand-drawn select dropdown with a rough chevron indicator.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A hand-drawn horizontal or vertical divider line.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/separator.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/separator.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A hand-drawn range slider with a sketchy track and circle thumb.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/rough-lib.json",
+        "http://localhost:3000/r/crumble-theme.json",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/slider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sparkline",
+      "type": "registry:ui",
+      "title": "Sparkline",
+      "description": "An inline mini chart that drops naturally into text and table cells.",
+      "dependencies": ["roughjs", "d3-shape", "d3-scale"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/sparkline.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/sparkline.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "A hand-drawn card preset for dashboard metrics with an optional trend arrow.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/stat-card.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/stat-card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sticky-note",
+      "type": "registry:ui",
+      "title": "Sticky Note",
+      "description": "A hand-drawn sticky note with a folded corner and five color variants.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/sticky-note.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/sticky-note.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A data table where row separators are hand-drawn rough lines instead of CSS borders.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A hand-drawn textarea with optional auto-grow and resize support.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/textarea.tsx"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A vertical event list with rough circle nodes and connecting lines.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/timeline.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/timeline.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A hand-drawn toggle switch with a sliding circle thumb.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/toggle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A hand-drawn callout that appears on hover with a rough polygon arrow.",
+      "dependencies": ["roughjs"],
+      "registryDependencies": [
+        "http://localhost:3000/r/use-rough.json",
+        "utils",
+        "http://localhost:3000/r/crumble-theme.json",
+        "http://localhost:3000/r/rough-lib.json"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/crumble/ui/tooltip.tsx"
         }
       ]
     }

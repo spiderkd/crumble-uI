@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "A hand-drawn horizontal or vertical divider line.",
+  "dependencies": [
+    "roughjs"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/use-rough.json",
+    "utils",
+    "http://localhost:3000/r/crumble-theme.json",
+    "http://localhost:3000/r/rough-lib.json"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/separator.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useRef } from \"react\";\nimport { useRough } from \"@/hooks/use-rough\";\nimport { cn } from \"@/lib/utils\";\nimport {\n  resolveRoughVars,\n  type CrumbleColorProps,\n  type CrumbleTheme,\n} from \"@/lib/rough\";\n\nexport interface SeparatorProps extends CrumbleColorProps {\n  className?: string;\n  id?: string;\n  label?: string;\n  orientation?: \"horizontal\" | \"vertical\";\n  theme?: CrumbleTheme;\n}\n\nexport function Separator({\n  className,\n  fill,\n  id,\n  label,\n  orientation = \"horizontal\",\n  stroke,\n  strokeMuted,\n  theme: themeProp,\n}: SeparatorProps) {\n  const containerRef = useRef<HTMLDivElement>(null);\n  const externalSvgRef = useRef<SVGSVGElement>(null);\n  const sepId = id ?? \"separator\";\n  const roughStyle = resolveRoughVars({ stroke, strokeMuted, fill });\n  const { drawLine, svgRef } = useRough({\n    stableId: sepId,\n    svgRef: externalSvgRef,\n    theme: themeProp,\n    variant: \"border\",\n  });\n\n  const draw = useCallback(() => {\n    const container = containerRef.current;\n    const svg = svgRef.current;\n    if (!container || !svg) return;\n\n    svg.replaceChildren();\n\n    const isH = orientation === \"horizontal\";\n    const w = isH ? container.offsetWidth : 20;\n    const h = isH ? 20 : container.offsetHeight;\n\n    svg.setAttribute(\"width\", String(w));\n    svg.setAttribute(\"height\", String(h));\n    svg.setAttribute(\"viewBox\", `0 0 ${w} ${h}`);\n\n    if (isH && label) {\n      const mid = w / 2;\n      const gap = 8;\n      const labelW = label.length * 7 + 16;\n      const left = drawLine(2, 10, mid - labelW / 2 - gap, 10, {\n        stroke: \"var(--cr-stroke-muted)\",\n      });\n      const right = drawLine(mid + labelW / 2 + gap, 10, w - 2, 10, {\n        stroke: \"var(--cr-stroke-muted)\",\n      });\n      if (left) svg.appendChild(left);\n      if (right) svg.appendChild(right);\n    } else if (isH) {\n      const line = drawLine(2, 10, w - 2, 10, {\n        stroke: \"var(--cr-stroke-muted)\",\n      });\n      if (line) svg.appendChild(line);\n    } else {\n      const line = drawLine(10, 2, 10, h - 2, {\n        stroke: \"var(--cr-stroke-muted)\",\n      });\n      if (line) svg.appendChild(line);\n    }\n  }, [drawLine, label, orientation, svgRef]);\n\n  useEffect(() => {\n    const id = requestAnimationFrame(() => draw());\n    return () => cancelAnimationFrame(id);\n  }, [draw]);\n\n  useEffect(() => {\n    const container = containerRef.current;\n    if (!container) return;\n    const ro = new ResizeObserver(() => draw());\n    ro.observe(container);\n    return () => ro.disconnect();\n  }, [draw]);\n\n  const isH = orientation === \"horizontal\";\n\n  return (\n    <div\n      ref={containerRef}\n      role=\"separator\"\n      aria-orientation={orientation}\n      className={cn(\n        \"relative flex items-center\",\n        isH ? \"w-full\" : \"h-full flex-col\",\n        className,\n      )}\n      style={roughStyle}\n    >\n      <svg\n        ref={externalSvgRef}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 overflow-visible\"\n      />\n      {label ? (\n        <span className=\"relative bg-background px-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground\">\n          {label}\n        </span>\n      ) : null}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/crumble/ui/separator.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
