@@ -148,7 +148,7 @@ export default function AnalyticsDashboard() {
           <div>
             <h1 className="text-[16px] font-medium">Overview</h1>
             <p className="text-[12px] text-muted-foreground">
-              crumble.dev · Last updated 2 min ago
+              bydefaulthuman.fun · Last updated 2 min ago
             </p>
           </div>
           <div className="flex items-center gap-3">
