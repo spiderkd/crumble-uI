@@ -229,7 +229,7 @@ export default function Page() {
       <section className="mx-auto max-w-4xl px-6 py-20">
         <div className="mb-12 text-center">
           <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-            why crumble
+            why byDefaultHuman?
           </p>
           <h2 className="text-3xl font-medium">
             <RoughHighlight
@@ -287,7 +287,7 @@ export default function Page() {
               <Button size="lg">Read the docs</Button>
             </Link>
             <Link
-              href="https://github.com/your-org/crumble"
+              href="https://github.com/spiderkd/byDefaultHuman"
               target="_blank"
               rel="noreferrer"
             >
@@ -303,7 +303,7 @@ export default function Page() {
       <footer className="border-t border-border/30 px-6 py-8">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 text-[12px] text-muted-foreground">
           <span className="font-[family-name:var(--font-display)] italic text-[15px] text-foreground">
-            crumble
+            ByDefaultHuman
           </span>
           <span>hand-drawn components for React · MIT license</span>
           <div className="flex gap-4">
@@ -320,7 +320,7 @@ export default function Page() {
               Components
             </Link>
             <Link
-              href="https://github.com/your-org/crumble"
+              href="https://github.com/spiderkd/bydefaulthuman"
               target="_blank"
               rel="noreferrer"
               className="hover:text-foreground transition-colors"

@@ -1,13 +1,13 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "crumble",
+  "name": "byDefaultHuman",
   "homepage": "https://bydefaulthuman.fun",
   "items": [
     {
       "name": "font-display",
       "type": "registry:font",
       "title": "Caveat",
-      "description": "Handwritten display font for Crumble labels and annotations.",
+      "description": "Handwritten display font for byDefaultHuman labels and annotations.",
       "font": {
         "family": "'Caveat Variable', cursive",
         "provider": "google",
@@ -21,7 +21,7 @@
     {
       "name": "crumble-theme",
       "type": "registry:base",
-      "title": "Crumble Design System",
+      "title": "byDefaultHuman Design System",
       "description": "Foundational theme, custom CSS variables, and font configuration for Crumble.",
       "config": {
         "style": "new-york",
@@ -88,7 +88,7 @@
       "name": "rough-lib",
       "type": "registry:lib",
       "title": "Rough Theme Config",
-      "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all Crumble components.",
+      "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all byDefaultHuman components.",
       "dependencies": ["roughjs"],
       "files": [
         {

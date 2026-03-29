@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "font-display",
   "title": "Caveat",
-  "description": "Handwritten display font for Crumble labels and annotations.",
+  "description": "Handwritten display font for byDefaultHuman labels and annotations.",
   "type": "registry:font",
   "font": {
     "family": "'Caveat Variable', cursive",

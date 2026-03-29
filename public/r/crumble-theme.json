@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "crumble-theme",
-  "title": "Crumble Design System",
+  "title": "byDefaultHuman Design System",
   "description": "Foundational theme, custom CSS variables, and font configuration for Crumble.",
   "dependencies": [
     "roughjs",

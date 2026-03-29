@@ -363,7 +363,7 @@ export function CrumbleSidebarInner({ tree }: { tree: PageTree.Root }) {
 
   return (
     <aside
-      className="relative flex h-full h-screen flex-col overflow-y-auto px-3 py-4"
+      className="relative flex h-full  flex-col overflow-y-auto px-3 py-4"
       style={{
         scrollbarWidth: "thin",
         scrollbarColor: "var(--border) transparent",

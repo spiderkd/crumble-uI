@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       nav={{
         title: (
           <span className="font-[family-name:var(--font-display)] text-xl font-bold">
-            crumble
+            byDefaultHuman
           </span>
         ),
       }}

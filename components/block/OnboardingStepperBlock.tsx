@@ -37,7 +37,7 @@ const DEFAULT_STEPS: OnboardingStep[] = [
   },
   {
     title: "You're all set!",
-    description: "Start building with Crumble.",
+    description: "Start building with byDefaultHuman.",
   },
 ];
 

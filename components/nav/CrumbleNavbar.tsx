@@ -111,7 +111,7 @@ function NavLogo() {
   return (
     <Link href="/" className="no-underline" aria-label="crumble home">
       <span className="font-[family-name:var(--font-display)] text-[1.2rem] font-bold italic leading-none tracking-tight text-foreground">
-        crumble
+        byDefaultHuman
       </span>
     </Link>
   );

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "rough-lib",
   "title": "Rough Theme Config",
-  "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all Crumble components.",
+  "description": "Core Rough.js theme presets, getRoughOptions, stableSeed, randomSeed, CrumbleContext, and resolveRoughVars. Required by all byDefaultHuman components.",
   "dependencies": [
     "roughjs"
   ],

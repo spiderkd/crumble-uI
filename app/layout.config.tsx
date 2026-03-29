@@ -12,5 +12,10 @@ export const baseOptions: BaseLayoutProps = {
       url: "/docs/components/button",
       active: "nested-url",
     },
+    {
+      text: "blocks",
+      url: "/docs/blocks/kanban",
+      active: "nested-url",
+    },
   ],
 };
