@@ -1,6 +1,7 @@
 import "./global.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Caveat, Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { CrumbleProvider } from "@/lib/crumble-context";
 
@@ -11,6 +12,32 @@ const caveat = Caveat({
   variable: "--font-display",
   weight: ["400", "500", "700"],
 });
+
+export const metadata: Metadata = {
+  title: {
+    default: "bydefaulthuman.fun",
+    template: "%s — bydefaulthuman.fun",
+  },
+  description:
+    "A hand-drawn React component library. Wobbly, sketchy borders powered by Rough.js. Accessible by default.",
+  metadataBase: new URL("https://bydefaulthuman.fun"),
+  openGraph: {
+    title: "bydefaulthuman.fun",
+    description:
+      "A hand-drawn React component library. Wobbly, sketchy borders powered by Rough.js. Accessible by default.",
+    url: "https://bydefaulthuman.fun",
+    siteName: "bydefaulthuman.fun",
+    locale: "en_US",
+    type: "website",
+    // og:image is wired up automatically from app/opengraph-image.tsx
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "bydefaulthuman.fun",
+    description:
+      "A hand-drawn React component library. Wobbly, sketchy borders powered by Rough.js.",
+  },
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
