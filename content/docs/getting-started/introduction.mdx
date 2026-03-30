@@ -5,12 +5,22 @@ description: What bydefaulthuman is and when to use it.
 
 import { PreviewContainer } from "@/components/preview/PreviewContainer";
 import { Button } from "@/registry/new-york/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/registry/new-york/ui/card";
+import { Badge } from "@/registry/new-york/ui/badge";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
 
-bydefaulthuman is a hand-drawn component library for React. Each component renders a wobbly, sketched border using [Rough.js](https://roughjs.com), a small SVG library that makes shapes look like they were drawn by hand.
+bydefaulthuman is a hand-drawn component library for React. Each component renders a wobbly, sketched border using [Rough.js](https://roughjs.com) — a small SVG library that makes shapes look like they were drawn by hand.
 
 ## Three themes
 
-Every component supports three visual personalities out of the box.
+Every component ships with three visual personalities out of the box.
 
 <PreviewContainer
   componentName="button"
@@ -27,14 +37,55 @@ Every component supports three visual personalities out of the box.
   </div>
 </PreviewContainer>
 
+| Theme    | Roughness | Feel                         |
+| -------- | --------- | ---------------------------- |
+| `pencil` | 0.8 – 1.2 | Light, sketchy, hachure fill |
+| `ink`    | 0.4 – 0.8 | Clean, confident, solid fill |
+| `crayon` | 2.0 – 2.8 | Wild, thick, zigzag fill     |
+
 ## How it works
 
-Every component is two layers: a real HTML element that handles browser behaviour and accessibility, plus a Rough.js SVG overlay that sits on top as a purely visual layer with `pointer-events: none`.
+Every component is two layers working together.
 
-The SVG border redraws on hover using a new random seed, giving a subtle alive feeling without needing an animation framework.
+<Steps>
+  <Step>
+    **A real HTML element** — a `<button>`, `<div>`, `<input>`, etc. This handles all browser behaviour: focus, keyboard events, form submission, and accessibility. Nothing unusual here.
+  </Step>
+  <Step>
+    **A Rough.js SVG overlay** — an absolutely-positioned `<svg>` with `pointer-events: none` drawn on top. It never intercepts clicks or focus. It is purely visual.
+  </Step>
+  <Step>
+    **Seed-based redraw on hover** — when the mouse enters, the SVG clears and redraws with a new random seed. This gives a subtle "alive" feeling. On first render the seed is deterministic so there are no hydration mismatches in SSR.
+  </Step>
+</Steps>
+
+## Annotation layer
+
+For text decoration, bydefaulthuman includes an `Annotation` component built on [rough-notation](https://roughnotation.com). It supports `underline`, `box`, `circle`, `highlight`, `strike-through`, `crossed-off`, and `bracket` styles, with three trigger modes:
+
+| Trigger  | Behaviour                                       |
+| -------- | ----------------------------------------------- |
+| `mount`  | Draws immediately on first render (default)     |
+| `inView` | Draws once when the element enters the viewport |
+| `hover`  | Draws on `mouseenter`, resets on `mouseleave`   |
+
+## Color system
+
+All stroke colours resolve through three CSS custom properties. You can override them per-component via props or on a parent element for section-level theming.
+
+| Variable            | Default              | Role                               |
+| ------------------- | -------------------- | ---------------------------------- |
+| `--cr-stroke`       | `currentColor`       | Main border and annotation stroke  |
+| `--cr-stroke-muted` | 40% of `--cr-stroke` | Secondary borders, disabled states |
+| `--cr-fill`         | `transparent`        | Interior fill passed to Rough.js   |
+
+Pass `stroke`, `strokeMuted`, or `fill` props directly to any component:
+
+```tsx
+<Button stroke="#e85d4a">Red border</Button>
+<Card fill="oklch(0.97 0.02 260 / 40%)">Tinted fill</Card>
+```
 
 ## When to use it
 
-bydefaulthuman is a good fit for personal projects, creative tools, educational apps, indie games, portfolios, and anything that benefits from feeling human-made.
-
-It is not designed for enterprise dashboards or anything that needs to look formally professional to clients.
+bydefaulthuman is a good fit for personal projects, creative tools, educational apps, indie games, portfolios, and anything that benefits from feeling human-made rather than machine-stamped.

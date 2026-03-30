@@ -4,15 +4,18 @@ description: Add bydefaulthuman to your project in one command.
 ---
 
 import { Button } from "@/registry/new-york/ui/button";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Files, Folder, File } from "fumadocs-ui/components/files";
 
-bydefaulthuman uses the [shadcn CLI](https://ui.shadcn.com/docs/cli) for distribution. Each component is a registry JSON file that resolves into copyable source in your project.
+bydefaulthuman uses the [shadcn CLI](https://ui.shadcn.com/docs/cli) for distribution. Each component is a registry JSON file that resolves into copyable source in your project — no package to pin, no version drift.
 
 ## Prerequisites
 
 - React 18+
-- Next.js 13+ App Router or any React setup with path aliases
+- Next.js 13+ App Router **or** any React setup with path aliases configured
 - Tailwind CSS
-- shadcn CLI initialized with `npx shadcn init`
+- shadcn CLI initialised with `npx shadcn init`
 
 ## Install any component
 
@@ -20,11 +23,29 @@ bydefaulthuman uses the [shadcn CLI](https://ui.shadcn.com/docs/cli) for distrib
 npx shadcn add https://bydefaulthuman.fun/r/button.json
 ```
 
-This copies `button.tsx` into your project and automatically installs `roughjs` plus shared files like `use-rough.ts` and `rough.ts` through `registryDependencies`.
+This copies `button.tsx` into your project and automatically installs `roughjs` plus shared files — `use-rough.ts` and `rough.ts` — through `registryDependencies`. Shared files are deduplicated automatically, so running the command for a second component won't overwrite them.
+
+## What lands in your project
+
+<Files>
+  <Folder name="registry/new-york" defaultOpen>
+    <Folder name="hooks" defaultOpen>
+      <File name="use-rough.ts" />
+    </Folder>
+    <Folder name="lib" defaultOpen>
+      <File name="rough.ts" />
+    </Folder>
+    <Folder name="ui" defaultOpen>
+      <File name="button.tsx" />
+    </Folder>
+  </Folder>
+</Files>
+
+`rough.ts` exports `configureCrumble`, all three theme option objects, and the `CrumbleContext` used internally. `use-rough.ts` exports `useRough`, the single hook every component calls to draw its SVG border.
 
 ## Global theme
 
-All components default to `pencil`. To change it globally, call `configureCrumble` once anywhere in your app:
+All components default to `pencil`. To change the default globally, call `configureCrumble` once — anywhere in your app before the first render, for example in a layout or providers file:
 
 ```ts
 import { configureCrumble } from "@/lib/rough";
@@ -32,18 +53,65 @@ import { configureCrumble } from "@/lib/rough";
 configureCrumble({ theme: "ink" });
 ```
 
+Available themes are `"pencil"`, `"ink"`, and `"crayon"`. See [Introduction](/docs/introduction#three-themes) for what each one looks like.
+
+### React Context alternative
+
+If you prefer context over a module-level singleton — useful when different sections of your UI need different themes — wrap a subtree with `CrumbleContext.Provider`:
+
+```tsx
+import { CrumbleContext } from "@/lib/rough";
+
+export function SketchySection({ children }: { children: React.ReactNode }) {
+  return (
+    <CrumbleContext.Provider
+      value={{ theme: "crayon", animateOnMount: true, animateOnHover: true }}
+    >
+      {children}
+    </CrumbleContext.Provider>
+  );
+}
+```
+
 ## Per-component override
+
+The `theme` prop on any component always wins over both the global config and any ancestor context:
 
 ```tsx
 <Button theme="crayon">This one is crayon</Button>
-<Button>This one uses global config</Button>
+<Button>This one uses the global config</Button>
 ```
 
 ## Disable animation behaviour
 
 ```ts
 configureCrumble({
-  animateOnMount: false,
-  animateOnHover: false,
+  animateOnMount: false, // skip the redraw on first render
+  animateOnHover: false, // borders stay static; no reseed on mouseenter
 });
 ```
+
+Both flags can also be passed on the `CrumbleContext.Provider` value if you only want to disable animation in a specific section.
+
+## Custom colours
+
+Every component accepts `stroke`, `strokeMuted`, and `fill` props. These map to `--cr-stroke`, `--cr-stroke-muted`, and `--cr-fill`:
+
+```tsx
+<Button stroke="#e85d4a">Red border button</Button>
+<Card stroke="oklch(0.55 0.18 260)" fill="oklch(0.97 0.02 260 / 40%)">
+  Blue tinted card
+</Card>
+```
+
+You can also set the CSS variables on a parent element to theme an entire section without repeating props on every component.
+
+## Updating a component
+
+Components live in your project, so updates are opt-in. Re-run the add command to pull the latest version:
+
+```bash
+npx shadcn add https://bydefaulthuman.fun/r/button.json
+```
+
+<Callout>The CLI will prompt before overwriting existing files.</Callout>

@@ -6,14 +6,18 @@ export const baseOptions: BaseLayoutProps = {
     component: <CrumbleNavbar />,
   },
   links: [
-    { text: "Docs", url: "/docs", active: "nested-url" },
+    {
+      text: "Documentation",
+      url: "/docs/getting-started/introduction",
+      active: "nested-url",
+    },
     {
       text: "Components",
       url: "/docs/components/button",
       active: "nested-url",
     },
     {
-      text: "blocks",
+      text: "Blocks",
       url: "/docs/blocks/kanban",
       active: "nested-url",
     },

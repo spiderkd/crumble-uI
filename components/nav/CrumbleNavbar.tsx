@@ -493,7 +493,7 @@ function MobileMenu({ open, pathname }: { open: boolean; pathname: string }) {
       {/* Rough bottom + side borders on the dropdown itself */}
       <nav className="flex flex-col gap-0.5">
         {[
-          { href: "/docs", label: "Docs" },
+          { href: "/docs/getting-started/introduction", label: "Docs" },
           { href: "/docs/components/button", label: "Components" },
         ].map(({ href, label }) => (
           <Link
@@ -552,13 +552,16 @@ export function CrumbleNavbar() {
           {/* Nav links */}
           <div className="hidden items-center gap-4 md:flex">
             <NavLink
-              href="/docs"
-              active={isActive("/docs") && !isActive("/docs/components")}
+              href="/docs/getting-started/introduction"
+              active={
+                isActive("/docs/getting-started/introduction") &&
+                !isActive("/docs/components")
+              }
             >
               Docs
             </NavLink>
             <NavLink
-              href="/docs/components/button"
+              href="/docs/components/accordion"
               active={isActive("/docs/components")}
             >
               Components
